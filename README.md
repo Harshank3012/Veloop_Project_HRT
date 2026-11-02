@@ -1,18 +1,20 @@
-# VELOOP Rewards – Gamification Dashboard
+# VELOOP Rewards – Premium Gamification Dashboard
 
-VELOOP Rewards is a React-based gamification dashboard designed to make user engagement interactive through XP tracking, level progression, and rewards.
+VELOOP Rewards is a React-based gamification dashboard that makes user engagement interactive through XP tracking, level progression, mini-games, and virtual rewards.
 
 ## Features
-- Interactive dashboard with current level and XP.
-- XP progress bar and remaining XP tracking.
+
+- Premium level dashboard with XP tracking.
+- Animated level badges and XP progress.
 - Five-level progression roadmap.
 - Next-level reward display.
 - XP Catcher mini-game with a 15-second timer.
 - Earn 10 XP per successful catch.
 - XP persistence using browser localStorage.
-- Responsive UI for different screen sizes.
+- Responsive dashboard UI.
 
 ## Tech Stack
+
 - React.js
 - Vite
 - JavaScript
@@ -39,6 +41,7 @@ npm run build
 ```
 
 ## Note
+
 This project is a gamification demonstration. XP, level thresholds, and reward values are currently demo configurations.
 
 **VELOOP Rewards – Earn XP. Level Up. Unlock Rewards.**
