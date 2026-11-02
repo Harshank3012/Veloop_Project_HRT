@@ -1,4 +1,4 @@
-# VELOOP Rewards — Day 8 Dashboard UI Snapshot
+# VELOOP Rewards — Dashboard UI Snapshot
 
 A separate dashboard-only reconstruction based on the supplied project source.
 
