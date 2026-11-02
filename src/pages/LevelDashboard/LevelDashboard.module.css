@@ -1,1 +1,958 @@
-.dashboard{min-height:100vh;background:#161827;color:#f4f4f8}.topbar{min-height:76px;padding:0 clamp(22px,5vw,64px);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:800;letter-spacing:-.4px;color:#f4f4f8;text-decoration:none}.brandAccent{color:#f4c96b}.brandMark{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#24202a;background:#f4c96b;font-size:20px;font-weight:900}.topbarRight{display:flex;align-items:center;gap:22px;color:#aeb1c4;font-size:12px}.status{display:flex;align-items:center;gap:8px}.status i{width:7px;height:7px;background:#65d6a0;border-radius:50%;box-shadow:0 0 12px #65d6a0}.avatar{width:36px;height:36px;border:1px solid rgba(244,201,107,.45);border-radius:50%;display:grid;place-items:center;color:#f4c96b;font-weight:700}.content{width:min(1120px,calc(100% - 48px));margin:0 auto;padding:42px 0 28px}.welcome{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:34px}.eyebrow{display:flex;align-items:center;gap:8px;color:#f4c96b;font-size:10px;font-weight:800;letter-spacing:1.2px}.welcome h1{max-width:680px;margin:13px 0 10px;font-size:clamp(30px,4vw,46px);line-height:1.12;letter-spacing:-1.6px;font-weight:800}.welcome h1 span{color:#f4c96b}.welcome p{margin:0;color:#aeb1c4;font-size:14px}.welcomeBadge{min-width:132px;padding:18px 20px;display:flex;flex-direction:column;align-items:center;gap:8px;border:1px solid rgba(244,201,107,.22);border-radius:18px;background:#1e2133;color:#f4c96b}.welcomeBadge span{color:#aeb1c4;font-size:9px;letter-spacing:1px}.welcomeBadge strong{color:#fff;font-size:17px}.heroGrid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.levelCard,.rewardCard{position:relative;overflow:hidden;padding:24px 26px 28px;border:1px solid rgba(255,255,255,.09);border-radius:20px;background:#1e2133;box-shadow:0 18px 55px rgba(0,0,0,.12)}.cardHeading{display:flex;justify-content:space-between;align-items:center;color:#aebde9;font-size:10px;font-weight:800;letter-spacing:1px}.helpButton{width:30px;height:30px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(255,255,255,.13);color:#aeb1c4}.levelBody{display:flex;align-items:center;gap:22px;padding:24px 0 25px}.levelBadge{width:96px;height:96px;flex:none;border:1px solid #d9a947;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(244,201,107,.17),rgba(244,201,107,.025) 68%);box-shadow:0 0 0 7px rgba(244,201,107,.035),0 0 25px rgba(244,201,107,.12)}.levelBadge span{color:#f4c96b;font-size:9px;font-weight:800;letter-spacing:1px}.levelBadge strong{font-size:34px;line-height:1.1}.xpSummary{display:flex;flex-direction:column;align-items:flex-start;gap:8px}.xpSummary small{color:#aeb1c4;font-size:9px;letter-spacing:1px}.xpNumber{font-size:34px;font-weight:800;letter-spacing:-1px}.xpNumber span{color:#f4c96b;font-size:14px;letter-spacing:0}.levelName{padding:5px 9px;border:1px solid rgba(244,201,107,.25);border-radius:6px;color:#f4c96b;font-size:10px}.progressSection{padding-top:18px;border-top:1px solid rgba(255,255,255,.07)}.progressLabels{display:flex;justify-content:space-between;margin-bottom:12px;color:#aeb1c4;font-size:11px}.progressLabels strong{color:#f4c96b}.progressTrack{width:100%;height:8px;overflow:hidden;border-radius:20px;background:#35384d}.progressFill{height:100%;border-radius:20px;background:linear-gradient(90deg,#c78d2e,#ffe29a)}.remaining{display:flex;align-items:center;gap:5px;margin-top:13px;color:#aeb1c4;font-size:11px}.remaining svg,.remaining strong{color:#f4c96b}.rewardCard{text-align:center}.rewardCard .cardHeading{text-align:left}.chest{position:relative;width:110px;height:110px;margin:18px auto 10px;display:grid;place-items:center;color:#f4c96b}.chestHalo{position:absolute;inset:8px;border:1px solid rgba(244,201,107,.25);border-radius:50%;background:rgba(244,201,107,.06)}.chest>svg:not(.chestSparkle){position:relative}.chestSparkle{position:absolute;right:-2px;top:8px}.rewardAmount{display:flex;justify-content:center;align-items:center;gap:8px;color:#f4c96b}.rewardAmount strong{font-size:32px}.rewardAmount span{color:#f4f4f8;font-size:12px}.rewardCaption{margin:10px 0 18px;color:#aeb1c4;font-size:12px}.lockedMessage{padding:14px;border:1px solid rgba(244,201,107,.2);border-radius:10px;background:rgba(244,201,107,.045);color:#f4f4f8;font-size:11px}.lockedMessage span{display:block;margin-bottom:5px;color:#f4c96b;font-size:9px;font-weight:800;letter-spacing:1px}.demoNotice{margin:12px 0 0;color:#858aa5;font-size:9px}.roadmapSection{margin-top:32px}.sectionHeader{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}.sectionHeader h2{margin:7px 0 0;font-size:25px;font-weight:800}.smallPill{padding:7px 11px;border:1px solid rgba(244,201,107,.25);border-radius:20px;color:#f4c96b;font-size:9px;font-weight:800}.roadmap{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;padding:22px 14px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:#1e2133}.roadmapItem{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}.roadmapNode{width:42px;height:42px;border:1px solid #45485e;border-radius:50%;display:grid;place-items:center;color:#aeb1c4;background:#292c40;font-size:12px}.roadmapNode.current{border-color:#d9a947;color:#f4c96b;background:rgba(244,201,107,.1)}.roadmapNode.completed{border-color:#65d6a0;color:#65d6a0}.roadmapItem strong{font-size:11px}.roadmapState{color:#aeb1c4;font-size:9px}.footer{display:flex;justify-content:space-between;gap:15px;margin-top:45px;padding-top:18px;border-top:1px solid rgba(255,255,255,.07);color:#777c96;font-size:10px}@media(max-width:760px){.heroGrid{grid-template-columns:1fr}.welcome{align-items:flex-start}.content{width:calc(100% - 32px);padding-top:30px}}@media(max-width:480px){.topbar{min-height:64px;padding:0 18px}.topbarRight{gap:12px}.status{font-size:10px}.welcome{flex-direction:column-reverse}.welcomeBadge{flex-direction:row;min-width:0;padding:12px}.welcomeBadge span{font-size:8px}.welcome h1{font-size:29px}.welcome p{font-size:12px;line-height:1.6}.levelCard,.rewardCard{padding:19px 17px 22px}.levelBody{gap:17px}.levelBadge{width:78px;height:78px}.levelBadge strong{font-size:28px}.xpNumber{font-size:28px}.roadmap{gap:6px;padding:17px 7px}.roadmapNode{width:34px;height:34px}.roadmapItem strong{font-size:9px}.roadmapState{font-size:8px}.footer{flex-direction:column}}
+.dashboard {
+  --gold: #f2c45e;
+  --muted: #9da4bb;
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #161827;
+  color: #f6f5f2;
+}
+
+.ambientGlow {
+  position: absolute;
+  pointer-events: none;
+  width: 760px;
+  height: 500px;
+  right: -250px;
+  top: -280px;
+  background: radial-gradient(ellipse, rgba(196,145,55,.13), transparent 68%);
+  filter: blur(12px);
+}
+
+.topbar {
+  height: 72px;
+  padding: 0 clamp(18px, 5vw, 76px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  background: rgba(22,24,39,.78);
+  position: relative;
+  z-index: 1;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.brandMark {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: linear-gradient(145deg,#ffe8a4,#c88e2e);
+  color: #1b1b24;
+  font-weight: 900;
+  font-size: 21px;
+  box-shadow: 0 5px 20px #e9b64b30;
+}
+
+.brandName {
+  font-size: 15px;
+  font-weight: 850;
+  letter-spacing: .8px;
+}
+
+.brandName small {
+  display: block;
+  margin-top: 2px;
+  color: #a6a9ba;
+  font-size: 8px;
+  letter-spacing: 2.2px;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.liveStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #b8bdcf;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.liveStatus i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #72d8a5;
+  box-shadow: 0 0 12px #72d8a5;
+}
+
+.iconButton {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #ffffff18;
+  border-radius: 50%;
+  background: #ffffff08;
+  color: #d7d9e2;
+}
+
+.iconButton b {
+  position: absolute;
+  right: 7px;
+  top: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.avatar {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #f2c45e70;
+  border-radius: 50%;
+  background: #f2c45e15;
+  color: var(--gold);
+  font-weight: 800;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: min(1240px, calc(100% - 48px));
+  margin: auto;
+  padding: 42px 0 28px;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 1.55px;
+}
+
+.welcome h1 {
+  margin: 12px 0 9px;
+  font-size: clamp(32px,4.2vw,52px);
+  line-height: 1.06;
+  letter-spacing: -2px;
+  font-weight: 850;
+}
+
+.welcome h1 span {
+  color: var(--gold);
+}
+
+.welcome p {
+  margin: 0;
+  color: #aeb3c8;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.journeyChip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 185px;
+  padding: 13px 15px;
+  border: 1px solid #f2c45e30;
+  border-radius: 15px;
+  background: linear-gradient(135deg,#25283b,#1c1f30);
+  box-shadow: 0 12px 30px #0002;
+}
+
+.journeyIcon {
+  width: 37px;
+  height: 37px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: #f2c45e16;
+  color: var(--gold);
+}
+
+.journeyChip small,
+.journeyChip strong {
+  display: block;
+}
+
+.journeyChip small {
+  margin-bottom: 4px;
+  color: #939ab2;
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+
+.journeyChip strong {
+  font-size: 15px;
+}
+
+.journeyChip > svg {
+  margin-left: auto;
+  color: #8e94aa;
+}
+
+.overviewGrid {
+  display: grid;
+  grid-template-columns: 1.18fr .82fr;
+  gap: 18px;
+}
+
+.progressCard,
+.rewardCard {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  padding: 24px 26px;
+  border: 1px solid #ffffff12;
+  border-radius: 20px;
+  background: linear-gradient(145deg,#222538 0%,#1d2031 75%);
+  box-shadow: 0 20px 55px #0002;
+}
+
+.progressCard::before,
+.rewardCard::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg,transparent,#f2c45e55,transparent);
+}
+
+.cardTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionLabel {
+  color: #aebbe7;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 1.35px;
+}
+
+.infoHint {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #ffffff1c;
+  border-radius: 50%;
+  color: #9ca3b8;
+}
+
+.levelIdentity {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  padding: 22px 0 23px;
+}
+
+.levelEmblem {
+  position: relative;
+  width: 108px;
+  height: 108px;
+  flex: 0 0 108px;
+  display: grid;
+  place-items: center;
+  clip-path: polygon(50% 0%,88% 13%,100% 50%,88% 87%,50% 100%,12% 87%,0 50%,12% 13%);
+  background: linear-gradient(145deg,#ffe6a0,#b77b24 48%,#f7d77d);
+  filter: drop-shadow(0 0 15px #e5ae4930);
+  animation: badgeFloat 5s ease-in-out infinite;
+}
+
+.emblemInner {
+  width: calc(100% - 7px);
+  height: calc(100% - 7px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  clip-path: inherit;
+  background: radial-gradient(circle at 50% 25%,#343347,#1a1c2a 72%);
+  color: var(--gold);
+}
+
+.emblemInner svg {
+  margin-bottom: 1px;
+}
+
+.emblemInner span {
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1.4px;
+}
+
+.emblemInner strong {
+  color: #fff;
+  font-size: 32px;
+  line-height: 1;
+  font-weight: 850;
+}
+
+.bronze {
+  background: linear-gradient(145deg, #f4c18a, #a85d32 52%, #e9ad70);
+}
+
+.silver {
+  background: linear-gradient(145deg,#fff,#8794aa 52%,#e3e8f0);
+}
+
+.gold {
+  background: linear-gradient(145deg,#fff0ae,#d79b35 52%,#ffe49a);
+}
+
+.platinum {
+  background: linear-gradient(145deg,#d9f5ff,#6ca8c5 52%,#d9f5ff);
+}
+
+.diamond {
+  background: linear-gradient(145deg,#e5d9ff,#8b75c9 52%,#eee7ff);
+}
+
+.elite {
+  background: linear-gradient(145deg,#ffc8a5,#b85b57 52%,#ffe0bb);
+}
+
+.identityText {
+  min-width: 0;
+}
+
+.mutedLabel {
+  color: #9299b2;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: 1.25px;
+}
+
+.identityText h2 {
+  margin: 5px 0 9px;
+  font-size: 18px;
+  letter-spacing: -.3px;
+}
+
+.xpTotal {
+  font-size: 32px;
+  font-weight: 850;
+  letter-spacing: -1px;
+}
+
+.xpTotal span {
+  display: block;
+  margin-top: 1px;
+  color: #9299b2;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: 1.1px;
+}
+
+.progressBlock {
+  padding-top: 17px;
+  border-top: 1px solid #ffffff12;
+}
+
+.progressMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 11px;
+  color: #9da4bb;
+  font-size: 10px;
+}
+
+.progressMeta b {
+  padding: 0 7px;
+  color: #e2c27a;
+}
+
+.progressMeta strong {
+  color: var(--gold);
+  font-size: 11px;
+}
+
+.progressTrack {
+  height: 9px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #383b50;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg,#b87c27,#f3c45f 70%,#ffe9a9);
+  box-shadow: 0 0 14px #eab94b65;
+  transition: width 900ms cubic-bezier(.2,.75,.25,1);
+  animation: progressGlow 3s ease-in-out infinite alternate;
+}
+
+.progressFoot {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+  color: #9299b2;
+  font-size: 9px;
+}
+
+.progressFoot span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.progressFoot svg,
+.progressFoot b {
+  color: var(--gold);
+}
+
+/* REWARD CARD */
+
+.rewardCard {
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 42%,#353047 0%,#222538 46%,#1d2031 80%);
+}
+
+.rewardCard .cardTopline {
+  text-align: left;
+}
+
+.lockPill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  border: 1px solid #f2c45e30;
+  border-radius: 20px;
+  color: var(--gold);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .8px;
+}
+
+.rewardVisual {
+  position: relative;
+  width: 126px;
+  height: 118px;
+  margin: 9px auto 0;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+}
+
+.rewardRings {
+  position: absolute;
+  width: 86px;
+  height: 86px;
+  border: 1px solid #f2c45e42;
+  border-radius: 50%;
+  background: radial-gradient(circle,#f2c45e20,transparent 70%);
+  box-shadow: 0 0 36px #f2c45e17;
+}
+
+.rewardIcon {
+  position: relative;
+  width: 82px;
+  height: 82px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #f2c45e45;
+  border-radius: 50%;
+  background: linear-gradient(145deg,#393346,#252638);
+  box-shadow: inset 0 0 20px #f2c45e12,0 12px 25px #0003;
+  animation: badgeFloat 5s ease-in-out infinite;
+}
+
+.rewardSparkleOne {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+}
+
+.rewardSparkleTwo {
+  position: absolute;
+  left: 8px;
+  bottom: 17px;
+}
+
+.rewardValue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--gold);
+}
+
+.rewardValue strong {
+  font-size: 34px;
+  letter-spacing: -1px;
+}
+
+.rewardValue span {
+  color: #f5f3ee;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.rewardSub {
+  margin: 7px 0 16px;
+  color: #aeb3c8;
+  font-size: 11px;
+}
+
+.rewardUnlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1px solid #f2c45e30;
+  border-radius: 11px;
+  background: #f2c45e09;
+  text-align: left;
+}
+
+.rewardUnlock span,
+.rewardUnlock strong {
+  display: block;
+}
+
+.rewardUnlock span {
+  margin-bottom: 4px;
+  color: var(--gold);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1px;
+}
+
+.rewardUnlock strong {
+  font-size: 11px;
+}
+
+.rewardMiniBadge {
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #f2c45e17;
+  color: var(--gold);
+}
+
+.demoLabel {
+  display: block;
+  margin-top: 10px;
+  color: #7f869f;
+  font-size: 8px;
+}
+
+/* ROADMAP + EARNING */
+
+.roadmapSection,
+.earnSection {
+  margin-top: 32px;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.sectionHeading h2 {
+  margin: 6px 0 0;
+  font-size: 22px;
+  letter-spacing: -.55px;
+}
+
+.roadmapCaption {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #969db4;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.roadmap {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5,minmax(0,1fr));
+  gap: 10px;
+  padding: 23px 18px;
+  border: 1px solid #ffffff12;
+  border-radius: 17px;
+  background: linear-gradient(120deg,#202337,#1c1f30);
+}
+
+.roadmapItem {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-align: center;
+}
+
+.roadmapConnector {
+  position: absolute;
+  z-index: -1;
+  top: 21px;
+  left: -50%;
+  width: 100%;
+  height: 1px;
+  background: #44485b;
+}
+
+.roadmapItem:first-child .roadmapConnector {
+  display: none;
+}
+
+.roadmapBadge {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #62677c;
+  border-radius: 14px;
+  background: #292c40;
+  color: #8f96ad;
+  box-shadow: 0 5px 14px #0002;
+}
+
+.roadmapItem strong {
+  font-size: 9px;
+  letter-spacing: .7px;
+}
+
+.roadmapItem > span {
+  color: #9299b2;
+  font-size: 8px;
+}
+
+.roadmapcompleted .roadmapBadge {
+  border-color: #6ac99a;
+  color: #6ac99a;
+  background: #6ac99a12;
+}
+
+.roadmapcurrent .roadmapBadge {
+  border-color: #e5b94f;
+  color: #f4cb6e;
+  background: linear-gradient(145deg,#4a3b27,#2b2932);
+  box-shadow: 0 0 22px #e5b94f30;
+}
+
+.roadmapcurrent > span {
+  color: var(--gold);
+}
+
+.earningGrid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 13px;
+}
+
+.earningCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #ffffff12;
+  border-radius: 15px;
+  background: linear-gradient(145deg,#222538,#1d2031);
+  transition: transform .22s ease,border-color .22s ease;
+}
+
+.earningCard:hover {
+  transform: translateY(-3px);
+  border-color: #f2c45e40;
+}
+
+.earningIcon {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: #f2c45e14;
+  color: var(--gold);
+}
+
+.earningIcon.purple {
+  background: #a98bff16;
+  color: #b49bff;
+}
+
+.earningIcon.green {
+  background: #65d6a016;
+  color: #65d6a0;
+}
+
+.earningInfo {
+  min-width: 0;
+  flex: 1;
+}
+
+.earningInfo strong {
+  font-size: 11px;
+}
+
+.earningInfo p {
+  margin: 5px 0;
+  color: #9da4bb;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.earningInfo > span {
+  color: var(--gold);
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.earningState {
+  align-self: flex-start;
+  white-space: nowrap;
+  padding: 5px 7px;
+  border: 1px solid #ffffff16;
+  border-radius: 20px;
+  color: #9299b2;
+  font-size: 7px;
+  font-weight: 850;
+  letter-spacing: .5px;
+}
+
+.earningState.available {
+  border-color: #65d6a044;
+  color: #65d6a0;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 34px;
+  padding-top: 16px;
+  border-top: 1px solid #ffffff10;
+  color: #737b95;
+  font-size: 8px;
+  letter-spacing: .4px;
+}
+
+.footer span:first-child {
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* ANIMATIONS */
+
+@keyframes badgeFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes progressGlow {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.14); }
+}
+
+/* TABLET */
+
+@media (max-width: 850px) {
+  .content {
+    width: calc(100% - 36px);
+    padding-top: 32px;
+  }
+
+  .overviewGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .progressCard,
+  .rewardCard {
+    padding: 20px;
+  }
+
+  .levelEmblem {
+    width: 88px;
+    height: 88px;
+    flex-basis: 88px;
+  }
+
+  .emblemInner strong {
+    font-size: 27px;
+  }
+
+  .earningGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .earningCard:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 620px) {
+  .topbar {
+    height: 62px;
+    padding: 0 17px;
+  }
+
+  .liveStatus {
+    display: none;
+  }
+
+  .content {
+    width: calc(100% - 28px);
+    padding: 26px 0 22px;
+  }
+
+  .welcome {
+    align-items: flex-start;
+    flex-direction: column-reverse;
+    margin-bottom: 20px;
+  }
+
+  .journeyChip {
+    min-width: 0;
+    width: 100%;
+    padding: 10px 12px;
+  }
+
+  .journeyIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .journeyChip > svg {
+    margin-left: auto;
+  }
+
+  .welcome h1 {
+    font-size: 34px;
+    letter-spacing: -1.3px;
+  }
+
+  .welcome p {
+    font-size: 11px;
+  }
+
+  .overviewGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .progressCard,
+  .rewardCard {
+    padding: 18px;
+  }
+
+  .levelIdentity {
+    gap: 17px;
+    padding: 18px 0;
+  }
+
+  .levelEmblem {
+    width: 91px;
+    height: 91px;
+    flex-basis: 91px;
+  }
+
+  .identityText h2 {
+    font-size: 16px;
+  }
+
+  .xpTotal {
+    font-size: 29px;
+  }
+
+  .rewardVisual {
+    height: 105px;
+  }
+
+  .roadmapSection,
+  .earnSection {
+    margin-top: 25px;
+  }
+
+  .sectionHeading h2 {
+    font-size: 19px;
+  }
+
+  .roadmap {
+    gap: 3px;
+    padding: 18px 7px;
+  }
+
+  .roadmapBadge {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+  }
+
+  .roadmapItem strong,
+  .roadmapItem > span {
+    font-size: 7px;
+  }
+
+  .roadmapConnector {
+    top: 17px;
+  }
+
+  .earningGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .earningCard:last-child {
+    grid-column: auto;
+  }
+
+  .footer {
+    flex-direction: column;
+  }
+
+  .progressFoot {
+    font-size: 8px;
+  }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  .levelEmblem,
+  .rewardIcon,
+  .progressFill {
+    animation: none;
+    transition: none;
+  }
+}
