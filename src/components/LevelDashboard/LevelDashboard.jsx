@@ -1,22 +1,50 @@
-import { useEffect, useMemo, useState } from 'react';
+
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
+
 import {
-  ArrowUpRight, Bell, Check, ChevronRight, CircleHelp,
-  Coins, Crown, Gift, LockKeyhole, Medal, Sparkles,
-  Star, Target, Trophy, Zap
+  ArrowUpRight,
+  Check,
+  ChevronRight,
+  CircleHelp,
+  Coins,
+  Crown,
+  Gift,
+  LockKeyhole,
+  Medal,
+  Sparkles,
+  Star,
+  Target,
+  Trophy,
+  Zap,
 } from 'lucide-react';
 
 import { levelData, XP_PER_LEVEL } from '../../data/levelData';
+import { BADGES } from '../../data/badges';
+
 import styles from './LevelDashboard.module.css';
-import XPCatcher from '../../components/XPCatcher/XPCatcher.jsx';
+
+import XPCatcher from '../XPCatcher/XPCatcher.jsx';
+import LevelUpCelebration from '../LevelUpCelebration/LevelUpCelebration.jsx';
+import BadgeCelebration from '../BadgeCelebration/BadgeCelebration.jsx';
+
+import { logActivity } from '../../utils/ActivityTracker';
+
+const XP_STORAGE_KEY = 'veloop-total-xp';
+const BADGE_STORAGE_KEY = 'veloop-unlocked-badges';
 
 const levelTiers = [
-  { name: 'Bronze Explorer', color: 'bronze' },
-  { name: 'Silver Explorer', color: 'silver' },
-  { name: 'Gold Explorer', color: 'gold' },
-  { name: 'Platinum Explorer', color: 'platinum' },
-  { name: 'Diamond Explorer', color: 'diamond' },
-  { name: 'Elite Explorer', color: 'elite' },
+  { name: 'Bronze Explorer', color: 'bronze', min: 1, max: 10 },
+  { name: 'Silver Explorer', color: 'silver', min: 11, max: 20 },
+  { name: 'Gold Explorer', color: 'gold', min: 21, max: 35 },
+  { name: 'Platinum Explorer', color: 'platinum', min: 36, max: 50 },
+  { name: 'Diamond Explorer', color: 'diamond', min: 51, max: 75 },
+  { name: 'Elite Explorer', color: 'elite', min: 76, max: 100 },
+  { name: 'Transcendent Explorer', color: 'transcendent', min: 101, max: Infinity },
 ];
+
+const getTierForLevel = (level) =>
+  levelTiers.find((tier) => level >= tier.min && level <= tier.max) ||
+  levelTiers[levelTiers.length - 1];
 
 const earningFeatures = [
   {
@@ -26,14 +54,16 @@ const earningFeatures = [
     status: 'AVAILABLE',
     icon: Target,
     color: 'gold',
+    link: '/Lvl-Dashboard/missions',
   },
   {
     title: 'Streak Bonus',
     description: 'Maintain your daily activity streak.',
-    reward: 'Coming Soon',
-    status: 'COMING SOON',
+    reward: 'View Streaks',
+    status: 'AVAILABLE',
     icon: Zap,
     color: 'purple',
+    link: '/Lvl-Dashboard/streaks',
   },
   {
     title: 'Refer & Earn',
@@ -45,64 +75,186 @@ const earningFeatures = [
   },
 ];
 
+function loadUnlockedBadges() {
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem(BADGE_STORAGE_KEY) || '[]'
+    );
+
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
+  }
+}
+
 export default function LevelDashboard() {
   const [currentXP, setCurrentXP] = useState(() => {
-    const savedXP = localStorage.getItem('veloop-total-xp');
+    const savedXP = localStorage.getItem(XP_STORAGE_KEY);
 
     return savedXP === null
       ? Number(levelData.currentXP) || 0
       : Math.max(0, Number(savedXP) || 0);
   });
 
+  const currentXPRef = useRef(currentXP);
+
+  const [unlockedBadges, setUnlockedBadges] = useState(
+    loadUnlockedBadges
+  );
+
+  const [celebrationQueue, setCelebrationQueue] = useState([]);
+  const [activeCelebration, setActiveCelebration] = useState(null);
+
   useEffect(() => {
-    localStorage.setItem('veloop-total-xp', String(currentXP));
+    localStorage.setItem(XP_STORAGE_KEY, String(currentXP));
+    currentXPRef.current = currentXP;
   }, [currentXP]);
+
+  useEffect(() => {
+    if (!activeCelebration && celebrationQueue.length > 0) {
+      setActiveCelebration(celebrationQueue[0]);
+      setCelebrationQueue((queue) => queue.slice(1));
+    }
+  }, [activeCelebration, celebrationQueue]);
 
   const currentLevel = Math.floor(currentXP / XP_PER_LEVEL) + 1;
   const xpIntoLevel = currentXP % XP_PER_LEVEL;
-  const progress = Math.min(100, (xpIntoLevel / XP_PER_LEVEL) * 100);
+
+  const progress = Math.min(
+    100,
+    (xpIntoLevel / XP_PER_LEVEL) * 100
+  );
+
   const remainingXP = XP_PER_LEVEL - xpIntoLevel;
   const nextLevel = currentLevel + 1;
-
-  const currentTier =
-    levelTiers[Math.min(currentLevel - 1, levelTiers.length - 1)];
+  const currentTier = getTierForLevel(currentLevel);
 
   const formattedXP = useMemo(
     () => currentXP.toLocaleString('en-IN'),
     [currentXP]
   );
 
-  const addXP = (amount) => {
-    setCurrentXP((previousXP) => previousXP + amount);
+  // ADD XP + ACTIVITY HISTORY + BADGE CHECKING
+  const addXP = useCallback((amount) => {
+    const earnedXP = Number(amount);
+
+    if (!Number.isFinite(earnedXP) || earnedXP <= 0) {
+      return;
+    }
+
+    const previousXP = currentXPRef.current;
+
+    const previousLevel =
+      Math.floor(previousXP / XP_PER_LEVEL) + 1;
+
+    const updatedXP = previousXP + earnedXP;
+
+    const updatedLevel =
+      Math.floor(updatedXP / XP_PER_LEVEL) + 1;
+
+    currentXPRef.current = updatedXP;
+    setCurrentXP(updatedXP);
+
+    // Record XP transaction
+    logActivity({
+      type: 'xp',
+      title: 'XP Earned',
+      description: `You earned ${earnedXP} XP from XP Catcher.`,
+      xp: earnedXP,
+    });
+
+    const celebrations = [];
+
+    // LEVEL UP
+    if (updatedLevel > previousLevel) {
+      const newTier = getTierForLevel(updatedLevel);
+
+      celebrations.push({
+        type: 'level',
+        payload: {
+          previousLevel,
+          newLevel: updatedLevel,
+          levelName: newTier.name,
+        },
+      });
+
+      logActivity({
+        type: 'level',
+        title: `Level ${updatedLevel} Unlocked`,
+        description: `Congratulations! You reached ${newTier.name}.`,
+        xp: 0,
+      });
+    }
+
+    // XP BADGE CHECK
+    const savedBadges = loadUnlockedBadges();
+
+    const savedIds = new Set(
+      savedBadges.map((badge) => badge.id)
+    );
+
+    const newlyUnlocked = BADGES.filter(
+      (badge) =>
+        badge.key === 'xp' &&
+        updatedXP >= badge.target &&
+        !savedIds.has(badge.id)
+    );
+
+    if (newlyUnlocked.length > 0) {
+      const newHistory = newlyUnlocked.map((badge) => ({
+        id: badge.id,
+        title: badge.title,
+        description: badge.description,
+        rarity: badge.rarity,
+        unlockedAt: new Date().toISOString(),
+      }));
+
+      const updatedHistory = [
+        ...savedBadges,
+        ...newHistory,
+      ];
+
+      try {
+        localStorage.setItem(
+          BADGE_STORAGE_KEY,
+          JSON.stringify(updatedHistory)
+        );
+      } catch (error) {
+        console.error('Unable to save unlocked badges:', error);
+      }
+
+      setUnlockedBadges(updatedHistory);
+
+      newHistory.forEach((badge) => {
+        celebrations.push({
+          type: 'badge',
+          payload: badge,
+        });
+
+        logActivity({
+          type: 'badge',
+          title: `${badge.title} Unlocked`,
+          description: badge.description,
+          xp: 0,
+        });
+      });
+    }
+
+    if (celebrations.length > 0) {
+      setCelebrationQueue((queue) => [
+        ...queue,
+        ...celebrations,
+      ]);
+    }
+  }, []);
+
+  const handleCloseCelebration = () => {
+    setActiveCelebration(null);
   };
 
   return (
     <main className={styles.dashboard}>
       <div className={styles.ambientGlow} />
-
-      {/* TOP NAVIGATION */}
-      <header className={styles.topbar}>
-        <a href="#home" className={styles.brand}>
-          <span className={styles.brandMark}>V</span>
-          <span className={styles.brandName}>
-            VELOOP
-            <small>REWARDS</small>
-          </span>
-        </a>
-
-        <div className={styles.topbarRight}>
-          <span className={styles.liveStatus}>
-            <i /> REWARDS HUB
-          </span>
-
-          <button className={styles.iconButton} aria-label="Notifications">
-            <Bell size={18} />
-            <b />
-          </button>
-
-          <span className={styles.avatar}>V</span>
-        </div>
-      </header>
 
       <div className={styles.content} id="home">
 
@@ -141,7 +293,7 @@ export default function LevelDashboard() {
         {/* CURRENT LEVEL + REWARD */}
         <section className={styles.overviewGrid}>
 
-          {/* CURRENT LEVEL */}
+          {/* LEVEL CARD */}
           <article className={styles.progressCard}>
             <div className={styles.cardTopline}>
               <span className={styles.sectionLabel}>
@@ -162,8 +314,12 @@ export default function LevelDashboard() {
               >
                 <div className={styles.emblemInner}>
                   <Crown size={20} />
+
                   <span>LEVEL</span>
-                  <strong>{String(currentLevel).padStart(2, '0')}</strong>
+
+                  <strong>
+                    {String(currentLevel).padStart(2, '0')}
+                  </strong>
                 </div>
               </div>
 
@@ -206,7 +362,9 @@ export default function LevelDashboard() {
               <div className={styles.progressFoot}>
                 <span>
                   <Zap size={14} />
-                  <b>{remainingXP.toLocaleString('en-IN')} XP</b>
+                  <b>
+                    {remainingXP.toLocaleString('en-IN')} XP
+                  </b>
                   to Level {nextLevel}
                 </span>
 
@@ -255,7 +413,9 @@ export default function LevelDashboard() {
                 {(Number(levelData.reward) || 500).toLocaleString('en-IN')}
               </strong>
 
-              <span>{levelData.rewardCurrency || 'VEs'}</span>
+              <span>
+                {levelData.rewardCurrency || 'VEs'}
+              </span>
             </div>
 
             <p className={styles.rewardSub}>
@@ -296,57 +456,62 @@ export default function LevelDashboard() {
           </div>
 
           <div className={styles.roadmap}>
-            {Array.from({ length: 5 }, (_, index) => currentLevel + index)
-              .map((level) => {
-                const state =
-                  level < currentLevel
-                    ? 'completed'
-                    : level === currentLevel
-                      ? 'current'
-                      : 'locked';
+            {Array.from(
+              { length: 5 },
+              (_, index) => currentLevel + index
+            ).map((level) => {
+              const state =
+                level < currentLevel
+                  ? 'completed'
+                  : level === currentLevel
+                    ? 'current'
+                    : 'locked';
 
-                const tier =
-                  levelTiers[Math.min(level - 1, levelTiers.length - 1)];
+              const tier = getTierForLevel(level);
 
-                return (
+              return (
+                <div
+                  className={`${styles.roadmapItem} ${styles[`roadmap${state}`]}`}
+                  key={level}
+                >
+                  <div className={styles.roadmapConnector} />
+
                   <div
-                    className={`${styles.roadmapItem} ${styles[`roadmap${state}`]}`}
-                    key={level}
+                    className={`${styles.roadmapBadge} ${styles[tier.color]}`}
                   >
-                    <div className={styles.roadmapConnector} />
-
-                    <div
-                      className={`${styles.roadmapBadge} ${styles[tier.color]}`}
-                    >
-                      {state === 'completed' ? (
-                        <Check size={18} />
-                      ) : state === 'current' ? (
-                        <Crown size={18} />
-                      ) : (
-                        <LockKeyhole size={15} />
-                      )}
-                    </div>
-
-                    <strong>
-                      LEVEL {String(level).padStart(2, '0')}
-                    </strong>
-
-                    <span>
-                      {state === 'completed'
-                        ? 'Completed'
-                        : state === 'current'
-                          ? 'You are here'
-                          : level === nextLevel
-                            ? 'Next goal'
-                            : 'Locked'}
-                    </span>
+                    {state === 'completed' ? (
+                      <Check size={18} />
+                    ) : state === 'current' ? (
+                      <Crown size={18} />
+                    ) : (
+                      <LockKeyhole size={15} />
+                    )}
                   </div>
-                );
-              })}
+
+                  <strong>
+                    LEVEL {String(level).padStart(2, '0')}
+                  </strong>
+
+                  <span>
+                    {state === 'completed'
+                      ? 'Completed'
+                      : state === 'current'
+                        ? 'You are here'
+                        : level === nextLevel
+                          ? 'Next goal'
+                          : 'Locked'}
+                  </span>
+
+                  <small className={styles.roadmapRank}>
+                    {tier.name}
+                  </small>
+                </div>
+              );
+            })}
           </div>
         </section>
 
-        {/* EARNING FEATURES */}
+        {/* FEATURE OPTIONS */}
         <section className={styles.earnSection}>
           <div className={styles.sectionHeading}>
             <div>
@@ -366,11 +531,8 @@ export default function LevelDashboard() {
             {earningFeatures.map((feature) => {
               const Icon = feature.icon;
 
-              return (
-                <article
-                  className={styles.earningCard}
-                  key={feature.title}
-                >
+              const cardContent = (
+                <>
                   <div
                     className={`${styles.earningIcon} ${styles[feature.color]}`}
                   >
@@ -392,17 +554,56 @@ export default function LevelDashboard() {
                   >
                     {feature.status}
                   </span>
+                </>
+              );
+
+              return feature.link ? (
+                <a
+                  href={feature.link}
+                  className={styles.earningCard}
+                  key={feature.title}
+                  style={{ textDecoration: 'none' }}
+                >
+                  {cardContent}
+                </a>
+              ) : (
+                <article
+                  className={styles.earningCard}
+                  key={feature.title}
+                >
+                  {cardContent}
                 </article>
               );
             })}
           </div>
         </section>
 
-        {/* EXISTING XP CATCHER - FUNCTIONALITY PRESERVED */}
+        {/* XP CATCHER GAME */}
         <XPCatcher onEarnXP={addXP} />
 
+        {/* LEVEL-UP CELEBRATION */}
+        {activeCelebration?.type === 'level' && (
+          <LevelUpCelebration
+            isOpen
+            previousLevel={activeCelebration.payload.previousLevel}
+            newLevel={activeCelebration.payload.newLevel}
+            levelName={activeCelebration.payload.levelName}
+            onClose={handleCloseCelebration}
+          />
+        )}
+
+        {/* BADGE CELEBRATION */}
+        {activeCelebration?.type === 'badge' && (
+          <BadgeCelebration
+            badge={activeCelebration.payload}
+            onClose={handleCloseCelebration}
+          />
+        )}
+
+        {/* FOOTER */}
         <footer className={styles.footer}>
           <span>VELOOP REWARDS · LEVEL-UP EXPERIENCE</span>
+
           <span>
             Progress and rewards shown for demonstration.
           </span>

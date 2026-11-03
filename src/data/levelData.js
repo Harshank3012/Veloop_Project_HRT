@@ -1,19 +1,15 @@
-
 export const XP_PER_LEVEL = 1500;
 
 export const levelData = {
   userName: 'VeLooper',
 
-  // Starting level
   currentLevel: 1,
   levelName: 'Bronze Explorer',
   currentXP: 0,
 
-  // Next level progression
   nextLevel: 2,
   requiredXP: XP_PER_LEVEL,
 
-  // Demo reward only — not an official company reward
   reward: 500,
   rewardCurrency: 'VEs',
 };
