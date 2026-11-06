@@ -1,25 +1,63 @@
 const ACTIVITY_KEY = 'veloop-activity-history';
 
-export function getActivities() {
+// Get activities with error status
+export function getActivitiesWithStatus() {
   try {
-    const data = JSON.parse(
-      localStorage.getItem(ACTIVITY_KEY) || '[]'
-    );
+    const rawData = localStorage.getItem(ACTIVITY_KEY);
 
-    return Array.isArray(data) ? data : [];
-  } catch {
-    return [];
+    if (rawData === null) {
+      return {
+        activities: [],
+        error: null,
+      };
+    }
+
+    const data = JSON.parse(rawData);
+
+    if (!Array.isArray(data)) {
+      return {
+        activities: [],
+        error: 'Invalid activity history data.',
+      };
+    }
+
+    return {
+      activities: data.filter(
+        (item) => item && typeof item === 'object'
+      ),
+      error: null,
+    };
+  } catch (error) {
+    console.error('Activity history loading failed:', error);
+
+    return {
+      activities: [],
+      error: 'Unable to load activity history. Please try again.',
+    };
   }
 }
 
+// Existing function kept for backward compatibility
+export function getActivities() {
+  return getActivitiesWithStatus().activities;
+}
+
+// Save new activity
 export function logActivity(activity) {
   try {
-    const activities = getActivities();
+    const result = getActivitiesWithStatus();
+
+    if (result.error) {
+      console.error('Activity not saved because history could not be loaded.');
+      return null;
+    }
+
+const activities = result.activities;
 
     const newActivity = {
-      id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-      timestamp: new Date().toISOString(),
-      ...activity,
+    ...activity,
+    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    timestamp: new Date().toISOString(),
     };
 
     const updated = [newActivity, ...activities].slice(0, 500);
@@ -35,7 +73,23 @@ export function logActivity(activity) {
   }
 }
 
+// Clear activity history
 export function clearActivities() {
-  localStorage.removeItem(ACTIVITY_KEY);
-  window.dispatchEvent(new Event('veloop-activity-updated'));
+  try {
+    localStorage.removeItem(ACTIVITY_KEY);
+
+    window.dispatchEvent(new Event('veloop-activity-updated'));
+
+    return {
+      success: true,
+      error: null,
+    };
+  } catch (error) {
+    console.error('Activity history clearing failed:', error);
+
+    return {
+      success: false,
+      error: 'Unable to clear activity history. Please try again.',
+    };
+  }
 }

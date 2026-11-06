@@ -31,6 +31,8 @@ import { logActivity } from '../../utils/ActivityTracker';
 
 const XP_STORAGE_KEY = 'veloop-total-xp';
 const BADGE_STORAGE_KEY = 'veloop-unlocked-badges';
+const LAST_SEEN_XP_KEY = 'veloop-dashboard-last-seen-xp';
+const MISSION_QUEUE_KEY = 'veloop-pending-mission-celebrations';
 
 const levelTiers = [
   { name: 'Bronze Explorer', color: 'bronze', min: 1, max: 10 },
@@ -75,6 +77,17 @@ const earningFeatures = [
   },
 ];
 
+function consumePendingMissionCelebrations() {
+  try {
+    const pending = JSON.parse(localStorage.getItem(MISSION_QUEUE_KEY) || '[]');
+    localStorage.removeItem(MISSION_QUEUE_KEY);
+    return Array.isArray(pending) ? pending : [];
+  } catch {
+    localStorage.removeItem(MISSION_QUEUE_KEY);
+    return [];
+  }
+}
+
 function loadUnlockedBadges() {
   try {
     const saved = JSON.parse(
@@ -98,17 +111,201 @@ export default function LevelDashboard() {
 
   const currentXPRef = useRef(currentXP);
 
-  const [unlockedBadges, setUnlockedBadges] = useState(
-    loadUnlockedBadges
-  );
-
+  const [, setUnlockedBadges] = useState(loadUnlockedBadges);
   const [celebrationQueue, setCelebrationQueue] = useState([]);
   const [activeCelebration, setActiveCelebration] = useState(null);
+
+  // Unlock mission badges from the lifetime mission counter.
+  const checkMissionBadges = useCallback(() => {
+    const totalMissions = Number(
+      localStorage.getItem('veloop-total-missions-completed') || 0
+    );
+
+    const savedBadges = loadUnlockedBadges();
+    const savedIds = new Set(savedBadges.map((badge) => badge.id));
+
+    const newlyUnlocked = BADGES.filter(
+      (badge) =>
+        badge.category === 'Mission Achievements' &&
+        badge.key !== 'perfectWeekDays' &&
+        totalMissions >= Number(badge.target) &&
+        !savedIds.has(badge.id)
+    );
+
+    if (newlyUnlocked.length === 0) return;
+
+    const newHistory = newlyUnlocked.map((badge) => ({
+      id: badge.id,
+      title: badge.title,
+      description: badge.description,
+      rarity: badge.rarity,
+      unlockedAt: new Date().toISOString(),
+    }));
+
+    const updatedHistory = [...savedBadges, ...newHistory];
+    localStorage.setItem(BADGE_STORAGE_KEY, JSON.stringify(updatedHistory));
+    setUnlockedBadges(updatedHistory);
+
+    newHistory.forEach((badge) => {
+      logActivity({
+        type: 'badge',
+        title: `${badge.title} Unlocked`,
+        description: badge.description,
+        xp: 0,
+      });
+    });
+
+    setCelebrationQueue((queue) => [
+      ...queue,
+      ...newHistory.map((badge) => ({ type: 'badge', payload: badge })),
+    ]);
+  }, []);
+
+  // Check XP badges after XP changes (including XP earned on another page).
+  const checkXPBadges = useCallback((totalXP) => {
+    const savedBadges = loadUnlockedBadges();
+    const savedIds = new Set(savedBadges.map((badge) => badge.id));
+
+    const newlyUnlocked = BADGES.filter(
+      (badge) =>
+        badge.key === 'xp' &&
+        totalXP >= Number(badge.target) &&
+        !savedIds.has(badge.id)
+    );
+
+    if (newlyUnlocked.length === 0) return [];
+
+    const newHistory = newlyUnlocked.map((badge) => ({
+      id: badge.id,
+      title: badge.title,
+      description: badge.description,
+      rarity: badge.rarity,
+      unlockedAt: new Date().toISOString(),
+    }));
+
+    const updatedHistory = [...savedBadges, ...newHistory];
+    localStorage.setItem(BADGE_STORAGE_KEY, JSON.stringify(updatedHistory));
+    setUnlockedBadges(updatedHistory);
+
+    newHistory.forEach((badge) => {
+      logActivity({
+        type: 'badge',
+        title: `${badge.title} Unlocked`,
+        description: badge.description,
+        xp: 0,
+      });
+    });
+
+    return newHistory.map((badge) => ({ type: 'badge', payload: badge }));
+  }, []);
+
+  // Process XP earned outside the dashboard (for example, Daily Missions).
+  // The last-seen value also lets celebrations work after navigating back
+  // from the Missions page, when this component was not mounted.
+  const processExternalXP = useCallback((updatedXP, previousXP) => {
+    if (!Number.isFinite(updatedXP) || updatedXP < 0) return;
+
+    currentXPRef.current = updatedXP;
+    setCurrentXP(updatedXP);
+    localStorage.setItem(XP_STORAGE_KEY, String(updatedXP));
+    localStorage.setItem(LAST_SEEN_XP_KEY, String(updatedXP));
+
+    const celebrations = [];
+    const previousLevel = Math.floor(previousXP / XP_PER_LEVEL) + 1;
+    const updatedLevel = Math.floor(updatedXP / XP_PER_LEVEL) + 1;
+
+    if (updatedXP > previousXP && updatedLevel > previousLevel) {
+      const newTier = getTierForLevel(updatedLevel);
+      celebrations.push({
+        type: 'level',
+        payload: {
+          previousLevel,
+          newLevel: updatedLevel,
+          levelName: newTier.name,
+        },
+      });
+
+      logActivity({
+        type: 'level',
+        title: `Level ${updatedLevel} Unlocked`,
+        description: `Congratulations! You reached ${newTier.name}.`,
+        xp: 0,
+      });
+    }
+
+    celebrations.push(...checkXPBadges(updatedXP));
+    if (celebrations.length > 0) {
+      setCelebrationQueue((queue) => [...queue, ...celebrations]);
+    }
+  }, [checkXPBadges]);
 
   useEffect(() => {
     localStorage.setItem(XP_STORAGE_KEY, String(currentXP));
     currentXPRef.current = currentXP;
   }, [currentXP]);
+
+  useEffect(() => {
+    // On return from another route, compare the saved XP with the last
+    // dashboard value so level-up celebrations are not missed.
+    const latestXP = Math.max(
+      0,
+      Number(localStorage.getItem(XP_STORAGE_KEY) || currentXPRef.current) || 0
+    );
+    const savedLastSeen = localStorage.getItem(LAST_SEEN_XP_KEY);
+    const previousXP = savedLastSeen === null
+      ? latestXP
+      : Math.max(0, Number(savedLastSeen) || 0);
+
+    processExternalXP(latestXP, previousXP);
+    checkXPBadges(latestXP);
+    checkMissionBadges();
+
+    // Show mission completion popups even when the Dashboard was unmounted
+    // while the user was on the Missions page.
+    const pendingMissions = consumePendingMissionCelebrations();
+    if (pendingMissions.length > 0) {
+      setCelebrationQueue((queue) => [
+        ...queue,
+        ...pendingMissions.map((mission) => ({
+          type: 'mission',
+          payload: mission,
+        })),
+      ]);
+    }
+
+    const handleXPUpdate = () => {
+      const updatedXP = Math.max(
+        0,
+        Number(localStorage.getItem(XP_STORAGE_KEY) || 0) || 0
+      );
+      processExternalXP(updatedXP, currentXPRef.current);
+    };
+
+    const handleAchievementsUpdate = () => checkMissionBadges();
+    const handleMissionCompleted = () => {
+      const pendingMissions = consumePendingMissionCelebrations();
+      if (pendingMissions.length === 0) return;
+
+      setCelebrationQueue((queue) => [
+        ...queue,
+        ...pendingMissions.map((mission) => ({
+          type: 'mission',
+          payload: mission,
+        })),
+      ]);
+    };
+
+    window.addEventListener('veloop-xp-updated', handleXPUpdate);
+    window.addEventListener('veloop-achievements-updated', handleAchievementsUpdate);
+    window.addEventListener('veloop-mission-completed', handleMissionCompleted);
+
+    return () => {
+      window.removeEventListener('veloop-xp-updated', handleXPUpdate);
+      window.removeEventListener('veloop-achievements-updated', handleAchievementsUpdate);
+      window.removeEventListener('veloop-mission-completed', handleMissionCompleted);
+    };
+  }, [processExternalXP, checkXPBadges, checkMissionBadges]);
+
 
   useEffect(() => {
     if (!activeCelebration && celebrationQueue.length > 0) {
@@ -154,6 +351,8 @@ export default function LevelDashboard() {
 
     currentXPRef.current = updatedXP;
     setCurrentXP(updatedXP);
+    localStorage.setItem(XP_STORAGE_KEY, String(updatedXP));
+    localStorage.setItem(LAST_SEEN_XP_KEY, String(updatedXP));
 
     // Record XP transaction
     logActivity({
@@ -598,6 +797,90 @@ export default function LevelDashboard() {
             badge={activeCelebration.payload}
             onClose={handleCloseCelebration}
           />
+        )}
+
+        {/* MISSION COMPLETED CELEBRATION */}
+        {activeCelebration?.type === 'mission' && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="mission-celebration-title"
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 9999,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '20px',
+              background: 'rgba(3, 6, 18, 0.82)',
+              backdropFilter: 'blur(10px)',
+            }}
+          >
+            <div
+              style={{
+                position: 'relative',
+                width: 'min(100%, 420px)',
+                padding: '38px 28px 30px',
+                border: '1px solid rgba(240, 183, 75, 0.55)',
+                borderRadius: '24px',
+                background: 'linear-gradient(145deg, #29283f, #191a2b)',
+                color: '#fff',
+                textAlign: 'center',
+                boxShadow: '0 24px 80px rgba(0,0,0,.5)',
+              }}
+            >
+              <div
+                style={{
+                  width: '76px',
+                  height: '76px',
+                  margin: '0 auto 22px',
+                  display: 'grid',
+                  placeItems: 'center',
+                  borderRadius: '22px',
+                  color: '#ffdc8a',
+                  background: 'linear-gradient(145deg, #76582a, #3a2d24)',
+                  border: '1px solid rgba(255, 205, 105, .65)',
+                  boxShadow: '0 0 35px rgba(235, 177, 75, .2)',
+                }}
+              >
+                <Target size={36} />
+              </div>
+
+              <div style={{ color: '#f5bd55', fontSize: '11px', fontWeight: 800, letterSpacing: '2px', marginBottom: '12px' }}>
+                MISSION COMPLETED
+              </div>
+
+              <h2 id="mission-celebration-title" style={{ margin: '0 0 10px', fontSize: '26px', fontWeight: 800 }}>
+                {activeCelebration.payload.title}
+              </h2>
+
+              <p style={{ color: '#c4c6d8', margin: '0 0 22px', lineHeight: 1.6 }}>
+                {activeCelebration.payload.description}
+              </p>
+
+              <div style={{ color: '#ffcf70', fontSize: '22px', fontWeight: 800, marginBottom: '26px' }}>
+                +{activeCelebration.payload.xp} XP EARNED
+              </div>
+
+              <button
+                type="button"
+                onClick={handleCloseCelebration}
+                style={{
+                  width: '100%',
+                  minHeight: '48px',
+                  border: 0,
+                  borderRadius: '12px',
+                  background: 'linear-gradient(90deg, #ffe19a, #e9ad42)',
+                  color: '#171725',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                }}
+              >
+                Awesome!
+              </button>
+            </div>
+          </div>
         )}
 
         {/* FOOTER */}

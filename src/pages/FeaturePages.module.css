@@ -355,3 +355,65 @@
     align-items: flex-start;
   }
 }
+
+
+
+/* STREAK REWARD BUTTON ACCESSIBILITY */
+
+.actionButton:hover:not(:disabled) {
+  background: #ffda82;
+  border-color: #ffda82;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px rgba(246, 194, 91, 0.2);
+}
+
+.actionButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.actionButton:focus-visible,
+.completedButton:focus-visible,
+.clearButton:focus-visible {
+  outline: 3px solid rgba(255, 225, 154, 0.9);
+  outline-offset: 3px;
+}
+
+.actionButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* STREAK CLAIMED STATUS */
+
+.completedButton {
+  cursor: default;
+  user-select: none;
+}
+
+/* MOBILE STREAK REWARD LAYOUT */
+
+@media (max-width: 650px) {
+  .cardBody {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card > button,
+  .card > span {
+    margin-left: 64px;
+    max-width: calc(100% - 64px);
+  }
+
+  .actionButton,
+  .completedButton {
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .actionButton {
+    transition: none;
+    transform: none;
+  }
+}

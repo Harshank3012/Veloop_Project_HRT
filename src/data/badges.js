@@ -225,30 +225,10 @@ export const BADGES = [
     target: 50,
     key: 'singleGameObjects',
   },
-  {
-    id: 21,
-    title: 'Expert Catcher',
-    category: 'Gaming Achievements',
-    description: 'Catch 75 objects in a single game.',
-    icon: Zap,
-    rarity: 'Epic',
-    target: 75,
-    key: 'singleGameObjects',
-  },
-  {
-    id: 22,
-    title: 'Ultimate Catcher',
-    category: 'Gaming Achievements',
-    description: 'Catch 100 objects in a single game.',
-    icon: Trophy,
-    rarity: 'Legendary',
-    target: 100,
-    key: 'singleGameObjects',
-  },
 
   // GAMING ACHIEVEMENTS - TOTAL GAMES PLAYED
   {
-    id: 23,
+    id: 21,
     title: 'Game Starter',
     category: 'Gaming Achievements',
     description: 'Complete 50 XP Catcher games.',
@@ -258,7 +238,7 @@ export const BADGES = [
     key: 'gamesPlayed',
   },
   {
-    id: 24,
+    id: 22,
     title: 'Game Enthusiast',
     category: 'Gaming Achievements',
     description: 'Complete 100 XP Catcher games.',
@@ -268,7 +248,7 @@ export const BADGES = [
     key: 'gamesPlayed',
   },
   {
-    id: 25,
+    id: 23,
     title: 'Game Master',
     category: 'Gaming Achievements',
     description: 'Complete 200 XP Catcher games.',
@@ -278,7 +258,7 @@ export const BADGES = [
     key: 'gamesPlayed',
   },
   {
-    id: 26,
+    id: 24,
     title: 'Gaming Legend',
     category: 'Gaming Achievements',
     description: 'Complete 500 XP Catcher games.',
@@ -288,7 +268,7 @@ export const BADGES = [
     key: 'gamesPlayed',
   },
   {
-    id: 27,
+    id: 25,
     title: 'Ultimate Gamer',
     category: 'Gaming Achievements',
     description: 'Complete 1,000 XP Catcher games.',
@@ -300,7 +280,7 @@ export const BADGES = [
 
   // LEVEL & RANK ACHIEVEMENTS
   {
-    id: 28,
+    id: 26,
     title: 'Bronze Explorer',
     category: 'Level Achievements',
     description: 'Begin your journey at Level 1.',
@@ -310,7 +290,7 @@ export const BADGES = [
     key: 'level',
   },
   {
-    id: 29,
+    id: 27,
     title: 'Silver Explorer',
     category: 'Level Achievements',
     description: 'Unlock Silver rank at Level 11.',
@@ -320,7 +300,7 @@ export const BADGES = [
     key: 'level',
   },
   {
-    id: 30,
+    id: 28,
     title: 'Gold Explorer',
     category: 'Level Achievements',
     description: 'Unlock Gold rank at Level 21.',
@@ -330,7 +310,7 @@ export const BADGES = [
     key: 'level',
   },
   {
-    id: 31,
+    id: 29,
     title: 'Platinum Explorer',
     category: 'Level Achievements',
     description: 'Unlock Platinum rank at Level 36.',
@@ -340,7 +320,7 @@ export const BADGES = [
     key: 'level',
   },
   {
-    id: 32,
+    id: 30,
     title: 'Diamond Explorer',
     category: 'Level Achievements',
     description: 'Unlock Diamond rank at Level 51.',
@@ -350,7 +330,7 @@ export const BADGES = [
     key: 'level',
   },
   {
-    id: 33,
+    id: 31,
     title: 'Elite Explorer',
     category: 'Level Achievements',
     description: 'Unlock Elite rank at Level 76.',
@@ -360,7 +340,7 @@ export const BADGES = [
     key: 'level',
   },
   {
-    id: 34,
+    id: 32,
     title: 'Transcendent Explorer',
     category: 'Level Achievements',
     description: 'Unlock Transcendent rank at Level 101.',

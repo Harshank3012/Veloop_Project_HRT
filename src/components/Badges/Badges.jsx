@@ -22,13 +22,19 @@ const readNum = (key) => Math.max(0, Number(localStorage.getItem(key)) || 0);
 function getAchievementData() {
   const xp = readNum('veloop-total-xp');
   const streak = readJSON('veloop-streak-data', {});
+  const missionStreak = readJSON(
+  'veloop-mission-streak-data',
+  {}
+);
 
   return {
     xp,
     level: Math.floor(xp / XP_PER_LEVEL) + 1,
     streak: Number(streak.currentStreak ?? streak.streak ?? 0),
     missions: readNum('veloop-total-missions-completed'),
-    perfectWeekDays: Number(streak.bestStreak ?? streak.longestStreak ?? 0),
+    perfectWeekDays: Number(
+  missionStreak.bestStreak || 0
+),
 
     // Total completed games
     gamesPlayed: readNum('veloop-games-played'),

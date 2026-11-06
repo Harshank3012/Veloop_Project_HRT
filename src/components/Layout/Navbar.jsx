@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
   ChevronDown,
@@ -9,11 +8,22 @@ import {
   Award,
   History,
   Bell,
+  CircleHelp,
 } from 'lucide-react';
+
+import Notifications from '../Notifications/Notifications';
+import HelpGuide from '../HelpGuide/HelpGuide';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const [earnOpen, setEarnOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  const handleUnreadChange = useCallback((count) => {
+    setUnreadCount(count);
+  }, []);
 
   return (
     <header className={styles.header}>
@@ -27,10 +37,36 @@ export default function Navbar() {
         </Link>
 
         <div className={styles.headerActions}>
-          <div className={styles.notification}>
+          {/* NOTIFICATIONS */}
+          <button
+            type="button"
+            className={styles.notification}
+            onClick={() => {
+              setNotificationsOpen(!notificationsOpen);
+              setHelpOpen(false);
+            }}
+            aria-label={`Notifications${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}
+            aria-expanded={notificationsOpen}
+          >
             <Bell size={19} />
-            <span className={styles.notificationDot}></span>
-          </div>
+
+            {unreadCount > 0 && (
+              <span className={styles.notificationDot}></span>
+            )}
+          </button>
+
+          {/* HELP GUIDE */}
+          <button
+            type="button"
+            className={styles.notification}
+            onClick={() => {
+              setHelpOpen(true);
+              setNotificationsOpen(false);
+            }}
+            aria-label="Help guide"
+          >
+            <CircleHelp size={19} />
+          </button>
 
           <div className={styles.profileIcon}>V</div>
         </div>
@@ -54,6 +90,7 @@ export default function Navbar() {
             className={`${styles.navLink} ${earnOpen ? styles.active : ''}`}
             onClick={() => setEarnOpen(!earnOpen)}
             type="button"
+            aria-expanded={earnOpen}
           >
             Earn XP
             <ChevronDown
@@ -101,6 +138,19 @@ export default function Navbar() {
           Activity History
         </NavLink>
       </nav>
+
+      {/* NOTIFICATIONS PANEL */}
+      <Notifications
+        isOpen={notificationsOpen}
+        onClose={() => setNotificationsOpen(false)}
+        onUnreadChange={handleUnreadChange}
+      />
+
+      {/* HELP GUIDE MODAL */}
+      <HelpGuide
+        isOpen={helpOpen}
+        onClose={() => setHelpOpen(false)}
+      />
     </header>
   );
 }

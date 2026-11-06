@@ -16,7 +16,6 @@ export default function XPCatcher({ onEarnXP }) {
   const [timeLeft, setTimeLeft] = useState(GAME_SECONDS);
   const [score, setScore] = useState(0);
   const [target, setTarget] = useState({ left: 50, top: 50 });
-  const [gameRecorded, setGameRecorded] = useState(false);
 
   // Prevent duplicate game recording.
   const gameRecordedRef = useRef(false);
@@ -68,7 +67,6 @@ export default function XPCatcher({ onEarnXP }) {
       xp: 0,
     });
 
-    setGameRecorded(true);
 
     window.dispatchEvent(
       new Event('veloop-achievements-updated')
@@ -77,7 +75,6 @@ export default function XPCatcher({ onEarnXP }) {
 
   const startGame = () => {
     setScore(0);
-    setGameRecorded(false);
     gameRecordedRef.current = false;
     setTimeLeft(GAME_SECONDS);
 
