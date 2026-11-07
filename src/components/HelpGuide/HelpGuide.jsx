@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   X,
   ChevronDown,
@@ -78,7 +79,7 @@ export default function HelpGuide({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div
       className={styles.overlay}
       onMouseDown={(event) => {
@@ -157,6 +158,7 @@ export default function HelpGuide({ isOpen, onClose }) {
           </button>
         </footer>
       </section>
-    </div>
+    </div>,
+    document.body
   );
 }

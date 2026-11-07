@@ -1,8 +1,10 @@
+
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LevelDashboard from './components/LevelDashboard/LevelDashboard.jsx';
 import Badges from './components/Badges/Badges.jsx';
 import Navbar from './components/Layout/Navbar.jsx';
+import WatchEarn from './components/WatchEarn/WatchEarn.jsx';
 
 import {
   MissionsPage,
@@ -36,6 +38,11 @@ export default function App() {
         <Route
           path="/Lvl-Dashboard/streaks"
           element={<AppLayout><StreaksPage /></AppLayout>}
+        />
+
+        <Route
+          path="/Lvl-Dashboard/watch-earn"
+          element={<AppLayout><WatchEarn /></AppLayout>}
         />
 
         <Route

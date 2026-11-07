@@ -1,3 +1,4 @@
+
 import { useCallback, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
@@ -9,6 +10,7 @@ import {
   History,
   Bell,
   CircleHelp,
+  PlayCircle,
 } from 'lucide-react';
 
 import Notifications from '../Notifications/Notifications';
@@ -27,7 +29,6 @@ export default function Navbar() {
 
   return (
     <header className={styles.header}>
-      {/* TOP BRAND ROW */}
       <div className={styles.brandRow}>
         <Link to="/Lvl-Dashboard" className={styles.brand}>
           <span className={styles.logo}>V</span>
@@ -37,7 +38,6 @@ export default function Navbar() {
         </Link>
 
         <div className={styles.headerActions}>
-          {/* NOTIFICATIONS */}
           <button
             type="button"
             className={styles.notification}
@@ -49,13 +49,11 @@ export default function Navbar() {
             aria-expanded={notificationsOpen}
           >
             <Bell size={19} />
-
             {unreadCount > 0 && (
               <span className={styles.notificationDot}></span>
             )}
           </button>
 
-          {/* HELP GUIDE */}
           <button
             type="button"
             className={styles.notification}
@@ -72,7 +70,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* NAVIGATION ROW */}
       <nav className={styles.nav}>
         <NavLink
           to="/Lvl-Dashboard"
@@ -101,6 +98,13 @@ export default function Navbar() {
 
           {earnOpen && (
             <div className={styles.dropdownMenu}>
+              <Link
+                to="/Lvl-Dashboard/watch-earn"
+                onClick={() => setEarnOpen(false)}
+              >
+                <PlayCircle size={16} /> Watch & Earn
+              </Link>
+
               <Link
                 to="/Lvl-Dashboard/missions"
                 onClick={() => setEarnOpen(false)}
@@ -139,14 +143,12 @@ export default function Navbar() {
         </NavLink>
       </nav>
 
-      {/* NOTIFICATIONS PANEL */}
       <Notifications
         isOpen={notificationsOpen}
         onClose={() => setNotificationsOpen(false)}
         onUnreadChange={handleUnreadChange}
       />
 
-      {/* HELP GUIDE MODAL */}
       <HelpGuide
         isOpen={helpOpen}
         onClose={() => setHelpOpen(false)}

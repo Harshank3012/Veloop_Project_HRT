@@ -1,339 +1,426 @@
 .dashboard {
-  --gold: #f2c45e;
-  --muted: #9da4bb;
+  --gold: #f4c66b;
+  --gold-light: #ffe8a8;
+  --text: #f5f5fa;
+  --muted: #9da5bd;
+  --panel: #191d30;
+  --panel-light: #222740;
+  --border: rgba(255, 255, 255, 0.09);
+
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  background: #161827;
-  color: #f6f5f2;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 10% 5%, rgba(105, 75, 177, 0.14), transparent 35%),
+    radial-gradient(ellipse at 90% 20%, rgba(207, 151, 55, 0.10), transparent 32%),
+    #101321;
+  color: var(--text);
+  font-family: inherit;
+}
+
+.dashboard * {
+  box-sizing: border-box;
+}
+
+.ambientGlow,
+.ambientGlowSecondary {
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(90px);
 }
 
 .ambientGlow {
-  position: absolute;
-  pointer-events: none;
-  width: 760px;
-  height: 500px;
-  right: -250px;
-  top: -280px;
-  background: radial-gradient(ellipse, rgba(196,145,55,.13), transparent 68%);
-  filter: blur(12px);
+  width: 420px;
+  height: 420px;
+  top: 100px;
+  right: -180px;
+  background: rgba(198, 145, 49, 0.13);
 }
 
-.topbar {
-  height: 72px;
-  padding: 0 clamp(18px, 5vw, 76px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-  background: rgba(22,24,39,.78);
-  position: relative;
-  z-index: 1;
+.ambientGlowSecondary {
+  width: 350px;
+  height: 350px;
+  top: 700px;
+  left: -180px;
+  background: rgba(110, 85, 207, 0.12);
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  color: #fff;
-  text-decoration: none;
-}
-
-.brandMark {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border-radius: 11px;
-  background: linear-gradient(145deg,#ffe8a4,#c88e2e);
-  color: #1b1b24;
-  font-weight: 900;
-  font-size: 21px;
-  box-shadow: 0 5px 20px #e9b64b30;
-}
-
-.brandName {
-  font-size: 15px;
-  font-weight: 850;
-  letter-spacing: .8px;
-}
-
-.brandName small {
-  display: block;
-  margin-top: 2px;
-  color: #a6a9ba;
-  font-size: 8px;
-  letter-spacing: 2.2px;
-}
-
-.topbarRight {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.liveStatus {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #b8bdcf;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-}
-
-.liveStatus i {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #72d8a5;
-  box-shadow: 0 0 12px #72d8a5;
-}
-
-.iconButton {
-  position: relative;
-  width: 35px;
-  height: 35px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #ffffff18;
-  border-radius: 50%;
-  background: #ffffff08;
-  color: #d7d9e2;
-}
-
-.iconButton b {
-  position: absolute;
-  right: 7px;
-  top: 6px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--gold);
-}
-
-.avatar {
-  width: 35px;
-  height: 35px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #f2c45e70;
-  border-radius: 50%;
-  background: #f2c45e15;
-  color: var(--gold);
-  font-weight: 800;
-}
+/* =========================================
+   MAIN CONTENT
+========================================= */
 
 .content {
   position: relative;
   z-index: 1;
-  width: min(1240px, calc(100% - 48px));
+  width: min(1360px, calc(100% - 64px));
   margin: auto;
-  padding: 42px 0 28px;
+  padding: 45px 0 28px;
 }
 
-.welcome {
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+  position: relative;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 28px;
+  align-items: center;
+  gap: 35px;
+  min-height: 300px;
+  margin-bottom: 30px;
+  padding: 38px 52px;
+  overflow: hidden;
+  border: 1px solid rgba(244, 198, 107, 0.19);
+  border-radius: 25px;
+  background:
+    radial-gradient(ellipse at 85% 50%, rgba(174, 123, 44, 0.17), transparent 42%),
+    linear-gradient(115deg, #24263b, #191d30 65%, #25243a);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.025),
+    transparent 75%
+  );
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 650px;
 }
 
 .eyebrow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   color: var(--gold);
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 850;
-  letter-spacing: 1.55px;
+  letter-spacing: 2px;
 }
 
-.welcome h1 {
-  margin: 12px 0 9px;
-  font-size: clamp(32px,4.2vw,52px);
-  line-height: 1.06;
-  letter-spacing: -2px;
-  font-weight: 850;
+.eyebrow svg {
+  filter: drop-shadow(0 0 7px #f4c66b);
 }
 
-.welcome h1 span {
-  color: var(--gold);
+.hero h1 {
+  margin: 20px 0 14px;
+  color: #fff;
+  font-size: clamp(36px, 5vw, 61px);
+  line-height: 1.04;
+  font-weight: 900;
+  letter-spacing: -2.5px;
 }
 
-.welcome p {
+.hero h1 span {
+  background: linear-gradient(90deg, #fff0bd, #e7ad48, #fff0bd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.heroContent > p {
+  max-width: 510px;
   margin: 0;
-  color: #aeb3c8;
+  color: #adb4ca;
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
-.journeyChip {
+.heroStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 11px;
+  margin-top: 25px;
+}
+
+.heroStat {
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 185px;
-  padding: 13px 15px;
-  border: 1px solid #f2c45e30;
-  border-radius: 15px;
-  background: linear-gradient(135deg,#25283b,#1c1f30);
-  box-shadow: 0 12px 30px #0002;
+  gap: 7px;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.045);
+  color: #d7d9e5;
+  font-size: 10px;
+  font-weight: 700;
 }
 
-.journeyIcon {
-  width: 37px;
-  height: 37px;
-  display: grid;
-  place-items: center;
-  border-radius: 11px;
-  background: #f2c45e16;
+.heroStat svg {
   color: var(--gold);
 }
 
-.journeyChip small,
-.journeyChip strong {
-  display: block;
+/* Hero Rank */
+
+.heroRank {
+  position: relative;
+  z-index: 1;
+  width: 225px;
+  height: 225px;
+  flex: 0 0 225px;
+  display: grid;
+  place-items: center;
 }
 
-.journeyChip small {
-  margin-bottom: 4px;
-  color: #939ab2;
+.heroRankOrbit {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(244, 198, 107, 0.23);
+  border-radius: 50%;
+  box-shadow:
+    0 0 35px rgba(244, 198, 107, 0.08),
+    inset 0 0 30px rgba(244, 198, 107, 0.04);
+  animation: orbitRotate 18s linear infinite;
+}
+
+.heroRankOrbit::before,
+.heroRankOrbit::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 15px var(--gold);
+}
+
+.heroRankOrbit::before {
+  top: 18px;
+  left: 48px;
+}
+
+.heroRankOrbit::after {
+  bottom: 25px;
+  right: 20px;
+}
+
+.heroRankInner {
+  width: 166px;
+  height: 166px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 2px solid rgba(244, 198, 107, 0.65);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 20%, #51402e, #27253a 60%, #171a29);
+  box-shadow:
+    0 0 0 7px rgba(244, 198, 107, 0.07),
+    0 0 40px rgba(244, 198, 107, 0.19),
+    inset 0 0 30px rgba(244, 198, 107, 0.12);
+  color: var(--gold);
+  animation: badgeFloat 4s ease-in-out infinite;
+}
+
+.heroRankInner svg {
+  filter: drop-shadow(0 0 9px var(--gold));
+}
+
+.heroRankInner > span {
+  color: #b5b4c4;
   font-size: 8px;
-  letter-spacing: 1px;
+  font-weight: 850;
+  letter-spacing: 1.7px;
 }
 
-.journeyChip strong {
-  font-size: 15px;
+.heroRankInner strong {
+  color: white;
+  font-size: 43px;
+  line-height: 1;
+  font-weight: 900;
 }
 
-.journeyChip > svg {
-  margin-left: auto;
-  color: #8e94aa;
+.heroRankInner small {
+  color: var(--gold-light);
+  font-size: 9px;
+  font-weight: 800;
 }
+
+.heroRankTag {
+  position: absolute;
+  bottom: -9px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 11px;
+  border: 1px solid rgba(244, 198, 107, 0.25);
+  border-radius: 20px;
+  background: #252438;
+  color: var(--gold);
+  font-size: 7px;
+  font-weight: 850;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+}
+
+/* =========================================
+   OVERVIEW GRID
+========================================= */
 
 .overviewGrid {
   display: grid;
-  grid-template-columns: 1.18fr .82fr;
-  gap: 18px;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 20px;
+  margin-bottom: 43px;
 }
 
 .progressCard,
 .rewardCard {
   position: relative;
-  overflow: hidden;
   min-width: 0;
-  padding: 24px 26px;
-  border: 1px solid #ffffff12;
+  overflow: hidden;
+  padding: 27px;
+  border: 1px solid var(--border);
   border-radius: 20px;
-  background: linear-gradient(145deg,#222538 0%,#1d2031 75%);
-  box-shadow: 0 20px 55px #0002;
+  background: linear-gradient(145deg, #20253a, #181c2e);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.20);
 }
 
 .progressCard::before,
 .rewardCard::before {
   content: "";
   position: absolute;
-  inset: 0 0 auto;
+  top: 0;
+  left: 10%;
+  width: 80%;
   height: 1px;
-  background: linear-gradient(90deg,transparent,#f2c45e55,transparent);
+  background: linear-gradient(90deg, transparent, #f4c66b80, transparent);
 }
 
-.cardTopline {
+.cardHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 15px;
 }
 
 .sectionLabel {
-  color: #aebbe7;
+  color: #aeb9e8;
   font-size: 9px;
   font-weight: 850;
-  letter-spacing: 1.35px;
+  letter-spacing: 1.6px;
 }
 
-.infoHint {
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #ffffff1c;
-  border-radius: 50%;
-  color: #9ca3b8;
+.cardHeader h2 {
+  margin: 7px 0 0;
+  color: #f6f5fa;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
 }
+
+.livePill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid rgba(99, 215, 160, 0.23);
+  border-radius: 20px;
+  background: rgba(99, 215, 160, 0.07);
+  color: #75dba8;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1px;
+}
+
+.livePill span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #75dba8;
+  box-shadow: 0 0 10px #75dba8;
+}
+
+/* =========================================
+   CURRENT LEVEL EMBLEM
+========================================= */
 
 .levelIdentity {
   display: flex;
   align-items: center;
-  gap: 23px;
-  padding: 22px 0 23px;
+  gap: 25px;
+  padding: 29px 0;
 }
 
 .levelEmblem {
   position: relative;
-  width: 108px;
-  height: 108px;
-  flex: 0 0 108px;
+  isolation: isolate;
+  width: 132px;
+  height: 132px;
+  flex: 0 0 132px;
   display: grid;
   place-items: center;
-  clip-path: polygon(50% 0%,88% 13%,100% 50%,88% 87%,50% 100%,12% 87%,0 50%,12% 13%);
-  background: linear-gradient(145deg,#ffe6a0,#b77b24 48%,#f7d77d);
-  filter: drop-shadow(0 0 15px #e5ae4930);
-  animation: badgeFloat 5s ease-in-out infinite;
+  clip-path: polygon(
+    50% 0%, 62% 7%, 78% 5%, 86% 18%,
+    98% 28%, 94% 45%, 100% 57%,
+    89% 72%, 88% 87%, 70% 92%,
+    50% 100%, 30% 92%, 12% 87%,
+    11% 72%, 0 57%, 6% 42%,
+    2% 28%, 14% 18%, 22% 5%, 38% 7%
+  );
+  filter: drop-shadow(0 0 17px rgba(244, 198, 107, 0.35));
+  animation: badgeFloat 4s ease-in-out infinite;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.levelEmblem:hover {
+  transform: translateY(-7px) scale(1.07) rotate(3deg);
+  filter: drop-shadow(0 0 28px rgba(244, 198, 107, 0.55));
+}
+
+.emblemOuterRing {
+  position: absolute;
+  inset: 5px;
+  clip-path: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.55);
 }
 
 .emblemInner {
-  width: calc(100% - 7px);
-  height: calc(100% - 7px);
+  position: relative;
+  width: calc(100% - 13px);
+  height: calc(100% - 13px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 4px;
   clip-path: inherit;
-  background: radial-gradient(circle at 50% 25%,#343347,#1a1c2a 72%);
-  color: var(--gold);
+  background:
+    radial-gradient(circle at 50% 20%, #414158, #1b1d2d 75%);
+  color: var(--gold-light);
+  box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.12);
 }
 
 .emblemInner svg {
-  margin-bottom: 1px;
+  filter: drop-shadow(0 0 8px currentColor);
 }
 
 .emblemInner span {
   font-size: 8px;
   font-weight: 850;
-  letter-spacing: 1.4px;
+  letter-spacing: 2px;
 }
 
 .emblemInner strong {
-  color: #fff;
-  font-size: 32px;
+  color: white;
+  font-size: 35px;
   line-height: 1;
-  font-weight: 850;
-}
-
-.bronze {
-  background: linear-gradient(145deg, #f4c18a, #a85d32 52%, #e9ad70);
-}
-
-.silver {
-  background: linear-gradient(145deg,#fff,#8794aa 52%,#e3e8f0);
-}
-
-.gold {
-  background: linear-gradient(145deg,#fff0ae,#d79b35 52%,#ffe49a);
-}
-
-.platinum {
-  background: linear-gradient(145deg,#d9f5ff,#6ca8c5 52%,#d9f5ff);
-}
-
-.diamond {
-  background: linear-gradient(145deg,#e5d9ff,#8b75c9 52%,#eee7ff);
-}
-
-.elite {
-  background: linear-gradient(145deg,#ffc8a5,#b85b57 52%,#ffe0bb);
+  font-weight: 900;
 }
 
 .identityText {
@@ -341,85 +428,153 @@
 }
 
 .mutedLabel {
-  color: #9299b2;
-  font-size: 8px;
-  font-weight: 750;
-  letter-spacing: 1.25px;
+  color: #949db7;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
 }
 
-.identityText h2 {
-  margin: 5px 0 9px;
-  font-size: 18px;
-  letter-spacing: -.3px;
+.identityText h3 {
+  margin: 7px 0 14px;
+  color: white;
+  font-size: clamp(18px, 2vw, 25px);
+  font-weight: 850;
+  letter-spacing: -0.7px;
 }
 
 .xpTotal {
-  font-size: 32px;
-  font-weight: 850;
+  color: var(--gold-light);
+  font-size: 33px;
+  font-weight: 900;
   letter-spacing: -1px;
 }
 
 .xpTotal span {
   display: block;
-  margin-top: 1px;
-  color: #9299b2;
+  margin-top: 3px;
+  color: #969db3;
   font-size: 8px;
-  font-weight: 750;
-  letter-spacing: 1.1px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
 }
 
+/* Rank colors */
+
+.bronze {
+  background: linear-gradient(145deg, #ffe0b4, #c47b49 40%, #713e2b 75%, #f4bd83);
+  color: #ffd5a6;
+}
+
+.silver {
+  background: linear-gradient(145deg, #ffffff, #aebed2 42%, #65768d 76%, #edf2f8);
+  color: #edf4ff;
+}
+
+.gold {
+  background: linear-gradient(145deg, #fff4c6, #e6ae3f 42%, #8c5c19 76%, #ffe59b);
+  color: #fff0b5;
+}
+
+.platinum {
+  background: linear-gradient(145deg, #e6fcff, #79c4db 42%, #326c84 76%, #d9f7ff);
+  color: #e2fbff;
+}
+
+.diamond {
+  background: linear-gradient(145deg, #f8edff, #ad8ce9 42%, #60428f 76%, #e6d8ff);
+  color: #f0e5ff;
+}
+
+.legendary {
+  background: linear-gradient(145deg, #ffe0d5, #dc7582 42%, #873a64 76%, #ffd5a8);
+  color: #ffe2d5;
+}
+
+.transcendent {
+  background: linear-gradient(145deg, #fff3c5, #d7a4ff 25%, #7149bd 52%, #a96bc8 75%, #fff0b9);
+  color: #fff0c5;
+}
+
+/* =========================================
+   PROGRESS BAR
+========================================= */
+
 .progressBlock {
-  padding-top: 17px;
-  border-top: 1px solid #ffffff12;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 
 .progressMeta {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 11px;
-  color: #9da4bb;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.progressMeta > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #b5bdd1;
   font-size: 10px;
+  font-weight: 800;
 }
 
-.progressMeta b {
-  padding: 0 7px;
-  color: #e2c27a;
-}
-
-.progressMeta strong {
+.progressMeta > span svg {
   color: var(--gold);
-  font-size: 11px;
+}
+
+.progressMeta > strong {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 900;
 }
 
 .progressTrack {
-  height: 9px;
+  height: 12px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 20px;
-  background: #383b50;
+  background: #34394e;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .progressFill {
+  position: relative;
   height: 100%;
-  border-radius: 20px;
-  background: linear-gradient(90deg,#b87c27,#f3c45f 70%,#ffe9a9);
-  box-shadow: 0 0 14px #eab94b65;
-  transition: width 900ms cubic-bezier(.2,.75,.25,1);
-  animation: progressGlow 3s ease-in-out infinite alternate;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #b77b2c, #f4c66b 65%, #fff0bd);
+  box-shadow: 0 0 17px rgba(244, 198, 107, 0.65);
+  transition: width 0.9s cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.progressFill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.45),
+    transparent 80%
+  );
+  animation: progressShine 2.5s linear infinite;
 }
 
 .progressFoot {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   margin-top: 12px;
-  color: #9299b2;
+  color: #969db5;
   font-size: 9px;
 }
 
 .progressFoot span:first-child {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 5px;
 }
 
@@ -428,97 +583,165 @@
   color: var(--gold);
 }
 
-/* REWARD CARD */
+.levelCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 22px;
+  padding: 12px 14px;
+  border: 1px solid rgba(244, 198, 107, 0.16);
+  border-radius: 12px;
+  background: rgba(244, 198, 107, 0.045);
+}
+
+.levelCardFooter span,
+.levelCardFooter strong {
+  display: block;
+}
+
+.levelCardFooter span {
+  margin-bottom: 5px;
+  color: #a2a9bf;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.levelCardFooter strong {
+  color: var(--gold-light);
+  font-size: 13px;
+}
+
+.milestoneIcon {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(244, 198, 107, 0.12);
+  color: var(--gold);
+}
+
+/* =========================================
+   REWARD CARD
+========================================= */
 
 .rewardCard {
   text-align: center;
-  background: radial-gradient(ellipse at 50% 42%,#353047 0%,#222538 46%,#1d2031 80%);
+  background:
+    radial-gradient(ellipse at 50% 43%, rgba(189, 139, 61, 0.17), transparent 58%),
+    linear-gradient(145deg, #25243a, #191d30);
 }
 
-.rewardCard .cardTopline {
+.rewardCard .cardHeader {
   text-align: left;
 }
 
 .lockPill {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 6px 9px;
-  border: 1px solid #f2c45e30;
+  gap: 6px;
+  padding: 7px 10px;
+  border: 1px solid rgba(244, 198, 107, 0.3);
   border-radius: 20px;
+  background: rgba(244, 198, 107, 0.07);
   color: var(--gold);
   font-size: 8px;
   font-weight: 850;
-  letter-spacing: .8px;
+  letter-spacing: 1px;
 }
 
 .rewardVisual {
   position: relative;
-  width: 126px;
-  height: 118px;
-  margin: 9px auto 0;
+  width: 145px;
+  height: 135px;
   display: grid;
   place-items: center;
-  color: var(--gold);
+  margin: 15px auto 5px;
 }
 
-.rewardRings {
+.rewardOrbit {
   position: absolute;
+  border: 1px solid rgba(244, 198, 107, 0.27);
+  border-radius: 50%;
+}
+
+.rewardOrbitOne {
+  width: 112px;
+  height: 112px;
+  animation: orbitRotate 14s linear infinite;
+}
+
+.rewardOrbitTwo {
   width: 86px;
   height: 86px;
-  border: 1px solid #f2c45e42;
-  border-radius: 50%;
-  background: radial-gradient(circle,#f2c45e20,transparent 70%);
-  box-shadow: 0 0 36px #f2c45e17;
+  border-style: dashed;
+  animation: orbitRotate 20s linear infinite reverse;
 }
 
 .rewardIcon {
   position: relative;
-  width: 82px;
-  height: 82px;
+  width: 78px;
+  height: 78px;
   display: grid;
   place-items: center;
-  border: 1px solid #f2c45e45;
-  border-radius: 50%;
-  background: linear-gradient(145deg,#393346,#252638);
-  box-shadow: inset 0 0 20px #f2c45e12,0 12px 25px #0003;
-  animation: badgeFloat 5s ease-in-out infinite;
+  border: 1px solid rgba(244, 198, 107, 0.5);
+  border-radius: 23px;
+  background: linear-gradient(145deg, #53442f, #29283a);
+  color: var(--gold-light);
+  box-shadow:
+    0 0 30px rgba(244, 198, 107, 0.18),
+    inset 0 0 18px rgba(244, 198, 107, 0.13);
+  transform: rotate(-8deg);
+  animation: badgeFloat 4s ease-in-out infinite;
+}
+
+.rewardSparkleOne,
+.rewardSparkleTwo,
+.rewardSparkleThree {
+  position: absolute;
+  color: var(--gold-light);
+  filter: drop-shadow(0 0 6px var(--gold));
 }
 
 .rewardSparkleOne {
-  position: absolute;
+  top: 6px;
   right: 5px;
-  top: 10px;
 }
 
 .rewardSparkleTwo {
-  position: absolute;
-  left: 8px;
-  bottom: 17px;
+  bottom: 13px;
+  left: 6px;
+}
+
+.rewardSparkleThree {
+  top: 20px;
+  left: 15px;
 }
 
 .rewardValue {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 8px;
+  align-items: center;
+  gap: 9px;
   color: var(--gold);
 }
 
 .rewardValue strong {
-  font-size: 34px;
+  font-size: 36px;
+  font-weight: 900;
   letter-spacing: -1px;
 }
 
 .rewardValue span {
-  color: #f5f3ee;
-  font-size: 11px;
-  font-weight: 750;
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .rewardSub {
-  margin: 7px 0 16px;
-  color: #aeb3c8;
+  margin: 8px 0 19px;
+  color: #aab0c4;
   font-size: 11px;
 }
 
@@ -526,10 +749,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px;
-  border: 1px solid #f2c45e30;
-  border-radius: 11px;
-  background: #f2c45e09;
+  padding: 13px 15px;
+  border: 1px solid rgba(244, 198, 107, 0.25);
+  border-radius: 12px;
+  background: rgba(244, 198, 107, 0.055);
   text-align: left;
 }
 
@@ -539,7 +762,7 @@
 }
 
 .rewardUnlock span {
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   color: var(--gold);
   font-size: 8px;
   font-weight: 850;
@@ -547,687 +770,544 @@
 }
 
 .rewardUnlock strong {
-  font-size: 11px;
+  color: white;
+  font-size: 12px;
 }
 
 .rewardMiniBadge {
-  width: 31px;
-  height: 31px;
+  width: 37px;
+  height: 37px;
   display: grid;
   place-items: center;
-  border-radius: 9px;
-  background: #f2c45e17;
+  border-radius: 11px;
+  background: rgba(244, 198, 107, 0.15);
   color: var(--gold);
 }
 
 .demoLabel {
   display: block;
-  margin-top: 10px;
-  color: #7f869f;
+  margin-top: 12px;
+  color: #777f99;
   font-size: 8px;
 }
 
-/* ROADMAP + EARNING */
+/* =========================================
+   SECTION HEADINGS
+========================================= */
 
 .roadmapSection,
-.earnSection {
-  margin-top: 32px;
+.earnSection,
+.gameSection {
+  margin-top: 43px;
 }
 
 .sectionHeading {
   display: flex;
-  align-items: flex-end;
   justify-content: space-between;
-  gap: 15px;
-  margin-bottom: 15px;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 21px;
 }
 
 .sectionHeading h2 {
-  margin: 6px 0 0;
-  font-size: 22px;
-  letter-spacing: -.55px;
+  margin: 7px 0 0;
+  color: #f5f5fa;
+  font-size: 25px;
+  font-weight: 850;
+  letter-spacing: -0.7px;
+}
+
+.sectionDescription {
+  margin: 8px 0 0;
+  color: #9ca4ba;
+  font-size: 11px;
+  line-height: 1.6;
 }
 
 .roadmapCaption {
   display: flex;
   align-items: center;
   gap: 7px;
-  color: #969db4;
+  padding-bottom: 4px;
+  color: #aeb5ca;
   font-size: 8px;
-  font-weight: 800;
+  font-weight: 850;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
+
+.roadmapCaption svg {
+  color: var(--gold);
+}
+
+/* =========================================
+   LEVEL ROADMAP
+========================================= */
+
 
 .roadmap {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5,minmax(0,1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: start;
   gap: 10px;
-  padding: 23px 18px;
-  border: 1px solid #ffffff12;
-  border-radius: 17px;
-  background: linear-gradient(120deg,#202337,#1c1f30);
+  padding: 32px 18px 27px;
+  overflow: visible;
+  border: 1px solid var(--border);
+  border-radius: 19px;
+  background: linear-gradient(120deg, #20253a, #191d30);
+}
+
+.roadmapTrack {
+  position: absolute;
+  top: 105px;
+  left: 7%;
+  right: 7%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    #bd7547,
+    #a8b9cb,
+    #e6b43c,
+    #65b6d0,
+    #9877dc,
+    #e66b42,
+    #a46be5
+  );
+  opacity: .65;
 }
 
 .roadmapItem {
   position: relative;
   z-index: 1;
   display: flex;
+  min-width: 0;
   flex-direction: column;
   align-items: center;
-  gap: 7px;
+  gap: 9px;
+  text-align: center;
+}
+
+.roadmapItem > strong {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.roadmapState {
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .7px;
+}
+
+.roadmapRank {
+  color: #aeb5ce;
+  font-size: 9px;
+}
+
+.roadmapLegend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 18px;
+}
+
+@media (max-width: 1000px) {
+  .roadmap {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .roadmapTrack {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .roadmap {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 24px 12px;
+  }
+}
+
+.roadmapItem {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
   text-align: center;
 }
 
 .roadmapConnector {
-  position: absolute;
-  z-index: -1;
-  top: 21px;
-  left: -50%;
-  width: 100%;
-  height: 1px;
-  background: #44485b;
-}
-
-.roadmapItem:first-child .roadmapConnector {
   display: none;
 }
 
 .roadmapBadge {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #62677c;
-  border-radius: 14px;
-  background: #292c40;
-  color: #8f96ad;
-  box-shadow: 0 5px 14px #0002;
-}
-
-.roadmapItem strong {
-  font-size: 9px;
-  letter-spacing: .7px;
-}
-
-.roadmapItem > span {
-  color: #9299b2;
-  font-size: 8px;
-}
-
-.roadmapcompleted .roadmapBadge {
-  border-color: #6ac99a;
-  color: #6ac99a;
-  background: #6ac99a12;
-}
-
-.roadmapcurrent .roadmapBadge {
-  border-color: #e5b94f;
-  color: #f4cb6e;
-  background: linear-gradient(145deg,#4a3b27,#2b2932);
-  box-shadow: 0 0 22px #e5b94f30;
-}
-
-.roadmapcurrent > span {
-  color: var(--gold);
-}
-
-.earningGrid {
-  display: grid;
-  grid-template-columns: repeat(3,minmax(0,1fr));
-  gap: 13px;
-}
-
-.earningCard {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  min-width: 0;
-  padding: 16px;
-  border: 1px solid #ffffff12;
-  border-radius: 15px;
-  background: linear-gradient(145deg,#222538,#1d2031);
-  transition: transform .22s ease,border-color .22s ease;
-}
-
-.earningCard:hover {
-  transform: translateY(-3px);
-  border-color: #f2c45e40;
-}
-
-.earningIcon {
-  width: 38px;
-  height: 38px;
-  flex: 0 0 38px;
-  display: grid;
-  place-items: center;
-  border-radius: 11px;
-  background: #f2c45e14;
-  color: var(--gold);
-}
-
-.earningIcon.purple {
-  background: #a98bff16;
-  color: #b49bff;
-}
-
-.earningIcon.green {
-  background: #65d6a016;
-  color: #65d6a0;
-}
-
-.earningInfo {
-  min-width: 0;
-  flex: 1;
-}
-
-.earningInfo strong {
-  font-size: 11px;
-}
-
-.earningInfo p {
-  margin: 5px 0;
-  color: #9da4bb;
-  font-size: 9px;
-  line-height: 1.5;
-}
-
-.earningInfo > span {
-  color: var(--gold);
-  font-size: 9px;
-  font-weight: 750;
-}
-
-.earningState {
-  align-self: flex-start;
-  white-space: nowrap;
-  padding: 5px 7px;
-  border: 1px solid #ffffff16;
-  border-radius: 20px;
-  color: #9299b2;
-  font-size: 7px;
-  font-weight: 850;
-  letter-spacing: .5px;
-}
-
-.earningState.available {
-  border-color: #65d6a044;
-  color: #65d6a0;
-}
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 34px;
-  padding-top: 16px;
-  border-top: 1px solid #ffffff10;
-  color: #737b95;
-  font-size: 8px;
-  letter-spacing: .4px;
-}
-
-.footer span:first-child {
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-/* ANIMATIONS */
-
-@keyframes badgeFloat {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
-@keyframes progressGlow {
-  from { filter: brightness(1); }
-  to { filter: brightness(1.14); }
-}
-
-/* TABLET */
-
-@media (max-width: 850px) {
-  .content {
-    width: calc(100% - 36px);
-    padding-top: 32px;
-  }
-
-  .overviewGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .progressCard,
-  .rewardCard {
-    padding: 20px;
-  }
-
-  .levelEmblem {
-    width: 88px;
-    height: 88px;
-    flex-basis: 88px;
-  }
-
-  .emblemInner strong {
-    font-size: 27px;
-  }
-
-  .earningGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .earningCard:last-child {
-    grid-column: 1 / -1;
-  }
-}
-
-/* MOBILE */
-
-@media (max-width: 620px) {
-  .topbar {
-    height: 62px;
-    padding: 0 17px;
-  }
-
-  .liveStatus {
-    display: none;
-  }
-
-  .content {
-    width: calc(100% - 28px);
-    padding: 26px 0 22px;
-  }
-
-  .welcome {
-    align-items: flex-start;
-    flex-direction: column-reverse;
-    margin-bottom: 20px;
-  }
-
-  .journeyChip {
-    min-width: 0;
-    width: 100%;
-    padding: 10px 12px;
-  }
-
-  .journeyIcon {
-    width: 32px;
-    height: 32px;
-  }
-
-  .journeyChip > svg {
-    margin-left: auto;
-  }
-
-  .welcome h1 {
-    font-size: 34px;
-    letter-spacing: -1.3px;
-  }
-
-  .welcome p {
-    font-size: 11px;
-  }
-
-  .overviewGrid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .progressCard,
-  .rewardCard {
-    padding: 18px;
-  }
-
-  .levelIdentity {
-    gap: 17px;
-    padding: 18px 0;
-  }
-
-  .levelEmblem {
-    width: 91px;
-    height: 91px;
-    flex-basis: 91px;
-  }
-
-  .identityText h2 {
-    font-size: 16px;
-  }
-
-  .xpTotal {
-    font-size: 29px;
-  }
-
-  .rewardVisual {
-    height: 105px;
-  }
-
-  .roadmapSection,
-  .earnSection {
-    margin-top: 25px;
-  }
-
-  .sectionHeading h2 {
-    font-size: 19px;
-  }
-
-  .roadmap {
-    gap: 3px;
-    padding: 18px 7px;
-  }
-
-  .roadmapBadge {
-    width: 36px;
-    height: 36px;
-    border-radius: 11px;
-  }
-
-  .roadmapItem strong,
-  .roadmapItem > span {
-    font-size: 7px;
-  }
-
-  .roadmapConnector {
-    top: 17px;
-  }
-
-  .earningGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .earningCard:last-child {
-    grid-column: auto;
-  }
-
-  .footer {
-    flex-direction: column;
-  }
-
-  .progressFoot {
-    font-size: 8px;
-  }
-}
-
-/* ACCESSIBILITY */
-
-@media (prefers-reduced-motion: reduce) {
-  .levelEmblem,
-  .rewardIcon,
-  .progressFill {
-    animation: none;
-    transition: none;
-  }
-}
-
-/* DAY 2 – PREMIUM LEVEL BADGES */
-
-.levelEmblem {
   position: relative;
-  isolation: isolate;
-  filter: drop-shadow(0 0 12px rgba(242, 196, 94, 0.25));
-  transition:
-    transform 0.4s ease,
-    filter 0.4s ease;
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 4px;
+  border: 2px solid #555c72;
+  border-radius: 19px;
+  background: linear-gradient(145deg, #30364e, #1e2336);
+  color: #969db3;
+  box-shadow: 0 9px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.levelEmblem:hover {
-  transform: translateY(-6px) scale(1.06);
-  filter: drop-shadow(0 0 22px rgba(242, 196, 94, 0.55));
-}
-
-.levelEmblem::after {
+.roadmapBadge::after {
   content: "";
   position: absolute;
-  inset: 5px;
-  clip-path: inherit;
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  inset: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
   pointer-events: none;
 }
 
-.emblemInner {
-  position: relative;
-  z-index: 1;
-  box-shadow:
-    inset 0 0 15px rgba(255, 255, 255, 0.08),
-    inset 0 -10px 20px rgba(0, 0, 0, 0.25);
-}
-
-.emblemInner svg {
-  filter: drop-shadow(0 0 5px currentColor);
-}
-
-/* Bronze */
-.levelEmblem.bronze {
-  background: linear-gradient(
-    145deg,
-    #ffd09c,
-    #b86b38 45%,
-    #f4b77c
-  );
-}
-
-/* Silver */
-.levelEmblem.silver {
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #8796ad 45%,
-    #e8edf5
-  );
-}
-
-/* Gold */
-.levelEmblem.gold {
-  background: linear-gradient(
-    145deg,
-    #fff2b9,
-    #d59a2e 45%,
-    #ffe7a0
-  );
-}
-
-/* Platinum */
-.levelEmblem.platinum {
-  background: linear-gradient(
-    145deg,
-    #e5fbff,
-    #65a9c4 45%,
-    #d4f3ff
-  );
-}
-
-/* Diamond */
-.levelEmblem.diamond {
-  background: linear-gradient(
-    145deg,
-    #f1eaff,
-    #8c75d4 45%,
-    #e4d9ff
-  );
-}
-
-/* Elite */
-.levelEmblem.elite {
-  background: linear-gradient(
-    145deg,
-    #ffd7c0,
-    #b95d58 45%,
-    #ffe3c4
-  );
-}
-
-/* Roadmap badge metallic finish */
-.roadmapBadge {
-  position: relative;
-  overflow: hidden;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
 .roadmapBadge:hover {
-  transform: translateY(-4px) scale(1.08);
+  transform: translateY(-6px) scale(1.07);
 }
 
-.roadmapBadge.bronze {
-  background: linear-gradient(145deg, #714326, #302638);
-  border-color: #c78650;
-  color: #f2bd84;
+.roadmapItem > strong {
+  color: white;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
 }
 
-.roadmapBadge.silver {
-  background: linear-gradient(145deg, #647287, #292d40);
-  border-color: #c4d0e1;
-  color: #e4eaf4;
-}
-
-.roadmapBadge.gold {
-  background: linear-gradient(145deg, #806027, #302a35);
-  border-color: #f2c45e;
-  color: #ffe29a;
-}
-
-.roadmapBadge.platinum {
-  background: linear-gradient(145deg, #35677d, #252d40);
-  border-color: #9cdaed;
-  color: #d5f5ff;
-}
-
-.roadmapBadge.diamond {
-  background: linear-gradient(145deg, #59458a, #29263e);
-  border-color: #c6adff;
-  color: #e5d9ff;
-}
-
-/* Premium current-level glow */
-.roadmapcurrent .roadmapBadge {
-  box-shadow:
-    0 0 10px rgba(242, 196, 94, 0.35),
-    0 0 25px rgba(242, 196, 94, 0.15);
-}
-
-/* Reduced motion accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .levelEmblem,
-  .roadmapBadge {
-    animation: none;
-    transition: none;
-  }
-}
-
-/* ===== GAMIFIED RANK BADGES ===== */
-
-.levelEmblem {
-  isolation: isolate;
-  transition: transform .3s ease, filter .3s ease;
-}
-
-.levelEmblem:hover {
-  transform: translateY(-4px) scale(1.035);
-}
-
-.levelEmblem.bronze {
-  background: linear-gradient(145deg, #f5d0a7, #bd7545 45%, #75402c 72%, #f6c28d);
-  filter: drop-shadow(0 0 15px #c47b4945);
-}
-
-.levelEmblem.silver {
-  background: linear-gradient(145deg, #ffffff, #bac7d7 45%, #68788e 72%, #eef3f8);
-  filter: drop-shadow(0 0 15px #c4d2e545);
-}
-
-.levelEmblem.gold {
-  background: linear-gradient(145deg, #fff2b8, #e4b43e 45%, #98651d 72%, #ffeb9e);
-  filter: drop-shadow(0 0 17px #f2c45e55);
-}
-
-.levelEmblem.platinum {
-  background: linear-gradient(145deg, #e7fcff, #83c9df 45%, #39758d 72%, #e4faff);
-  filter: drop-shadow(0 0 16px #7bcde655);
-}
-
-.levelEmblem.diamond {
-  background: linear-gradient(145deg, #f4edff, #ad91f0 45%, #5c438e 72%, #e9ddff);
-  filter: drop-shadow(0 0 17px #a98bea55);
-}
-
-.levelEmblem.elite {
-  background: linear-gradient(145deg, #ffe0d5, #d66d70 45%, #803b59 72%, #ffd5bd);
-  filter: drop-shadow(0 0 17px #d66d7055);
-}
-
-.levelEmblem.transcendent {
-  background: linear-gradient(145deg, #fff2c7, #c59af5 28%, #7545a8 55%, #d9a94e 78%, #fff0bd);
-  filter: drop-shadow(0 0 20px #bd8df477);
-}
-
-.levelEmblem .emblemInner {
-  background: radial-gradient(circle at 50% 22%, #3b3a50, #171a2a 74%);
-}
-
-.levelEmblem .emblemInner svg {
-  color: #f6d98c;
-}
-
-/* Roadmap rank badges */
-
-.roadmapBadge.bronze {
-  background: linear-gradient(145deg, #75472d, #302638);
-  border-color: #d99a68;
-  color: #ffd0a0;
-}
-
-.roadmapBadge.silver {
-  background: linear-gradient(145deg, #718096, #292f40);
-  border-color: #dce5f0;
-  color: #f2f6fc;
-}
-
-.roadmapBadge.gold {
-  background: linear-gradient(145deg, #8a682a, #302a35);
-  border-color: #ffe08a;
-  color: #fff0b5;
-}
-
-.roadmapBadge.platinum {
-  background: linear-gradient(145deg, #3e788e, #252d40);
-  border-color: #a9e8f8;
-  color: #e1faff;
-}
-
-.roadmapBadge.diamond {
-  background: linear-gradient(145deg, #654e9b, #29263e);
-  border-color: #d3c0ff;
-  color: #f0e8ff;
-}
-
-.roadmapBadge.elite {
-  background: linear-gradient(145deg, #8c455c, #30263a);
-  border-color: #ffb6a7;
-  color: #ffe1d6;
-}
-
-.roadmapBadge.transcendent {
-  background: linear-gradient(145deg, #76519d, #30243e);
-  border-color: #f1d18a;
-  color: #fff0c5;
+.roadmapState {
+  color: #929ab0;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 0.6px;
 }
 
 .roadmapRank {
-  display: block;
-  margin-top: 4px;
-  color: #aeb5ca;
+  color: #9da5bd;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+/* Completed levels */
+
+.roadmapcompleted .roadmapBadge {
+  border-color: #65d6a0;
+  background: linear-gradient(145deg, #286c55, #193d3a);
+  color: #8af0ba;
+  box-shadow: 0 0 20px rgba(101, 214, 160, 0.17);
+}
+
+.roadmapcompleted .roadmapState {
+  color: #70d9a4;
+}
+
+/* Current level */
+
+.roadmapcurrent .roadmapBadge {
+  border-color: var(--gold-light);
+  background: linear-gradient(145deg, #9b702f, #4a3827 55%, #27263b);
+  color: #fff0b6;
+  box-shadow:
+    0 0 0 6px rgba(244, 198, 107, 0.08),
+    0 0 28px rgba(244, 198, 107, 0.35);
+  animation: currentLevelPulse 2.5s ease-in-out infinite;
+}
+
+.roadmapcurrent .roadmapBadge::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 1px solid rgba(244, 198, 107, 0.4);
+  border-radius: 24px;
+  animation: ringPulse 2.5s ease-in-out infinite;
+}
+
+.roadmapcurrent .roadmapState {
+  color: var(--gold);
+}
+
+.roadmapcurrent .roadmapRank {
+  color: var(--gold-light);
+  font-weight: 800;
+}
+
+/* Locked levels */
+
+.roadmaplocked .roadmapBadge {
+  border-color: #4a5065;
+  background: linear-gradient(145deg, #30354b, #1d2234);
+  color: #7d859e;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.roadmaplocked .roadmapItem > strong {
+  color: #a4abc0;
+}
+
+.roadmaplocked .roadmapRank {
+  color: #777f97;
+}
+
+/* Tier roadmap colors */
+
+.roadmapBadge.bronze {
+  border-color: #d69a69;
+  color: #ffd2a6;
+}
+
+.roadmapBadge.silver {
+  border-color: #c8d5e6;
+  color: #edf3ff;
+}
+
+.roadmapBadge.gold {
+  border-color: #f5d277;
+  color: #ffedac;
+}
+
+.roadmapBadge.platinum {
+  border-color: #9fe5f5;
+  color: #d9f9ff;
+}
+
+.roadmapBadge.diamond {
+  border-color: #c7a9ff;
+  color: #e9ddff;
+}
+
+.roadmapBadge.legendary {
+  border-color: #ffaaa9;
+  color: #ffe1d9;
+}
+
+.roadmapBadge.transcendent {
+  border-color: #e3b5ff;
+  color: #f5dcff;
+}
+
+/* Legend */
+
+.roadmapLegend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 18px;
+  margin-top: 14px;
+}
+
+.roadmapLegend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #9ba3b9;
+  font-size: 9px;
+}
+
+.roadmapLegend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legendCompleted {
+  background: #65d6a0;
+}
+
+.legendCurrent {
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.legendLocked {
+  background: #737b92;
+}
+
+/* =========================================
+   EARNING FEATURES
+========================================= */
+
+.earningGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.earningCard {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 185px;
+  flex-direction: column;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: linear-gradient(145deg, #242940, #191e31);
+  color: white;
+  text-decoration: none;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  animation: cardEnter 0.5s ease both;
+  animation-delay: calc(var(--feature-index, 0) * 80ms);
+}
+
+.earningCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 198, 107, 0.5), transparent);
+}
+
+.earningCard:hover {
+  transform: translateY(-7px);
+  border-color: rgba(244, 198, 107, 0.4);
+  box-shadow: 0 17px 35px rgba(0, 0, 0, 0.25);
+  color: white;
+}
+
+.featureTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.earningIcon {
+  width: 47px;
+  height: 47px;
+  flex: 0 0 47px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(244, 198, 107, 0.2);
+  border-radius: 14px;
+  background: rgba(244, 198, 107, 0.12);
+  color: var(--gold);
+  transition: transform 0.3s ease;
+}
+
+.earningCard:hover .earningIcon {
+  transform: rotate(-7deg) scale(1.08);
+}
+
+.earningIcon.purple {
+  border-color: rgba(179, 151, 255, 0.25);
+  background: rgba(169, 139, 255, 0.14);
+  color: #b99fff;
+}
+
+.earningIcon.blue {
+  border-color: rgba(100, 179, 255, 0.25);
+  background: rgba(100, 179, 255, 0.14);
+  color: #85c5ff;
+}
+
+.earningIcon.green {
+  border-color: rgba(101, 214, 160, 0.25);
+  background: rgba(101, 214, 160, 0.12);
+  color: #75dba8;
+}
+
+.earningState {
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  color: #929ab0;
+  font-size: 7px;
+  font-weight: 850;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.earningState.available {
+  border-color: rgba(101, 214, 160, 0.3);
+  background: rgba(101, 214, 160, 0.06);
+  color: #75dba8;
+}
+
+.earningInfo {
+  margin-top: 17px;
+}
+
+.earningInfo strong {
+  color: #f5f5fa;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.earningInfo p {
+  margin: 7px 0 0;
+  color: #9da5bb;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.featureBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 15px;
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.featureBottom svg {
+  transition: transform 0.25s ease;
+}
+
+.earningCard:hover .featureBottom svg {
+  transform: translateX(5px);
+}
+
+/* =========================================
+   XP CATCHER SECTION
+========================================= */
+
+.gameSection {
+  padding-top: 5px;
+}
+
+.gamePill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 1px solid rgba(169, 139, 255, 0.28);
+  border-radius: 20px;
+  background: rgba(169, 139, 255, 0.08);
+  color: #c0adff;
   font-size: 8px;
-  line-height: 1.2;
+  font-weight: 850;
+  letter-spacing: 1px;
 }
 
-@media (max-width: 620px) {
-  .roadmapRank {
-    display: none;
-  }
+.gameCard {
+  position: relative;
+  padding: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(169, 139, 255, 0.19);
+  border-radius: 19px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(169, 139, 255, 0.10), transparent 60%),
+    linear-gradient(145deg, #20243a, #171b2d);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
 }
 
-/* ==============================
-   CELEBRATION MODALS
-================================ */
+/* =========================================
+   CELEBRATION
+========================================= */
 
 .celebrationOverlay {
   position: fixed;
@@ -1236,41 +1316,20 @@
   display: grid;
   place-items: center;
   padding: 20px;
-  background: rgba(5,8,20,.82);
-  backdrop-filter: blur(10px);
+  background: rgba(5, 7, 18, 0.85);
+  backdrop-filter: blur(12px);
 }
 
-.celebrationModal {
-  width: min(440px, 100%);
+.missionCelebration {
   position: relative;
-  padding: 38px 28px;
-  border: 1px solid rgba(246,194,91,.35);
-  border-radius: 24px;
-  background: linear-gradient(145deg,#24263b,#171827);
-  box-shadow: 0 25px 80px rgba(0,0,0,.5);
+  width: min(440px, 100%);
+  padding: 36px 28px;
+  border: 1px solid rgba(244, 198, 107, 0.4);
+  border-radius: 23px;
+  background: linear-gradient(145deg, #292a42, #181b2c);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
   text-align: center;
-  animation: celebrationPop .35s ease;
-}
-
-@keyframes celebrationPop {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(.94);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.celebrationClose {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  border: 0;
-  background: transparent;
-  color: #b8bfd4;
-  cursor: pointer;
+  animation: celebrationPop 0.4s ease;
 }
 
 .celebrationIcon {
@@ -1279,543 +1338,357 @@
   display: grid;
   place-items: center;
   margin: 0 auto 20px;
-  border-radius: 50%;
-  color: #f6c25b;
-  background: rgba(246,194,91,.12);
-  border: 1px solid rgba(246,194,91,.4);
-  box-shadow: 0 0 35px rgba(246,194,91,.18);
+  border: 1px solid rgba(244, 198, 107, 0.5);
+  border-radius: 22px;
+  background: linear-gradient(145deg, #76582a, #392b26);
+  color: #ffdc8a;
+  box-shadow: 0 0 35px rgba(235, 177, 75, 0.2);
 }
 
-.celebrationModal h2 {
-  color: #fff;
-  font-size: 30px;
-  margin: 14px 0;
+.celebrationEyebrow {
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
 }
 
-.celebrationModal h2 span {
-  color: #f6c25b;
+.missionCelebration h2 {
+  margin: 14px 0 10px;
+  color: white;
+  font-size: 25px;
+  font-weight: 850;
 }
 
-.celebrationModal p {
-  color: #aeb7d1;
-  font-size: 13px;
+.missionCelebration p {
+  color: #b7bfd2;
+  font-size: 12px;
+  line-height: 1.7;
 }
 
-.levelTransition {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 25px;
-  margin: 28px 0;
-  color: #f6c25b;
+.celebrationXP {
+  margin: 24px 0;
+  color: var(--gold-light);
+  font-size: 28px;
+  font-weight: 900;
 }
 
-.levelTransition div {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-.levelTransition small {
-  color: #9ca7c5;
+.celebrationXP span {
+  display: block;
+  margin-top: 4px;
+  color: #9da5bb;
   font-size: 9px;
-}
-
-.levelTransition strong {
-  color: #fff;
-  font-size: 34px;
-}
-
-.celebrationModal h3 {
-  color: #f6c25b;
-  margin: 10px 0 24px;
+  letter-spacing: 2px;
 }
 
 .celebrationContinue {
-  display: inline-flex;
-  align-items: center;
+  width: 100%;
+  min-height: 49px;
+  display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
-  width: 100%;
-  padding: 14px 20px;
   border: 0;
-  border-radius: 10px;
-  background: #f6c25b;
+  border-radius: 12px;
+  background: linear-gradient(100deg, #ffe5a0, #e5ad43);
   color: #171827;
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 900;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.badgeRarity {
-  display: inline-block;
-  margin: 16px 0 22px;
-  padding: 7px 14px;
-  border: 1px solid rgba(246,194,91,.35);
-  border-radius: 30px;
-  color: #f6c25b;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-/* ==============================
-   RESPONSIVE
-================================ */
-
-@media (max-width: 850px) {
-  .badgeGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 480px) {
-  .badgeGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .celebrationModal {
-    padding: 32px 20px;
-  }
-
-  .celebrationModal h2 {
-    font-size: 25px;
-  }
-}
-
-/* =================================
-   DASHBOARD SECTION SPACING
-================================= */
-
-.content {
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 32px 5%;
-}
-
-.overviewGrid,
-.roadmapSection,
-.earnSection,
-.badgeCollection {
-  margin-bottom: 48px;
-}
-
-.roadmapSection,
-.earnSection,
-.badgeCollection {
-  padding-top: 28px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* =================================
-   SECTION HEADINGS
-================================= */
-
-.sectionHeading {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 24px;
-  margin-bottom: 26px;
-}
-
-.sectionHeading h2 {
-  margin: 8px 0 0;
-  color: #f5f5fa;
-  font-size: 25px;
-  font-weight: 700;
-  letter-spacing: -0.6px;
-}
-
-.sectionDescription {
-  color: #9296aa;
-  font-size: 13px;
-  margin-top: 8px;
-}
-
-.sectionLabel {
-  color: #a9b5ff;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-}
-
-/* =================================
-   VIEW ALL BADGES
-================================= */
-
-.badgeHeadingActions {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-.badgeCount {
-  color: #999db2;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
-
-.viewAllBadges {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-
-  padding: 11px 16px;
-  border: 1px solid rgba(246, 194, 91, 0.3);
-  border-radius: 9px;
-
-  background: rgba(246, 194, 91, 0.07);
-  color: #f6c25b;
-
-  font-size: 12px;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-
-  transition: all 0.25s ease;
-}
-
-.viewAllBadges:hover {
-  background: rgba(246, 194, 91, 0.16);
-  border-color: #f6c25b;
+.celebrationContinue:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(244, 198, 107, 0.25);
 }
 
-/* =================================
-   FEATURE CARDS
-================================= */
-
-.earningGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-}
-
-.earningCard {
-  min-height: 155px;
-  padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 15px;
-  background: #191b2b;
-  transition: 0.25s ease;
-}
-
-.earningCard:hover {
-  transform: translateY(-4px);
-  border-color: rgba(246, 194, 91, 0.35);
-}
-
-/* =================================
-   BADGE GRID
-================================= */
-
-.badgeGrid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.badgeCard {
-  min-height: 190px;
-  padding: 23px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 15px;
-  background: #191b2b;
-  text-align: center;
-  transition: 0.25s ease;
-}
-
-.badgeCard:hover {
-  transform: translateY(-4px);
-  border-color: rgba(246, 194, 91, 0.35);
-}
-
-.badgeCardIcon {
-  margin-bottom: 14px;
-  color: #f6c25b;
-}
-
-.badgeCard strong {
-  display: block;
-  color: #f5f5fa;
-  font-size: 14px;
-}
-
-.badgeCard p {
-  color: #9296aa;
-  font-size: 12px;
-  line-height: 1.6;
-  margin: 9px 0;
-}
-
-.badgeCard span {
-  display: inline-block;
-  margin-top: 9px;
-  color: #f6c25b;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.badgeLocked {
-  opacity: 0.65;
-}
-
-.badgeUnlocked {
-  border-color: rgba(246, 194, 91, 0.25);
-}
-
-/* =================================
-   RESPONSIVE
-================================= */
-
-@media (max-width: 900px) {
-  .badgeGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .earningGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 600px) {
-  .content {
-    padding: 24px 18px;
-  }
-
-  .overviewGrid,
-  .roadmapSection,
-  .earnSection,
-  .badgeCollection {
-    margin-bottom: 34px;
-  }
-
-  .sectionHeading {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .badgeHeadingActions {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .badgeGrid,
-  .earningGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* =================================
-   DASHBOARD SECTION SPACING
-================================= */
-
-.content {
-  position: relative;
-  z-index: 1;
-  width: min(1440px, calc(100% - 48px));
-  margin: auto;
-  padding: 32px 24px;
-}
-
-.overviewGrid,
-.roadmapSection,
-.earnSection {
-  margin-bottom: 38px;
-}
-
-.roadmapSection,
-.earnSection {
-  padding-top: 28px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* =================================
-   SECTION HEADINGS
-================================= */
-
-.sectionHeading {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 24px;
-  margin-bottom: 22px;
-}
-
-.sectionHeading h2 {
-  margin: 8px 0 0;
-  color: #f5f5fa;
-  font-size: 23px;
-  font-weight: 750;
-  letter-spacing: -0.6px;
-}
-
-.sectionLabel {
-  color: #a9b5ff;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-}
-
-.roadmapCaption {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  color: #969db4;
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-/* =================================
-   FEATURE CARDS
-================================= */
-
-.earningGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.earningCard {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  min-width: 0;
-  min-height: 145px;
-  padding: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 15px;
-  background: linear-gradient(145deg, #222538, #1d2031);
-  transition: transform 0.22s ease, border-color 0.22s ease;
-}
-
-.earningCard:hover {
-  transform: translateY(-4px);
-  border-color: rgba(246, 194, 91, 0.4);
-}
-
-.earningIcon {
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
-  display: grid;
-  place-items: center;
-  border-radius: 11px;
-  background: rgba(242, 196, 94, 0.14);
-  color: var(--gold);
-}
-
-.earningIcon.purple {
-  background: #a98bff16;
-  color: #b49bff;
-}
-
-.earningIcon.green {
-  background: #65d6a016;
-  color: #65d6a0;
-}
-
-.earningInfo {
-  min-width: 0;
-  flex: 1;
-}
-
-.earningInfo strong {
-  color: #f5f5fa;
-  font-size: 12px;
-}
-
-.earningInfo p {
-  margin: 7px 0;
-  color: #9da4bb;
-  font-size: 10px;
-  line-height: 1.6;
-}
-
-.earningInfo > span {
-  color: var(--gold);
-  font-size: 10px;
-  font-weight: 750;
-}
-
-.earningState {
-  align-self: flex-start;
-  white-space: nowrap;
-  padding: 5px 7px;
-  border: 1px solid #ffffff16;
-  border-radius: 20px;
-  color: #9299b2;
-  font-size: 7px;
-  font-weight: 850;
-  letter-spacing: 0.5px;
-}
-
-.earningState.available {
-  border-color: #65d6a044;
-  color: #65d6a0;
-}
-
-/* =================================
+/* =========================================
    FOOTER
-================================= */
+========================================= */
 
 .footer {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  margin-top: 34px;
-  padding-top: 16px;
-  border-top: 1px solid #ffffff10;
-  color: #737b95;
+  gap: 15px;
+  margin-top: 45px;
+  padding: 20px 0 5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  color: #777f98;
   font-size: 8px;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.8px;
 }
 
 .footer span:first-child {
-  font-weight: 800;
-  letter-spacing: 1px;
+  color: var(--gold);
+  font-weight: 900;
+  letter-spacing: 1.5px;
 }
 
-/* =================================
-   TABLET
-================================= */
+/* =========================================
+   ANIMATIONS
+========================================= */
 
-@media (max-width: 850px) {
+@keyframes badgeFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes orbitRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes currentLevelPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 6px rgba(244, 198, 107, 0.08),
+      0 0 25px rgba(244, 198, 107, 0.25);
+  }
+  50% {
+    box-shadow:
+      0 0 0 9px rgba(244, 198, 107, 0.12),
+      0 0 35px rgba(244, 198, 107, 0.42);
+  }
+}
+
+@keyframes ringPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.25;
+  }
+}
+
+@keyframes progressShine {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes celebrationPop {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1050px) {
   .content {
-    width: calc(100% - 36px);
-    padding: 32px 0;
+    width: calc(100% - 44px);
+  }
+
+  .hero {
+    padding: 32px;
+  }
+
+  .heroRank {
+    width: 190px;
+    height: 190px;
+    flex-basis: 190px;
+  }
+
+  .heroRankInner {
+    width: 145px;
+    height: 145px;
   }
 
   .earningGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .earningCard:last-child {
-    grid-column: 1 / -1;
+  .overviewGrid {
+    grid-template-columns: 1.1fr 0.9fr;
   }
 }
 
-/* =================================
-   MOBILE
-================================= */
-
-@media (max-width: 620px) {
+@media (max-width: 760px) {
   .content {
-    width: calc(100% - 28px);
-    padding: 26px 0 22px;
+    width: calc(100% - 34px);
+    padding-top: 28px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 30px 25px;
+  }
+
+  .heroRank {
+    width: 150px;
+    height: 150px;
+    flex-basis: 150px;
+  }
+
+  .heroRankInner {
+    width: 116px;
+    height: 116px;
+  }
+
+  .heroRankInner strong {
+    font-size: 32px;
+  }
+
+  .heroRankInner svg {
+    width: 22px;
+  }
+
+  .heroRankTag {
+    font-size: 6px;
+  }
+
+  .overviewGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .roadmap {
+    gap: 8px;
+    padding-inline: 12px;
+  }
+
+  .roadmapBadge {
+    width: 57px;
+    height: 57px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 560px) {
+  .content {
+    width: calc(100% - 26px);
+    padding: 20px 0 20px;
+  }
+
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+    padding: 25px 20px 32px;
+    border-radius: 19px;
+  }
+
+  .hero h1 {
+    font-size: 39px;
+    letter-spacing: -1.8px;
+  }
+
+  .heroContent > p {
+    font-size: 11px;
+  }
+
+  .heroStats {
+    gap: 7px;
+  }
+
+  .heroStat {
+    padding: 8px;
+    font-size: 8px;
+  }
+
+  .heroRank {
+    align-self: center;
+    width: 175px;
+    height: 175px;
+    flex-basis: 175px;
+  }
+
+  .heroRankInner {
+    width: 132px;
+    height: 132px;
+  }
+
+  .heroRankInner strong {
+    font-size: 35px;
+  }
+
+  .overviewGrid {
+    gap: 13px;
+    margin-bottom: 32px;
+  }
+
+  .progressCard,
+  .rewardCard {
+    padding: 19px;
+    border-radius: 17px;
+  }
+
+  .cardHeader h2 {
+    font-size: 17px;
+  }
+
+  .levelIdentity {
+    gap: 17px;
+    padding: 23px 0;
+  }
+
+  .levelEmblem {
+    width: 102px;
+    height: 102px;
+    flex-basis: 102px;
+  }
+
+  .emblemInner strong {
+    font-size: 29px;
+  }
+
+  .emblemInner svg {
+    width: 19px;
+  }
+
+  .identityText h3 {
+    font-size: 17px;
+  }
+
+  .xpTotal {
+    font-size: 27px;
+  }
+
+  .progressFoot {
+    font-size: 8px;
+  }
+
+  .rewardVisual {
+    height: 120px;
   }
 
   .roadmapSection,
-  .earnSection {
-    margin-top: 25px;
+  .earnSection,
+  .gameSection {
+    margin-top: 33px;
   }
 
   .sectionHeading {
@@ -1825,70 +1698,3473 @@
   }
 
   .sectionHeading h2 {
-    font-size: 19px;
+    font-size: 21px;
+  }
+
+  .roadmapCaption {
+    font-size: 8px;
+  }
+
+  .roadmap {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 18px 12px;
+  }
+
+  .roadmapTrack {
+    display: none;
+  }
+
+  .roadmapItem {
+    gap: 7px;
+    padding: 12px 4px;
+    border: 1px solid rgba(255, 255, 255, 0.055);
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.018);
+  }
+
+  .roadmapBadge {
+    width: 49px;
+    height: 49px;
+    border-radius: 14px;
+  }
+
+  .roadmapBadge svg {
+    width: 19px;
+  }
+
+  .roadmapItem > strong {
+    font-size: 10px;
+  }
+
+  .roadmapState {
+    font-size: 7px;
+  }
+
+  .roadmapRank {
+    font-size: 8px;
+  }
+
+  .roadmapItem:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .roadmapLegend {
+    justify-content: center;
+    gap: 14px;
   }
 
   .earningGrid {
     grid-template-columns: 1fr;
+    gap: 11px;
   }
 
   .earningCard {
-    min-height: 120px;
+    min-height: 160px;
     padding: 18px;
   }
 
-  .earningCard:last-child {
-    grid-column: auto;
+  .gameCard {
+    padding: 8px;
   }
 
   .footer {
     flex-direction: column;
+    font-size: 7px;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 360px) {
+  .content {
+    width: calc(100% - 20px);
+  }
+
+  .hero h1 {
+    font-size: 33px;
+  }
+
+  .heroStats {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .levelIdentity {
+    gap: 12px;
+  }
+
+  .levelEmblem {
+    width: 88px;
+    height: 88px;
+    flex-basis: 88px;
+  }
+
+  .identityText h3 {
+    font-size: 15px;
+  }
+
+  .xpTotal {
+    font-size: 24px;
+  }
+
+  .progressFoot {
+    flex-direction: column;
+  }
+
+  .roadmap {
+    gap: 8px;
+    padding: 12px 7px;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* =========================================
+   VELOOP — 7 UNIQUE MMORPG RANK CRESTS
+========================================= */
+
+.roadmapBadge {
+  --metal: #bd7547;
+  --metal-light: #ffe0b5;
+  --metal-dark: #59301f;
+  --glow: rgba(198, 123, 73, .35);
+
+  position: relative;
+  isolation: isolate;
+  width: 94px;
+  height: 106px;
+  flex: 0 0 94px;
+  display: grid;
+  place-items: center;
+  margin: 0 0 19px;
+  padding: 5px;
+  overflow: visible;
+  border: 2px solid var(--metal-light);
+  border-radius: 46% 46% 42% 42% / 34% 34% 58% 58%;
+  background: linear-gradient(
+    145deg,
+    var(--metal-light),
+    var(--metal) 45%,
+    var(--metal-dark)
+  );
+  color: white;
+  box-shadow:
+    0 7px 0 rgba(0,0,0,.28),
+    0 12px 24px rgba(0,0,0,.35),
+    0 0 22px var(--glow),
+    inset 0 2px 5px rgba(255,255,255,.65);
+  transition: transform .3s ease, filter .3s ease;
+}
+
+/* Inner metallic frame */
+.roadmapBadgeRim {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 5px;
+  border: 2px solid rgba(255,255,255,.48);
+  border-radius: inherit;
+  background: linear-gradient(
+    145deg,
+    var(--metal),
+    var(--metal-dark)
+  );
+  box-shadow:
+    inset 0 2px 8px rgba(0,0,0,.38),
+    inset 0 -2px 5px rgba(255,255,255,.18);
+}
+
+.roadmapBadgeCore {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      circle at 35% 22%,
+      var(--metal),
+      var(--metal-dark) 85%
+    );
+  box-shadow: inset 0 0 18px rgba(0,0,0,.28);
+}
+
+/* Roman tier number */
+.rankRoman {
+  position: absolute;
+  top: 7px;
+  color: rgba(255,255,255,.88);
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 1.5px;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+
+/* Central rank symbol */
+.rankIconFrame {
+  display: grid;
+  place-items: center;
+  color: var(--metal-light);
+  filter: drop-shadow(0 3px 4px rgba(0,0,0,.5));
+}
+
+.rankIconFrame svg {
+  width: 30px;
+  height: 30px;
+}
+
+/* Level number inside crest */
+.rankLevelNumber {
+  color: #fff;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: .4px;
+  text-shadow: 0 2px 5px rgba(0,0,0,.65);
+}
+
+/* Completed / current / locked marker */
+.medalStatus {
+  position: absolute;
+  z-index: 5;
+  right: -7px;
+  bottom: 3px;
+  width: 23px;
+  height: 23px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #171b2c;
+  border-radius: 50%;
+  background: #243047;
+  color: #aab3c8;
+  box-shadow: 0 3px 8px rgba(0,0,0,.35);
+}
+
+.badgecompleted .medalStatus {
+  background: #176a4b;
+  color: #a5ffd2;
+}
+
+.badgecurrent .medalStatus {
+  background: #8a5b17;
+  color: #fff0b0;
+}
+
+/* =========================================
+   UNIQUE METAL FINISHES
+========================================= */
+
+.roadmapBadge.bronze {
+  --metal: #b96d3f;
+  --metal-light: #ffd09a;
+  --metal-dark: #572b1d;
+  --glow: rgba(207, 116, 65, .35);
+}
+
+.roadmapBadge.silver {
+  --metal: #a6b8ce;
+  --metal-light: #f5f8ff;
+  --metal-dark: #465d78;
+  --glow: rgba(180, 204, 232, .35);
+}
+
+.roadmapBadge.gold {
+  --metal: #d99e2c;
+  --metal-light: #fff0a6;
+  --metal-dark: #76500f;
+  --glow: rgba(244, 190, 57, .4);
+}
+
+.roadmapBadge.platinum {
+  --metal: #65b6d0;
+  --metal-light: #e0fbff;
+  --metal-dark: #24536d;
+  --glow: rgba(103, 209, 238, .4);
+}
+
+.roadmapBadge.diamond {
+  --metal: #9877dc;
+  --metal-light: #f0e3ff;
+  --metal-dark: #41286e;
+  --glow: rgba(174, 133, 255, .45);
+}
+
+.roadmapBadge.legendary {
+  --metal: #d75e4f;
+  --metal-light: #ffe0ad;
+  --metal-dark: #70243b;
+  --glow: rgba(255, 102, 77, .5);
+}
+
+.roadmapBadge.transcendent {
+  --metal: #a46be5;
+  --metal-light: #ffe4ff;
+  --metal-dark: #38205e;
+  --glow: rgba(190, 126, 255, .65);
+}
+
+/* =========================================
+   UNIQUE CREST SILHOUETTES
+========================================= */
+
+/* Bronze — warrior crest */
+.roadmapBadge.bronze {
+  border-radius: 48% 48% 34% 34% / 35% 35% 55% 55%;
+}
+
+/* Silver — knight shield */
+.roadmapBadge.silver {
+  border-radius: 46% 46% 12% 12% / 30% 30% 65% 65%;
+}
+
+/* Gold — royal pointed crest */
+.roadmapBadge.gold {
+  border-radius: 16% 16% 48% 48% / 20% 20% 68% 68%;
+  clip-path: polygon(
+    50% 0, 91% 12%, 100% 42%,
+    88% 75%, 50% 100%, 12% 75%,
+    0 42%, 9% 12%
+  );
+}
+
+/* Platinum — angular master crest */
+.roadmapBadge.platinum {
+  border-radius: 12px;
+  clip-path: polygon(
+    50% 0, 88% 9%, 100% 35%,
+    91% 78%, 50% 100%, 9% 78%,
+    0 35%, 12% 9%
+  );
+}
+
+/* Diamond — crystal cut */
+.roadmapBadge.diamond {
+  border-radius: 8px;
+  clip-path: polygon(
+    50% 0, 85% 8%, 100% 35%,
+    91% 77%, 50% 100%, 9% 77%,
+    0 35%, 15% 8%
+  );
+}
+
+/* Legendary — phoenix crest */
+.roadmapBadge.legendary {
+  border-radius: 48% 48% 18% 18%;
+  clip-path: polygon(
+    50% 0, 82% 8%, 100% 32%,
+    91% 70%, 50% 100%, 9% 70%,
+    0 32%, 18% 8%
+  );
+}
+
+/* Transcendent — cosmic crown crest */
+.roadmapBadge.transcendent {
+  width: 108px;
+  height: 120px;
+  flex-basis: 108px;
+  border-width: 3px;
+  border-radius: 25px;
+  clip-path: polygon(
+    50% 0, 63% 9%, 83% 5%,
+    91% 22%, 100% 37%, 91% 61%,
+    82% 83%, 50% 100%, 18% 83%,
+    9% 61%, 0 37%, 9% 22%,
+    17% 5%, 37% 9%
+  );
+}
+
+.roadmapBadge.transcendent .rankIconFrame svg {
+  width: 36px;
+  height: 36px;
+}
+
+/* =========================================
+   WING ORNAMENTS
+========================================= */
+
+.rankWings {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.rankWingLeft,
+.rankWingRight {
+  position: absolute;
+  top: 20px;
+  width: 43px;
+  height: 68px;
+  background: linear-gradient(
+    145deg,
+    var(--metal-light),
+    var(--metal),
+    var(--metal-dark)
+  );
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,.4));
+}
+
+.rankWingLeft {
+  left: -30px;
+  clip-path: polygon(
+    100% 38%, 72% 9%, 0 0,
+    25% 29%, 4% 35%, 40% 54%,
+    15% 64%, 58% 74%, 48% 100%,
+    100% 83%
+  );
+}
+
+.rankWingRight {
+  right: -30px;
+  clip-path: polygon(
+    0 38%, 28% 9%, 100% 0,
+    75% 29%, 96% 35%, 60% 54%,
+    85% 64%, 42% 74%, 52% 100%,
+    0 83%
+  );
+}
+
+/* Bigger wings for higher ranks */
+.roadmapBadge.gold .rankWingLeft,
+.roadmapBadge.gold .rankWingRight {
+  width: 52px;
+  height: 79px;
+  top: 13px;
+}
+
+.roadmapBadge.gold .rankWingLeft {
+  left: -38px;
+}
+
+.roadmapBadge.gold .rankWingRight {
+  right: -38px;
+}
+
+.roadmapBadge.diamond .rankWingLeft,
+.roadmapBadge.diamond .rankWingRight,
+.roadmapBadge.legendary .rankWingLeft,
+.roadmapBadge.legendary .rankWingRight {
+  width: 57px;
+  height: 88px;
+  top: 7px;
+}
+
+.roadmapBadge.diamond .rankWingLeft,
+.roadmapBadge.legendary .rankWingLeft {
+  left: -42px;
+}
+
+.roadmapBadge.diamond .rankWingRight,
+.roadmapBadge.legendary .rankWingRight {
+  right: -42px;
+}
+
+/* Transcendent crystalline wings */
+.roadmapBadge.transcendent .rankWingLeft,
+.roadmapBadge.transcendent .rankWingRight {
+  top: 7px;
+  width: 70px;
+  height: 105px;
+  background: linear-gradient(
+    145deg,
+    #fff0ff,
+    #c49aff 38%,
+    #7950c4 72%,
+    #34204f
+  );
+  filter: drop-shadow(0 0 9px rgba(191,139,255,.65));
+}
+
+.roadmapBadge.transcendent .rankWingLeft {
+  left: -54px;
+  clip-path: polygon(
+    100% 43%, 75% 12%, 48% 0,
+    36% 25%, 0 10%, 28% 48%,
+    4% 61%, 53% 69%, 40% 100%,
+    100% 80%
+  );
+}
+
+.roadmapBadge.transcendent .rankWingRight {
+  right: -54px;
+  clip-path: polygon(
+    0 43%, 25% 12%, 52% 0,
+    64% 25%, 100% 10%, 72% 48%,
+    96% 61%, 47% 69%, 60% 100%,
+    0 80%
+  );
+}
+
+/* =========================================
+   COMPLETED / CURRENT / LOCKED STATES
+========================================= */
+
+.badgecompleted .roadmapBadgeCore {
+  box-shadow: inset 0 0 18px rgba(115,255,185,.12);
+}
+
+.badgecurrent .roadmapBadge {
+  animation: rankCrestPulse 2.6s ease-in-out infinite;
+}
+
+.badgecurrent .roadmapBadgeCore {
+  filter: brightness(1.16);
+}
+
+.badgelocked .roadmapBadge {
+  filter: saturate(.55) brightness(.68);
+}
+
+.badgelocked .rankWings {
+  opacity: .55;
+}
+
+/* Hover */
+.roadmapItem:hover .roadmapBadge {
+  transform: translateY(-6px) scale(1.06);
+  filter: brightness(1.13);
+}
+
+@keyframes rankCrestPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px var(--glow));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 22px var(--glow));
+  }
+}
+
+/* Mobile */
+@media (max-width: 760px) {
+  .roadmapBadge {
+    width: 78px;
+    height: 90px;
+    flex-basis: 78px;
+  }
+
+  .roadmapBadge.transcendent {
+    width: 91px;
+    height: 103px;
+    flex-basis: 91px;
+  }
+
+  .rankLevelNumber {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badgecurrent .roadmapBadge {
+    animation: none;
+  }
+}
+
+
+/* Keep outer ornaments visible */
+.roadmapBadge {
+  clip-path: none;
+}
+
+/* Apply unique silhouettes to the inner crest only */
+.roadmapBadge.bronze .roadmapBadgeRim,
+.roadmapBadge.bronze .roadmapBadgeCore {
+  clip-path: polygon(50% 0, 88% 12%, 100% 45%, 82% 82%, 50% 100%, 18% 82%, 0 45%, 12% 12%);
+}
+
+.roadmapBadge.silver .roadmapBadgeRim,
+.roadmapBadge.silver .roadmapBadgeCore {
+  clip-path: polygon(50% 0, 90% 12%, 92% 65%, 50% 100%, 8% 65%, 10% 12%);
+}
+
+.roadmapBadge.gold .roadmapBadgeRim,
+.roadmapBadge.gold .roadmapBadgeCore {
+  clip-path: polygon(50% 0, 100% 30%, 88% 76%, 50% 100%, 12% 76%, 0 30%);
+}
+
+.roadmapBadge.platinum .roadmapBadgeRim,
+.roadmapBadge.platinum .roadmapBadgeCore {
+  clip-path: polygon(50% 0, 88% 8%, 100% 35%, 90% 80%, 50% 100%, 10% 80%, 0 35%, 12% 8%);
+}
+
+.roadmapBadge.diamond .roadmapBadgeRim,
+.roadmapBadge.diamond .roadmapBadgeCore {
+  clip-path: polygon(50% 0, 85% 10%, 100% 38%, 85% 80%, 50% 100%, 15% 80%, 0 38%, 15% 10%);
+}
+
+.roadmapBadge.legendary .roadmapBadgeRim,
+.roadmapBadge.legendary .roadmapBadgeCore {
+  clip-path: polygon(50% 0, 85% 12%, 100% 42%, 80% 82%, 50% 100%, 20% 82%, 0 42%, 15% 12%);
+}
+
+.roadmapBadge.transcendent .roadmapBadgeRim,
+.roadmapBadge.transcendent .roadmapBadgeCore {
+  clip-path: polygon(50% 0, 75% 8%, 95% 25%, 100% 50%, 85% 82%, 50% 100%, 15% 82%, 0 50%, 5% 25%, 25% 8%);
+}
+
+
+/* ===== Rank Emblem Artwork ===== */
+
+.rank-art {
+  position: relative;
+  isolation: isolate;
+  width: 145px;
+  height: 155px;
+  flex: 0 0 145px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 5px;
+  transition: transform .3s ease, filter .3s ease;
+}
+
+.rank-art svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 8px 9px rgba(0,0,0,.45));
+}
+
+.rank-art-completed {
+  filter: drop-shadow(0 0 9px rgba(91,220,160,.2));
+}
+
+.rank-art-current {
+  filter: drop-shadow(0 0 17px rgba(194,126,255,.65));
+  animation: rankArtFloat 3s ease-in-out infinite;
+}
+
+.rank-art-locked {
+  filter: saturate(.35) brightness(.7);
+}
+
+.roadmapItem:hover .rank-art {
+  transform: translateY(-7px) scale(1.06);
+}
+
+.rank-art-aura {
+  position: absolute;
+  z-index: -1;
+  inset: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(176,91,255,.4), transparent 68%);
+  filter: blur(15px);
+  animation: rankAura 2.5s ease-in-out infinite;
+}
+
+.roadmapItem > strong {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.roadmapState {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.roadmapRank {
+  color: #aeb5ce;
+  font-size: 10px;
+}
+
+.roadmapcompleted .roadmapState {
+  color: #72e5ad;
+}
+
+.roadmapcurrent .roadmapState {
+  color: #ffd477;
+}
+
+.roadmaplocked .roadmapState {
+  color: #838ba4;
+}
+
+@keyframes rankArtFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes rankAura {
+  0%, 100% { opacity: .55; transform: scale(.92); }
+  50% { opacity: 1; transform: scale(1.12); }
+}
+
+@media (max-width: 760px) {
+  .roadmap {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rank-art {
+    width: 125px;
+    height: 135px;
+    flex-basis: 125px;
+  }
+
+  .roadmapTrack {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rank-art-current,
+  .rank-art-aura {
+    animation: none;
   }
 }
 
 
 
-/* MOBILE ROADMAP - 2 COLUMN GRID */
-@media (max-width: 620px) {
+/* =========================================
+   FINAL VELOOP PREMIUM ROADMAP
+========================================= */
+
+.roadmap {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: start;
+  gap: 12px;
+  padding: 38px 20px 30px;
+  overflow: visible;
+  border: 1px solid rgba(151, 120, 255, .28);
+  border-radius: 22px;
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(115, 76, 205, .16),
+      transparent 65%
+    ),
+    linear-gradient(120deg, #20243b, #151a2d);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, .25);
+}
+
+.roadmapTrack {
+  position: absolute;
+  top: 115px;
+  left: 7%;
+  right: 7%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    #bd7547,
+    #c8d9ef,
+    #e6b43c,
+    #65cce9,
+    #9877dc,
+    #e66b42,
+    #a46be5
+  );
+  opacity: .85;
+  box-shadow: 0 0 12px rgba(173, 133, 255, .35);
+}
+
+.roadmapItem {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.roadmapBadge {
+  position: relative;
+  isolation: isolate;
+  width: 94px;
+  height: 106px;
+  flex: 0 0 94px;
+  display: grid;
+  place-items: center;
+  margin: 0 0 12px;
+  padding: 5px;
+  overflow: visible;
+  border: 2px solid var(--metal-light);
+  border-radius: 46% 46% 42% 42% / 34% 34% 58% 58%;
+  background: linear-gradient(
+    145deg,
+    var(--metal-light),
+    var(--metal) 45%,
+    var(--metal-dark)
+  );
+  color: white;
+  box-shadow:
+    0 7px 0 rgba(0,0,0,.28),
+    0 12px 24px rgba(0,0,0,.35),
+    0 0 22px var(--glow),
+    inset 0 2px 5px rgba(255,255,255,.65);
+  transition: transform .3s ease, filter .3s ease;
+}
+
+.roadmapBadgeRim {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 5px;
+  border: 2px solid rgba(255,255,255,.48);
+  border-radius: inherit;
+  background: linear-gradient(
+    145deg,
+    var(--metal),
+    var(--metal-dark)
+  );
+  box-shadow:
+    inset 0 2px 8px rgba(0,0,0,.38),
+    inset 0 -2px 5px rgba(255,255,255,.18);
+}
+
+.roadmapBadgeCore {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at 35% 22%,
+    var(--metal),
+    var(--metal-dark) 85%
+  );
+}
+
+.rankRoman {
+  position: absolute;
+  top: 7px;
+  color: rgba(255,255,255,.88);
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 1.5px;
+}
+
+.rankIconFrame {
+  display: grid;
+  place-items: center;
+  color: var(--metal-light);
+  filter: drop-shadow(0 3px 4px rgba(0,0,0,.5));
+}
+
+.rankIconFrame svg {
+  width: 30px;
+  height: 30px;
+}
+
+.rankLevelNumber {
+  color: #fff;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 950;
+}
+
+.medalStatus {
+  position: absolute;
+  z-index: 5;
+  right: -7px;
+  bottom: 3px;
+  width: 23px;
+  height: 23px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #171b2c;
+  border-radius: 50%;
+  background: #243047;
+  color: #aab3c8;
+}
+
+.badgecompleted .medalStatus {
+  background: #176a4b;
+  color: #a5ffd2;
+}
+
+.badgecurrent .medalStatus {
+  background: #8a5b17;
+  color: #fff0b0;
+}
+
+.roadmapBadge.bronze {
+  --metal: #b96d3f;
+  --metal-light: #ffd09a;
+  --metal-dark: #572b1d;
+  --glow: rgba(207, 116, 65, .35);
+}
+
+.roadmapBadge.silver {
+  --metal: #a6b8ce;
+  --metal-light: #f5f8ff;
+  --metal-dark: #465d78;
+  --glow: rgba(180, 204, 232, .35);
+}
+
+.roadmapBadge.gold {
+  --metal: #d99e2c;
+  --metal-light: #fff0a6;
+  --metal-dark: #76500f;
+  --glow: rgba(244, 190, 57, .4);
+}
+
+.roadmapBadge.platinum {
+  --metal: #65b6d0;
+  --metal-light: #e0fbff;
+  --metal-dark: #24536d;
+  --glow: rgba(103, 209, 238, .4);
+}
+
+.roadmapBadge.diamond {
+  --metal: #9877dc;
+  --metal-light: #f0e3ff;
+  --metal-dark: #41286e;
+  --glow: rgba(174, 133, 255, .45);
+}
+
+.roadmapBadge.legendary {
+  --metal: #d75e4f;
+  --metal-light: #ffe0ad;
+  --metal-dark: #70243b;
+  --glow: rgba(255, 102, 77, .5);
+}
+
+.roadmapBadge.transcendent {
+  --metal: #a46be5;
+  --metal-light: #ffe4ff;
+  --metal-dark: #38205e;
+  --glow: rgba(190, 126, 255, .65);
+}
+
+.rankWings {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.rankWingLeft,
+.rankWingRight {
+  position: absolute;
+  top: 20px;
+  width: 43px;
+  height: 68px;
+  background: linear-gradient(
+    145deg,
+    var(--metal-light),
+    var(--metal),
+    var(--metal-dark)
+  );
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,.4));
+}
+
+.rankWingLeft {
+  left: -30px;
+  clip-path: polygon(
+    100% 38%, 72% 9%, 0 0,
+    25% 29%, 4% 35%, 40% 54%,
+    15% 64%, 58% 74%, 48% 100%,
+    100% 83%
+  );
+}
+
+.rankWingRight {
+  right: -30px;
+  clip-path: polygon(
+    0 38%, 28% 9%, 100% 0,
+    75% 29%, 96% 35%, 60% 54%,
+    85% 64%, 42% 74%, 52% 100%,
+    0 83%
+  );
+}
+
+.roadmapBadge.gold .rankWingLeft,
+.roadmapBadge.gold .rankWingRight {
+  width: 52px;
+  height: 79px;
+  top: 13px;
+}
+
+.roadmapBadge.gold .rankWingLeft {
+  left: -38px;
+}
+
+.roadmapBadge.gold .rankWingRight {
+  right: -38px;
+}
+
+.roadmapBadge.diamond .rankWingLeft,
+.roadmapBadge.diamond .rankWingRight,
+.roadmapBadge.legendary .rankWingLeft,
+.roadmapBadge.legendary .rankWingRight {
+  width: 57px;
+  height: 88px;
+  top: 7px;
+}
+
+.roadmapBadge.diamond .rankWingLeft,
+.roadmapBadge.legendary .rankWingLeft {
+  left: -42px;
+}
+
+.roadmapBadge.diamond .rankWingRight,
+.roadmapBadge.legendary .rankWingRight {
+  right: -42px;
+}
+
+.roadmapBadge.transcendent .rankWingLeft,
+.roadmapBadge.transcendent .rankWingRight {
+  top: 7px;
+  width: 70px;
+  height: 105px;
+  background: linear-gradient(
+    145deg,
+    #fff0ff,
+    #c49aff 38%,
+    #7950c4 72%,
+    #34204f
+  );
+  filter: drop-shadow(0 0 9px rgba(191,139,255,.65));
+}
+
+.roadmapBadge.transcendent .rankWingLeft {
+  left: -54px;
+}
+
+.roadmapBadge.transcendent .rankWingRight {
+  right: -54px;
+}
+
+.roadmapBadge.transcendent {
+  width: 108px;
+  height: 120px;
+  flex-basis: 108px;
+}
+
+.roadmapcompleted .roadmapBadge {
+  filter: drop-shadow(0 0 10px rgba(91,220,160,.25));
+}
+
+.roadmapcurrent .roadmapBadge {
+  animation: rankCrestPulse 2.6s ease-in-out infinite;
+}
+
+.roadmaplocked .roadmapBadge {
+  filter: saturate(.55) brightness(.68);
+}
+
+.roadmaplocked .rankWings {
+  opacity: .55;
+}
+
+.roadmapItem:hover .roadmapBadge {
+  transform: translateY(-6px) scale(1.06);
+}
+
+.roadmapItem > strong {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.4;
+}
+
+.roadmapState {
+  padding: 7px 12px;
+  border: 1px solid currentColor;
+  border-radius: 30px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .6px;
+  white-space: nowrap;
+}
+
+.roadmapcompleted .roadmapState {
+  color: #72e5ad;
+  background: rgba(66,208,145,.07);
+}
+
+.roadmapcurrent .roadmapState {
+  color: #ffd477;
+  background: rgba(255,190,62,.08);
+}
+
+.roadmaplocked .roadmapState {
+  color: #8793b4;
+  background: rgba(120,140,180,.06);
+}
+
+.roadmapRank {
+  color: #aeb5ce;
+  font-size: 9px;
+}
+
+.roadmapLegend {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 17px;
+}
+
+.roadmapLegend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #9ba3b9;
+  font-size: 9px;
+}
+
+.roadmapLegend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legendCompleted {
+  background: #65d6a0;
+}
+
+.legendCurrent {
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.legendLocked {
+  background: #737b92;
+}
+
+@keyframes rankCrestPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px var(--glow));
+  }
+  50% {
+    filter: drop-shadow(0 0 22px var(--glow));
+  }
+}
+
+@media (max-width: 1100px) {
   .roadmap {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    padding: 18px 12px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .roadmapItem {
-    min-width: 0;
-    gap: 8px;
-    padding: 10px 4px;
+  .roadmapTrack {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .roadmap {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 22px 12px;
   }
 
   .roadmapBadge {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+    width: 78px;
+    height: 90px;
+    flex-basis: 78px;
   }
 
-  .roadmapItem strong {
+  .roadmapBadge.transcendent {
+    width: 91px;
+    height: 103px;
+    flex-basis: 91px;
+  }
+
+  .roadmapItem {
+    gap: 8px;
+    padding: 12px 4px;
+    border: 1px solid rgba(255,255,255,.055);
+    border-radius: 13px;
+    background: rgba(255,255,255,.018);
+  }
+
+  .roadmapItem > strong {
     font-size: 10px;
-    line-height: 1.3;
   }
 
-  .roadmapItem > span {
-    font-size: 9px;
-    line-height: 1.3;
+  .roadmapState {
+    font-size: 7px;
   }
 
   .roadmapRank {
+    font-size: 8px;
+  }
+
+  .roadmapLegend {
+    justify-content: center;
+    gap: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roadmapcurrent .roadmapBadge {
+    animation: none;
+  }
+}
+
+
+/* =========================================
+   FINAL ILLUSTRATED RANK ROADMAP
+   Overrides legacy CSS-only badge experiments.
+========================================= */
+
+.roadmap {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(4px, .8vw, 14px);
+  padding: 24px 18px 25px;
+  overflow: visible;
+}
+
+.roadmapTrack {
+  top: 105px;
+  left: 7.2%;
+  right: 7.2%;
+  height: 2px;
+  z-index: 0;
+  opacity: .78;
+  pointer-events: none;
+}
+
+.roadmapItem {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  padding: 0 3px;
+  text-align: center;
+}
+
+.roadmapItem > div:first-child {
+  margin: 0 auto 7px;
+}
+
+.rankTitle {
+  width: 100%;
+  min-height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f8f6ff;
+  font-size: clamp(9px, .82vw, 12px);
+  font-weight: 850;
+  line-height: 1.22;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.roadmapItem .roadmapState {
+  width: 112px;
+  min-height: 27px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.roadmapItem .roadmapRank {
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.roadmapcompleted .roadmapState {
+  color: #83f0bd;
+  border-color: rgba(83, 225, 159, .62);
+  background: rgba(32, 164, 111, .10);
+  box-shadow: 0 0 13px rgba(60, 214, 145, .12);
+}
+
+.roadmapcurrent .roadmapState {
+  color: #ffe08a;
+  border-color: rgba(255, 192, 72, .9);
+  background: rgba(255, 174, 44, .12);
+  box-shadow: 0 0 17px rgba(255, 176, 55, .22);
+}
+
+.roadmaplocked .roadmapState {
+  color: #aeb8d6;
+  border-color: rgba(139, 151, 190, .55);
+  background: rgba(99, 111, 151, .10);
+}
+
+.roadmapLegend {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 14px;
+}
+
+@media (max-width: 1120px) {
+  .roadmap {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    row-gap: 24px;
+  }
+
+  .roadmapTrack {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .roadmap {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 8px;
+    padding: 18px 10px 20px;
+  }
+
+  .roadmapItem {
+    padding: 8px 4px 12px;
+    border: 1px solid rgba(179, 148, 255, .10);
+    border-radius: 15px;
+    background: rgba(255, 255, 255, .018);
+  }
+
+  .rankTitle {
+    font-size: 10px;
+    min-height: 28px;
+  }
+
+  .roadmapItem .roadmapState {
+    width: 104px;
+    min-height: 25px;
+    font-size: 8px;
+  }
+
+  .roadmapItem .roadmapRank {
+    font-size: 9px;
+  }
+
+  .roadmapLegend {
+    justify-content: center;
+    gap: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roadmapItem :global(*) {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* =====================================================
+   VELOOP PREMIUM LEVEL PAGE — FINAL VISUAL SYSTEM
+   Functional markup and XP logic remain unchanged.
+===================================================== */
+.dashboard {
+  --gold: #ffc95c;
+  --gold-light: #fff0b5;
+  --text: #f7f5ff;
+  --muted: #a8a9c6;
+  --panel: rgba(24, 20, 49, .88);
+  --panel-light: rgba(43, 31, 78, .78);
+  --border: rgba(190, 133, 255, .28);
+  background:
+    radial-gradient(ellipse at 50% -8%, rgba(117, 55, 207, .30), transparent 42%),
+    radial-gradient(ellipse at 4% 42%, rgba(37, 91, 180, .13), transparent 32%),
+    radial-gradient(ellipse at 96% 68%, rgba(166, 55, 178, .13), transparent 30%),
+    linear-gradient(180deg, #100d25 0%, #100f25 48%, #0a1022 100%);
+}
+
+.dashboard::before,
+.dashboard::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(90px);
+}
+
+.dashboard::before {
+  width: 440px;
+  height: 440px;
+  top: 300px;
+  left: -260px;
+  background: rgba(107, 53, 211, .18);
+}
+
+.dashboard::after {
+  width: 480px;
+  height: 480px;
+  top: 900px;
+  right: -300px;
+  background: rgba(36, 117, 205, .13);
+}
+
+.content {
+  width: min(1480px, calc(100% - 56px));
+  padding: 30px 0 44px;
+}
+
+/* Cinematic hero */
+.hero {
+  min-height: 292px;
+  gap: 28px;
+  margin-bottom: 24px;
+  padding: 30px clamp(24px, 4vw, 56px);
+  border: 1px solid rgba(177, 119, 255, .42);
+  border-radius: 25px;
+  background:
+    radial-gradient(ellipse at 53% 90%, rgba(255, 180, 60, .20), transparent 28%),
+    radial-gradient(ellipse at 78% 45%, rgba(135, 66, 233, .28), transparent 42%),
+    linear-gradient(112deg, rgba(21, 19, 50, .98), rgba(32, 22, 67, .92) 52%, rgba(17, 20, 48, .98));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .32), inset 0 1px rgba(255,255,255,.08);
+}
+
+.hero::before {
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(255, 193, 75, .18), transparent 35%),
+    linear-gradient(105deg, transparent 25%, rgba(255,255,255,.045) 50%, transparent 75%);
+}
+
+.heroContent { max-width: 560px; }
+
+.eyebrow {
+  color: #ffd16d;
+  font-size: 10px;
+  letter-spacing: 2.1px;
+}
+
+.hero h1 {
+  margin: 15px 0 13px;
+  font-size: clamp(38px, 5vw, 64px);
+  letter-spacing: -2.8px;
+  text-shadow: 0 8px 30px rgba(0,0,0,.28);
+}
+
+.hero h1 span {
+  background-image: linear-gradient(90deg, #fff4ca 0%, #ffc247 46%, #ff8c37 100%);
+}
+
+.heroContent > p { color: #d0cce5; max-width: 470px; }
+
+.heroStat {
+  border-color: rgba(189, 143, 255, .24);
+  background: rgba(255,255,255,.055);
+  backdrop-filter: blur(10px);
+}
+
+.heroRank {
+  width: 250px;
+  height: 250px;
+  flex-basis: 250px;
+}
+
+.heroRankOrbit {
+  inset: 12px;
+  border-color: rgba(194, 139, 255, .45);
+  box-shadow: 0 0 50px rgba(154, 87, 255, .18), inset 0 0 38px rgba(244, 198, 107, .08);
+}
+
+.heroRankInner {
+  width: 205px;
+  height: 205px;
+  gap: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--gold-light);
+  animation: badgeFloat 4s ease-in-out infinite;
+}
+
+.heroRankInner > div {
+  width: 188px;
+  height: 150px;
+  flex: 0 0 150px;
+}
+
+.heroRankInner > span {
+  margin-top: -2px;
+  color: #d5c5ff;
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+
+.heroRankInner strong {
+  color: #fff2c2;
+  font-size: 30px;
+  text-shadow: 0 0 22px rgba(255, 190, 70, .45);
+}
+
+.heroRankInner small {
+  color: #ffd47c;
+  font-size: 9px;
+}
+
+.heroRankTag {
+  bottom: -3px;
+  padding: 9px 14px;
+  border-color: rgba(255, 194, 83, .45);
+  background: linear-gradient(135deg, #3b2458, #1e1a3c);
+  box-shadow: 0 0 24px rgba(167, 101, 255, .24);
+  color: #ffe29a;
+}
+
+/* Premium glass panels */
+.overviewGrid {
+  grid-template-columns: minmax(0, 1.18fr) minmax(300px, .82fr);
+  gap: 18px;
+  margin-bottom: 35px;
+}
+
+.progressCard,
+.rewardCard,
+.gameCard {
+  border: 1px solid rgba(178, 126, 255, .30);
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(135, 76, 220, .17), transparent 48%),
+    linear-gradient(145deg, rgba(34, 27, 68, .94), rgba(17, 22, 46, .96));
+  box-shadow: 0 18px 48px rgba(0,0,0,.24), inset 0 1px rgba(255,255,255,.07);
+  backdrop-filter: blur(14px);
+}
+
+.progressCard::before,
+.rewardCard::before {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #bd83ff, #ffd16a, transparent);
+  opacity: .8;
+}
+
+.sectionLabel { color: #c3aaff; }
+.cardHeader h2 { font-size: 20px; }
+
+.levelIdentity { gap: 20px; padding: 23px 0; }
+
+.levelEmblem {
+  clip-path: none;
+  overflow: visible;
+  width: 142px;
+  height: 142px;
+  flex-basis: 142px;
+  filter: drop-shadow(0 0 18px rgba(183, 119, 255, .28));
+}
+
+.levelEmblem .emblemOuterRing { display: none; }
+
+.levelEmblem .emblemInner {
+  width: 100%;
+  height: 100%;
+  clip-path: none;
+  background: transparent;
+  overflow: visible;
+  box-shadow: none;
+}
+
+.levelEmblem .emblemInner > div {
+  width: 130px;
+  height: 105px;
+  flex: 0 0 105px;
+}
+
+.levelEmblem .emblemInner > span {
+  color: #c9b6ff;
+  font-size: 8px;
+}
+
+.levelEmblem .emblemInner > strong {
+  font-size: 24px;
+  color: #fff0bf;
+}
+
+.identityText h3 { color: #fff0c6; }
+.xpTotal { color: #ffd16a; }
+
+.progressTrack {
+  height: 13px;
+  border: 1px solid rgba(193, 143, 255, .25);
+  border-radius: 20px;
+  background: rgba(5, 8, 25, .72);
+}
+
+.progressFill {
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ff9d35, #ffd45e 55%, #fff0a7);
+  box-shadow: 0 0 18px rgba(255, 174, 55, .42);
+}
+
+.levelCardFooter {
+  border-top-color: rgba(181, 132, 255, .18);
+}
+
+.rewardVisual {
+  background: radial-gradient(circle, rgba(176, 103, 255, .16), transparent 68%);
+}
+
+.rewardIcon {
+  border-color: rgba(255, 201, 91, .55);
+  background: linear-gradient(145deg, rgba(255, 183, 62, .22), rgba(129, 65, 196, .25));
+  color: #ffd16a;
+  box-shadow: 0 0 34px rgba(255, 175, 65, .19), inset 0 0 22px rgba(255,255,255,.08);
+}
+
+.rewardValue { color: #ffd16a; }
+.rewardUnlock {
+  border-color: rgba(180, 130, 255, .25);
+  background: rgba(148, 94, 218, .10);
+}
+
+/* Rank roadmap */
+.roadmapSection,
+.earnSection,
+.gameSection { margin-top: 35px; }
+
+.sectionHeading { margin-bottom: 18px; }
+.sectionHeading h2 { font-size: clamp(21px, 2.3vw, 28px); }
+.sectionDescription { color: #b3b0ce; }
+.roadmapCaption {
+  padding: 9px 13px;
+  border: 1px solid rgba(187, 135, 255, .30);
+  border-radius: 30px;
+  background: rgba(121, 70, 191, .12);
+  color: #e4d7ff;
+}
+
+.roadmap {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 5px;
+  padding: 24px 15px 22px;
+  border: 1px solid rgba(185, 127, 255, .44);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(130, 68, 220, .20), transparent 65%),
+    linear-gradient(145deg, rgba(31, 24, 62, .96), rgba(13, 20, 43, .98));
+  box-shadow: 0 22px 55px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.08);
+}
+
+.roadmapTrack {
+  top: 121px;
+  left: 7%;
+  right: 7%;
+  height: 3px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #d28a49, #d6eaff, #ffc64c, #6bd9ff, #bd85ff, #ff7649, #b879ff);
+  box-shadow: 0 0 14px rgba(190, 120, 255, .55);
+}
+
+.roadmapItem {
+  min-width: 0;
+  gap: 8px;
+  padding: 0 3px 5px;
+  border-radius: 17px;
+  transition: background .25s ease, transform .25s ease;
+}
+
+.roadmapItem:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,.035);
+}
+
+.roadmapItem .emblem {
+  width: min(100%, 190px);
+  height: 174px;
+  flex-basis: 174px;
+  margin-bottom: 0;
+}
+
+.roadmapItem .artwork { transform: scale(1.05); }
+.roadmapItem .emblem.current .artwork { transform: scale(1.12); }
+
+.rankTitle,
+.roadmapItem > strong {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: clamp(9px, .85vw, 12px);
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+  letter-spacing: -.15px;
+}
+
+.roadmapState {
+  min-width: 105px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border: 1px solid rgba(163, 150, 214, .65);
+  border-radius: 30px;
+  background: rgba(94, 91, 146, .14);
+  color: #c7c7e5;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .6px;
+  white-space: nowrap;
+}
+
+.roadmapRank {
+  min-height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  color: #aaa9c6;
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.roadmapcompleted .roadmapState {
+  border-color: rgba(73, 222, 155, .72);
+  background: rgba(34, 190, 121, .13);
+  color: #8ef0bd;
+  box-shadow: 0 0 14px rgba(61, 219, 151, .12);
+}
+
+.roadmapcurrent .roadmapState {
+  border-color: rgba(255, 199, 79, .9);
+  background: rgba(255, 179, 54, .15);
+  color: #ffe08b;
+  box-shadow: 0 0 18px rgba(255, 183, 65, .2);
+}
+
+.roadmaplocked .roadmapState {
+  border-color: rgba(131, 137, 173, .55);
+  background: rgba(99, 104, 139, .13);
+  color: #a0a3c0;
+}
+
+.roadmapcurrent .roadmapRank { color: #ffe0a0; font-weight: 800; }
+.roadmaplocked .roadmapItem > strong { color: #c0bfd4; }
+
+.roadmapLegend { gap: 18px; margin-top: 15px; }
+.roadmapLegend span { color: #b6b4d0; font-size: 9px; }
+
+/* Activity cards */
+.earningGrid { gap: 14px; }
+.earningCard {
+  min-height: 190px;
+  padding: 19px;
+  border: 1px solid rgba(178, 126, 255, .27);
+  border-radius: 19px;
+  background: linear-gradient(145deg, rgba(39, 30, 78, .92), rgba(17, 24, 49, .96));
+  box-shadow: 0 15px 35px rgba(0,0,0,.20), inset 0 1px rgba(255,255,255,.06);
+}
+
+.earningCard:nth-child(1) { --activity-accent: #ffb34f; }
+.earningCard:nth-child(2) { --activity-accent: #bf82ff; }
+.earningCard:nth-child(3) { --activity-accent: #57c9ff; }
+.earningCard:nth-child(4) { --activity-accent: #5fe3a0; }
+
+.earningCard::before {
+  background: linear-gradient(90deg, transparent, var(--activity-accent), transparent);
+  opacity: .8;
+}
+
+.earningCard:hover {
+  transform: translateY(-7px);
+  border-color: var(--activity-accent);
+  box-shadow: 0 18px 42px rgba(0,0,0,.28), 0 0 22px color-mix(in srgb, var(--activity-accent) 20%, transparent);
+}
+
+.earningIcon {
+  border-color: color-mix(in srgb, var(--activity-accent) 55%, transparent);
+  background: color-mix(in srgb, var(--activity-accent) 15%, transparent);
+  color: var(--activity-accent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--activity-accent) 18%, transparent);
+}
+
+.featureBottom { color: var(--activity-accent); }
+
+/* XP Catcher arena */
+.gameCard {
+  border-color: rgba(100, 197, 255, .32);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(83, 118, 255, .20), transparent 58%),
+    linear-gradient(145deg, rgba(29, 25, 68, .97), rgba(10, 20, 46, .98));
+  box-shadow: 0 20px 48px rgba(0,0,0,.25), inset 0 1px rgba(255,255,255,.08);
+}
+
+.gamePill {
+  border-color: rgba(93, 192, 255, .35);
+  background: rgba(58, 143, 226, .12);
+  color: #a7ddff;
+}
+
+/* Footer and entrance motion */
+.footer {
+  border-top-color: rgba(183, 130, 255, .2);
+  color: #77799e;
+}
+.footer span:first-child { color: #d4b5ff; }
+
+@keyframes premiumPanelIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero,
+.progressCard,
+.rewardCard,
+.roadmapSection,
+.earnSection,
+.gameSection {
+  animation: premiumPanelIn .55s ease both;
+}
+
+.roadmapSection { animation-delay: .08s; }
+.earnSection { animation-delay: .14s; }
+.gameSection { animation-delay: .2s; }
+
+@media (max-width: 1100px) {
+  .content { width: min(100% - 40px, 1000px); }
+  .roadmap { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .roadmapTrack { display: none; }
+  .roadmapItem .emblem { width: 170px; height: 155px; flex-basis: 155px; }
+  .overviewGrid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 760px) {
+  .content { width: calc(100% - 28px); padding-top: 20px; }
+  .hero { flex-direction: column; align-items: flex-start; padding: 26px 22px 34px; }
+  .heroRank { align-self: center; width: 220px; height: 220px; flex-basis: 220px; }
+  .heroRankInner { width: 190px; height: 190px; }
+  .overviewGrid { grid-template-columns: 1fr; }
+  .roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px 10px; padding: 18px 12px; }
+  .roadmapItem { padding: 10px 4px; border: 1px solid rgba(183,130,255,.13); background: rgba(255,255,255,.025); }
+  .roadmapItem .emblem { width: 145px; height: 136px; flex-basis: 136px; }
+  .roadmapItem:last-child { grid-column: auto; }
+  .sectionHeading { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .earningGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .content { width: calc(100% - 22px); }
+  .hero h1 { font-size: 39px; }
+  .heroStats { gap: 7px; }
+  .heroStat { font-size: 8px; padding: 8px; }
+  .heroRank { width: 190px; height: 190px; flex-basis: 190px; }
+  .heroRankInner { width: 170px; height: 170px; }
+  .heroRankInner > div { width: 160px; height: 125px; flex-basis: 125px; }
+  .levelIdentity { gap: 12px; }
+  .levelEmblem { width: 110px; height: 110px; flex-basis: 110px; }
+  .levelEmblem .emblemInner > div { width: 105px; height: 85px; flex-basis: 85px; }
+  .earningGrid { grid-template-columns: 1fr; }
+  .earningCard { min-height: 160px; }
+  .roadmapItem .emblem { width: 132px; height: 124px; flex-basis: 124px; }
+  .roadmapState { min-width: 96px; font-size: 7px; }
+  .roadmapItem > strong { font-size: 9px; }
+  .roadmapRank { font-size: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .progressCard,
+  .rewardCard,
+  .roadmapSection,
+  .earnSection,
+  .gameSection { animation: none; }
+}
+
+/* CSS-module-safe sizing hooks for the shared rank artwork component */
+.heroRankEmblem {
+  width: 188px;
+  height: 150px;
+  flex: 0 0 150px;
+}
+
+.levelRankEmblem {
+  width: 130px;
+  height: 105px;
+  flex: 0 0 105px;
+}
+
+.roadmapEmblem {
+  width: min(100%, 190px);
+  height: 174px;
+  flex: 0 0 174px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1100px) {
+  .roadmapEmblem { width: 170px; height: 155px; flex-basis: 155px; }
+}
+
+@media (max-width: 760px) {
+  .heroRankEmblem { width: 170px; height: 135px; flex-basis: 135px; }
+  .roadmapEmblem { width: 145px; height: 136px; flex-basis: 136px; }
+}
+
+@media (max-width: 480px) {
+  .heroRankEmblem { width: 160px; height: 125px; flex-basis: 125px; }
+  .levelRankEmblem { width: 105px; height: 85px; flex-basis: 85px; }
+  .roadmapEmblem { width: 132px; height: 124px; flex-basis: 124px; }
+}
+
+
+/* ===== RESTORED CLASSIC CURRENT-LEVEL EMBLEM + ORBITING PAIR ===== */
+.levelIdentity {
+  align-items: center;
+  gap: 26px;
+  padding: 24px 0;
+}
+
+.levelEmblemStage {
+  position: relative;
+  isolation: isolate;
+  width: 166px;
+  height: 166px;
+  flex: 0 0 166px;
+  display: grid;
+  place-items: center;
+}
+
+.levelEmblemOrbit {
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(244, 198, 107, .42);
+  border-radius: 50%;
+  box-shadow: 0 0 28px rgba(244, 198, 107, .12), inset 0 0 24px rgba(244, 198, 107, .06);
+  animation: levelOrbitalSpin 10s linear infinite;
+}
+
+.levelEmblemOrbit::before,
+.levelEmblemOrbit::after {
+  content: '';
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff6c7, #ffc34f 55%, #bd7426);
+  border: 1px solid rgba(255, 238, 174, .9);
+  box-shadow: 0 0 10px #ffc34f, 0 0 22px rgba(255, 190, 65, .65);
+}
+
+.levelEmblemOrbit::before { top: 13px; left: 28px; }
+.levelEmblemOrbit::after { bottom: 15px; right: 22px; width: 9px; height: 9px; }
+
+.levelEmblem {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  width: 124px;
+  height: 124px;
+  flex: 0 0 124px;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+  clip-path: polygon(50% 0%, 63% 8%, 79% 5%, 88% 19%, 99% 31%, 94% 47%, 100% 59%, 88% 74%, 87% 89%, 69% 94%, 50% 100%, 31% 94%, 13% 89%, 12% 74%, 0 59%, 6% 43%, 2% 29%, 14% 18%, 22% 5%, 38% 8%);
+  background: linear-gradient(145deg, #ffe1ae 0%, #bd7543 35%, #5b2c20 72%, #281d2a 100%);
+  filter: drop-shadow(0 0 16px rgba(244, 177, 91, .48));
+  animation: classicBadgeFloat 4s ease-in-out infinite;
+  transition: transform .3s ease, filter .3s ease;
+}
+
+.levelEmblem::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 7px;
+  clip-path: inherit;
+  border: 1px solid rgba(255, 244, 215, .72);
+  background: radial-gradient(circle at 50% 22%, rgba(255, 231, 184, .28), transparent 55%);
+}
+
+.levelEmblem:hover {
+  transform: translateY(-5px) scale(1.05);
+  filter: drop-shadow(0 0 24px rgba(255, 190, 93, .68));
+}
+
+.levelEmblem .emblemOuterRing { display: none; }
+
+.levelEmblem .emblemInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  clip-path: none;
+  background: radial-gradient(circle at 50% 25%, rgba(111, 64, 43, .7), rgba(35, 24, 34, .93) 75%);
+  color: #ffe8b7;
+  box-shadow: inset 0 0 22px rgba(255, 219, 158, .15);
+}
+
+.levelEmblem .emblemInner svg {
+  color: #ffe3a5;
+  filter: drop-shadow(0 0 8px rgba(255, 190, 85, .75));
+}
+
+.levelEmblem .emblemInner span {
+  color: rgba(255, 239, 211, .8);
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.levelEmblem .emblemInner strong {
+  color: #fff;
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 950;
+  text-shadow: 0 2px 10px rgba(0,0,0,.5);
+}
+
+.levelEmblem.silver { background: linear-gradient(145deg, #f4f8ff, #9eb5d0 38%, #435d7c 75%, #202b40); }
+.levelEmblem.gold { background: linear-gradient(145deg, #fff0ae, #e2a832 38%, #81520d 75%, #35230d); }
+.levelEmblem.platinum { background: linear-gradient(145deg, #e1fbff, #6bbbd6 38%, #245b75 75%, #142a3b); }
+.levelEmblem.diamond { background: linear-gradient(145deg, #f6eaff, #a779e8 38%, #553482 75%, #24183c); }
+.levelEmblem.legendary { background: linear-gradient(145deg, #ffe8b4, #ed7045 38%, #8a2d3c 75%, #351a2c); }
+.levelEmblem.transcendent { background: linear-gradient(145deg, #fff0ff, #bd7dff 38%, #6034a0 75%, #251344); }
+
+@keyframes levelOrbitalSpin { to { transform: rotate(360deg); } }
+@keyframes classicBadgeFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+
+@media (max-width: 620px) {
+  .levelIdentity { gap: 15px; padding: 19px 0; }
+  .levelEmblemStage { width: 132px; height: 132px; flex-basis: 132px; }
+  .levelEmblem { width: 100px; height: 100px; flex-basis: 100px; }
+  .levelEmblem .emblemInner strong { font-size: 23px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .levelEmblemOrbit, .levelEmblem { animation: none; }
+}
+
+
+/* =========================================================
+   FINAL VISIBILITY FIX — ROADMAP MEDALS + HERO ORBIT
+   Prevent medal artwork from being clipped by layout boxes.
+========================================================= */
+
+/* Let the complete feather wings and lower ornaments render */
+.roadmapSection,
+.roadmap,
+.roadmapItem {
+  overflow: visible !important;
+}
+
+.roadmap {
+  min-height: 290px;
+  padding-top: 42px !important;
+  padding-bottom: 30px !important;
+  row-gap: 18px;
+}
+
+.roadmapItem {
+  min-height: 235px;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  overflow: visible !important;
+}
+
+.roadmapItem :global(.rankEmblem),
+.roadmapItem :global(.emblem) {
+  overflow: visible !important;
+}
+
+/* RankEmblem is a CSS-module component; target its root through
+   the existing roadmap child structure without clipping artwork. */
+.roadmapItem > *:first-child {
+  overflow: visible !important;
+  flex-shrink: 0;
+}
+
+.roadmapItem > *:first-child img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Keep all seven complete medals inside their own grid cells */
+.roadmapItem > *:first-child {
+  width: min(100%, 190px);
+  height: 190px;
+  min-height: 190px;
+}
+
+/* Hero emblem: larger safe area, no clipping */
+.heroRank {
+  position: relative;
+  z-index: 3;
+  width: 270px !important;
+  height: 270px !important;
+  min-width: 270px;
+  flex: 0 0 270px !important;
+  overflow: visible !important;
+  isolation: isolate;
+}
+
+.heroRankOrbit {
+  position: absolute;
+  inset: 13px !important;
+  overflow: visible !important;
+  border: 1px solid rgba(204, 164, 255, .5);
+  border-radius: 50%;
+  animation: heroOrbitRing 22s linear infinite;
+}
+
+.heroRankInner {
+  position: relative;
+  z-index: 2;
+  width: 218px !important;
+  height: 218px !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.heroRankEmblem {
+  width: 218px !important;
+  height: 205px !important;
+  flex: 0 0 205px !important;
+  max-width: none !important;
+  overflow: visible !important;
+}
+
+.heroRankEmblem img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Two visible golden orbiting balls on opposite sides */
+.heroRankOrbit::before,
+.heroRankOrbit::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  margin: -5.5px 0 0 -5.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #fff7c7 0 12%, #ffd15b 38%, #f39b20 78%, #a64c13 100%);
+  box-shadow:
+    0 0 7px 2px rgba(255, 199, 75, .8),
+    0 0 19px 5px rgba(255, 169, 43, .42);
+  pointer-events: none;
+}
+
+.heroRankOrbit::before {
+  animation: heroOrbitBallA 7s linear infinite;
+}
+
+.heroRankOrbit::after {
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  animation: heroOrbitBallB 7s linear infinite;
+}
+
+@keyframes heroOrbitBallA {
+  from { transform: rotate(0deg) translateX(116px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(116px) rotate(-360deg); }
+}
+
+@keyframes heroOrbitBallB {
+  from { transform: rotate(180deg) translateX(116px) rotate(-180deg); }
+  to   { transform: rotate(540deg) translateX(116px) rotate(-540deg); }
+}
+
+@keyframes heroOrbitRing {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Keep hero call-to-action below the emblem without clipping */
+.heroRankTag {
+  z-index: 4;
+  bottom: -1px !important;
+  white-space: nowrap;
+}
+
+/* Responsive scaling */
+@media (max-width: 1100px) {
+  .roadmap {
+    min-height: 0;
+  }
+
+  .roadmapItem {
+    min-height: 220px;
+  }
+
+  .heroRank {
+    width: 230px !important;
+    height: 230px !important;
+    min-width: 230px;
+    flex-basis: 230px !important;
+  }
+
+  .heroRankInner {
+    width: 190px !important;
+    height: 190px !important;
+  }
+
+  .heroRankEmblem {
+    width: 190px !important;
+    height: 180px !important;
+    flex-basis: 180px !important;
+  }
+
+  @keyframes heroOrbitBallA {
+    from { transform: rotate(0deg) translateX(98px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(98px) rotate(-360deg); }
+  }
+
+  @keyframes heroOrbitBallB {
+    from { transform: rotate(180deg) translateX(98px) rotate(-180deg); }
+    to   { transform: rotate(540deg) translateX(98px) rotate(-540deg); }
+  }
+}
+
+@media (max-width: 760px) {
+  .roadmap {
+    min-height: 0;
+    padding: 24px 12px !important;
+  }
+
+  .roadmapItem {
+    min-height: 190px;
+  }
+
+  .roadmapItem > *:first-child {
+    width: min(100%, 160px);
+    height: 160px;
+    min-height: 160px;
+  }
+
+  .heroRank {
+    width: 205px !important;
+    height: 205px !important;
+    min-width: 205px;
+    flex-basis: 205px !important;
+  }
+
+  .heroRankInner {
+    width: 170px !important;
+    height: 170px !important;
+  }
+
+  .heroRankEmblem {
+    width: 175px !important;
+    height: 165px !important;
+    flex-basis: 165px !important;
+  }
+
+  @keyframes heroOrbitBallA {
+    from { transform: rotate(0deg) translateX(86px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(86px) rotate(-360deg); }
+  }
+
+  @keyframes heroOrbitBallB {
+    from { transform: rotate(180deg) translateX(86px) rotate(-180deg); }
+    to   { transform: rotate(540deg) translateX(86px) rotate(-540deg); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroRankOrbit,
+  .heroRankOrbit::before,
+  .heroRankOrbit::after {
+    animation: none !important;
+  }
+}
+
+
+
+/* =========================================================
+   FINAL FIX: SHOW THE COMPLETE RANK ARTWORK
+   Reserve real space for the full PNG artwork. Do not crop,
+   stretch, or scale the artwork outside its image box.
+========================================================= */
+
+.roadmapSection,
+.roadmap,
+.roadmapItem,
+.hero,
+.heroRank,
+.heroRankInner {
+  overflow: visible !important;
+}
+
+.roadmap {
+  padding-top: 58px !important;
+  padding-bottom: 42px !important;
+  min-height: 340px !important;
+  align-items: start;
+}
+
+.roadmapItem {
+  min-height: 275px !important;
+  padding-top: 8px !important;
+  padding-bottom: 14px !important;
+  justify-content: flex-start;
+}
+
+/* The RankEmblem root receives this class from JSX. */
+.roadmapItem > .roadmapEmblem {
+  box-sizing: border-box;
+  display: grid !important;
+  place-items: center !important;
+  width: min(100%, 210px) !important;
+  height: 210px !important;
+  min-height: 210px !important;
+  flex: 0 0 210px !important;
+  margin: 0 auto 8px !important;
+  padding: 5px !important;
+  overflow: visible !important;
+  transform: none;
+}
+
+.roadmapItem > .roadmapEmblem .artwork {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+}
+
+/* Keep the completed/locked indicator inside the artwork frame. */
+.roadmapItem > .roadmapEmblem .stateMark,
+.roadmapItem > .roadmapEmblem .lockMark {
+  right: 3px !important;
+  bottom: 8px !important;
+}
+
+/* Hero emblem and orbital ring get a larger, unclipped stage. */
+.hero {
+  overflow: visible !important;
+  padding-top: 34px;
+  padding-bottom: 42px !important;
+}
+
+.heroRank {
+  box-sizing: border-box;
+  width: 290px !important;
+  height: 290px !important;
+  min-width: 290px !important;
+  flex: 0 0 290px !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  overflow: visible !important;
+  display: grid;
+  place-items: center;
+}
+
+.heroRankOrbit {
+  inset: 14px !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.heroRankInner {
+  box-sizing: border-box;
+  width: 238px !important;
+  height: 238px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.heroRankEmblem {
+  box-sizing: border-box;
+  display: grid !important;
+  place-items: center !important;
+  width: 232px !important;
+  height: 220px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  flex: 0 0 220px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.heroRankEmblem .artwork,
+.heroRankEmblem img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+}
+
+/* Keep the orbiting balls fully inside the enlarged ring. */
+.heroRankOrbit::before {
+  animation-name: heroOrbitBallA;
+}
+
+.heroRankOrbit::after {
+  animation-name: heroOrbitBallB;
+}
+
+@keyframes heroOrbitBallA {
+  from { transform: rotate(0deg) translateX(123px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(123px) rotate(-360deg); }
+}
+
+@keyframes heroOrbitBallB {
+  from { transform: rotate(180deg) translateX(123px) rotate(-180deg); }
+  to   { transform: rotate(540deg) translateX(123px) rotate(-540deg); }
+}
+
+.heroRankTag {
+  z-index: 5;
+  bottom: 0 !important;
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+  .roadmap {
+    min-height: 0 !important;
+    padding-top: 42px !important;
+    padding-bottom: 32px !important;
+  }
+
+  .roadmapItem {
+    min-height: 255px !important;
+  }
+
+  .roadmapItem > .roadmapEmblem {
+    width: min(100%, 190px) !important;
+    height: 190px !important;
+    min-height: 190px !important;
+    flex-basis: 190px !important;
+  }
+
+  .heroRank {
+    width: 260px !important;
+    height: 260px !important;
+    min-width: 260px !important;
+    flex-basis: 260px !important;
+  }
+
+  .heroRankInner {
+    width: 215px !important;
+    height: 215px !important;
+  }
+
+  .heroRankEmblem {
+    width: 210px !important;
+    height: 200px !important;
+    flex-basis: 200px !important;
+  }
+
+  @keyframes heroOrbitBallA {
+    from { transform: rotate(0deg) translateX(110px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(110px) rotate(-360deg); }
+  }
+
+  @keyframes heroOrbitBallB {
+    from { transform: rotate(180deg) translateX(110px) rotate(-180deg); }
+    to   { transform: rotate(540deg) translateX(110px) rotate(-540deg); }
+  }
+}
+
+/* Mobile */
+@media (max-width: 760px) {
+  .roadmap {
+    min-height: 0 !important;
+    padding: 28px 12px 24px !important;
+    row-gap: 12px;
+  }
+
+  .roadmapItem {
+    min-height: 215px !important;
+    padding: 8px 3px 12px !important;
+  }
+
+  .roadmapItem > .roadmapEmblem {
+    width: min(100%, 160px) !important;
+    height: 160px !important;
+    min-height: 160px !important;
+    flex-basis: 160px !important;
+  }
+
+  .heroRank {
+    width: 220px !important;
+    height: 220px !important;
+    min-width: 220px !important;
+    flex-basis: 220px !important;
+  }
+
+  .heroRankInner {
+    width: 180px !important;
+    height: 180px !important;
+  }
+
+  .heroRankEmblem {
+    width: 178px !important;
+    height: 170px !important;
+    flex-basis: 170px !important;
+  }
+
+  @keyframes heroOrbitBallA {
+    from { transform: rotate(0deg) translateX(91px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(91px) rotate(-360deg); }
+  }
+
+  @keyframes heroOrbitBallB {
+    from { transform: rotate(180deg) translateX(91px) rotate(-180deg); }
+    to   { transform: rotate(540deg) translateX(91px) rotate(-540deg); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroRankOrbit,
+  .heroRankOrbit::before,
+  .heroRankOrbit::after {
+    animation: none !important;
+  }
+}
+
+/* =========================================================
+   FINAL LAYOUT — roadmap and hero alignment
+   One authoritative block; no competing translateY overrides.
+========================================================= */
+
+.roadmapSection,
+.roadmap,
+.roadmapItem,
+.hero,
+.heroRank,
+.heroRankInner {
+  overflow: visible;
+}
+
+.roadmap {
+  align-items: start;
+  padding: 34px 18px 30px;
+  min-height: 0;
+}
+
+.roadmapTrack {
+  top: 122px;
+}
+
+.roadmapItem {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  padding: 0 3px 10px;
+  text-align: center;
+  overflow: visible;
+}
+
+.roadmapItem > .roadmapEmblem {
+  align-self: center;
+  flex-shrink: 0;
+  margin: 0 auto 5px;
+  overflow: visible;
+}
+
+.roadmapItem > .roadmapEmblem .artwork {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  overflow: visible;
+}
+
+.roadmapItem .rankTitle {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  line-height: 1.2;
+}
+
+.roadmapItem .roadmapState {
+  margin-top: 3px;
+}
+
+.roadmapItem .roadmapRank {
+  margin-top: 2px;
+}
+
+.hero {
+  overflow: visible;
+  align-items: center;
+}
+
+.heroRank {
+  position: relative;
+  z-index: 3;
+  isolation: isolate;
+  width: 270px;
+  height: 270px;
+  min-width: 270px;
+  flex: 0 0 270px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto;
+  padding: 0;
+  overflow: visible;
+}
+
+.heroRankOrbit {
+  position: absolute;
+  inset: 12px;
+  z-index: 0;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.heroRankInner {
+  position: relative;
+  z-index: 2;
+  width: 236px;
+  height: 236px;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.heroRankEmblem {
+  position: relative;
+  top: -8px;
+  display: grid;
+  place-items: center;
+  width: 236px;
+  height: 194px;
+  min-height: 194px;
+  flex: 0 0 194px;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.heroRankEmblem .artwork,
+.heroRankEmblem img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.heroRankOrbit::before,
+.heroRankOrbit::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #fff7c7 0 12%, #ffd15b 38%, #f39b20 78%, #a64c13 100%);
+  box-shadow: 0 0 7px 2px rgba(255, 199, 75, .8), 0 0 19px 5px rgba(255, 169, 43, .42);
+  pointer-events: none;
+}
+
+.heroRankOrbit::before {
+  animation: heroOrbitBallA 7s linear infinite;
+}
+
+.heroRankOrbit::after {
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  animation: heroOrbitBallB 7s linear infinite;
+}
+
+@keyframes heroOrbitBallA {
+  from { transform: rotate(0deg) translateX(116px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(116px) rotate(-360deg); }
+}
+
+@keyframes heroOrbitBallB {
+  from { transform: rotate(180deg) translateX(116px) rotate(-180deg); }
+  to { transform: rotate(540deg) translateX(116px) rotate(-540deg); }
+}
+
+.heroRankTag {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  margin: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+  .roadmap {
+    padding: 28px 14px 26px;
+  }
+
+  .roadmapTrack {
+    top: 116px;
+  }
+
+  .heroRank {
+    width: 244px;
+    height: 244px;
+    min-width: 244px;
+    flex-basis: 244px;
+  }
+
+  .heroRankInner {
+    width: 214px;
+    height: 214px;
+  }
+
+  .heroRankEmblem {
+    top: -7px;
+    width: 218px;
+    height: 180px;
+    flex-basis: 180px;
+  }
+
+  @keyframes heroOrbitBallA {
+    from { transform: rotate(0deg) translateX(104px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(104px) rotate(-360deg); }
+  }
+
+  @keyframes heroOrbitBallB {
+    from { transform: rotate(180deg) translateX(104px) rotate(-180deg); }
+    to { transform: rotate(540deg) translateX(104px) rotate(-540deg); }
+  }
+}
+
+@media (max-width: 760px) {
+  .roadmap {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 10px;
+    padding: 22px 12px 24px;
+  }
+
+  .roadmapTrack {
     display: none;
   }
 
-  /* Hide connectors in the mobile grid */
-  .roadmapConnector {
-    display: none;
+  .roadmapItem {
+    min-height: 0;
+    padding: 8px 4px 12px;
   }
 
-  /* Transcendent gets full width */
-  .roadmapItem:last-child {
-    grid-column: 1 / -1;
+  .heroRank {
+    width: 214px;
+    height: 214px;
+    min-width: 214px;
+    flex-basis: 214px;
+  }
+
+  .heroRankOrbit {
+    inset: 9px;
+  }
+
+  .heroRankInner {
+    width: 188px;
+    height: 188px;
+  }
+
+  .heroRankEmblem {
+    top: -6px;
+    width: 190px;
+    height: 158px;
+    flex-basis: 158px;
+  }
+
+  .heroRankTag {
+    bottom: -5px;
+  }
+
+  @keyframes heroOrbitBallA {
+    from { transform: rotate(0deg) translateX(93px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(93px) rotate(-360deg); }
+  }
+
+  @keyframes heroOrbitBallB {
+    from { transform: rotate(180deg) translateX(93px) rotate(-180deg); }
+    to { transform: rotate(540deg) translateX(93px) rotate(-540deg); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroRankOrbit,
+  .heroRankOrbit::before,
+  .heroRankOrbit::after {
+    animation: none !important;
+  }
+}
+
+
+/* =========================================================
+   VELOOP PREMIUM LEVEL PAGE — alignment + responsive polish
+   ========================================================= */
+.hero {
+  min-height: 330px;
+  padding: clamp(28px, 4vw, 56px) clamp(24px, 4.5vw, 64px);
+  border-color: rgba(244, 198, 107, .28);
+  background:
+    radial-gradient(ellipse at 78% 48%, rgba(184, 126, 255, .16), transparent 34%),
+    radial-gradient(ellipse at 92% 54%, rgba(244, 198, 107, .17), transparent 38%),
+    linear-gradient(115deg, #171a2d 0%, #20213b 52%, #191a31 100%);
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .25;
+  background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(90deg, transparent, #000 60%, #000);
+}
+.heroContent { max-width: 690px; }
+.hero h1 { text-shadow: 0 8px 35px rgba(0,0,0,.35); }
+.heroRank {
+  width: 290px;
+  height: 290px;
+  flex: 0 0 290px;
+  margin-right: 10px;
+}
+.heroRankOrbit {
+  inset: 12px;
+  border: 1px dashed rgba(244,198,107,.42);
+  box-shadow: 0 0 55px rgba(176,124,255,.14), inset 0 0 42px rgba(244,198,107,.07);
+}
+.heroRankInner {
+  width: 258px;
+  height: 258px;
+  gap: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  animation: none;
+  overflow: visible;
+}
+.heroRankInner .heroRankEmblem { margin: 0 auto; }
+.heroRankTag {
+  bottom: 3px;
+  z-index: 4;
+  padding: 9px 14px;
+  font-size: 8px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.3);
+}
+
+/* Roadmap: balanced rank tiles rather than squeezed seven-column badges. */
+.roadmap {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid rgba(169,139,255,.22);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(123,83,202,.13), transparent 62%),
+    linear-gradient(145deg, rgba(32,37,61,.98), rgba(19,23,40,.98));
+  box-shadow: inset 0 1px rgba(255,255,255,.045), 0 22px 55px rgba(0,0,0,.2);
+}
+.roadmapTrack { display: none; }
+.roadmapItem {
+  min-height: 285px;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 18px 12px 20px;
+  border: 1px solid rgba(255,255,255,.075);
+  border-radius: 20px;
+  background: linear-gradient(160deg, rgba(255,255,255,.045), rgba(255,255,255,.012));
+  box-shadow: inset 0 1px rgba(255,255,255,.035), 0 12px 24px rgba(0,0,0,.12);
+  transition: transform .28s ease, border-color .28s ease, background .28s ease, box-shadow .28s ease;
+}
+.roadmapItem:hover {
+  transform: translateY(-7px);
+  border-color: rgba(190,160,255,.36);
+  background: linear-gradient(160deg, rgba(255,255,255,.075), rgba(255,255,255,.018));
+  box-shadow: 0 18px 32px rgba(0,0,0,.25), inset 0 1px rgba(255,255,255,.08);
+}
+.roadmapItem.roadmapcurrent {
+  border-color: rgba(255,207,91,.7);
+  background:
+    radial-gradient(ellipse at 50% 28%, rgba(255,191,70,.15), transparent 65%),
+    linear-gradient(160deg, rgba(255,202,91,.09), rgba(255,255,255,.018));
+  box-shadow: 0 0 0 1px rgba(255,202,91,.08), 0 0 32px rgba(255,184,62,.13), inset 0 1px rgba(255,255,255,.1);
+}
+.roadmapItem.roadmapcompleted { border-color: rgba(66,215,155,.23); }
+.roadmapItem.roadmaplocked { opacity: .76; }
+.roadmapEmblem {
+  width: min(100%, 154px) !important;
+  height: 150px !important;
+  min-height: 150px !important;
+  flex: 0 0 150px !important;
+}
+.roadmapItem .rankTitle,
+.roadmapItem > strong {
+  min-height: 34px;
+  margin: 0;
+  color: #f7f5ff;
+  font-size: clamp(12px, 1.1vw, 15px);
+  font-weight: 850;
+  line-height: 1.3;
+  letter-spacing: -.2px;
+  text-wrap: balance;
+}
+.roadmapState {
+  min-width: 118px;
+  padding: 7px 11px;
+  border: 1px solid rgba(160,165,195,.2);
+  border-radius: 99px;
+  background: rgba(130,137,170,.09);
+  color: #bdc2d8;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.roadmapcompleted .roadmapState {
+  border-color: rgba(66,215,155,.34);
+  background: rgba(66,215,155,.09);
+  color: #83e8bd;
+}
+.roadmapcurrent .roadmapState {
+  border-color: rgba(255,207,91,.48);
+  background: rgba(255,194,72,.12);
+  color: #ffe19a;
+}
+.roadmapRank {
+  color: #aeb5ce;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+.roadmapLegend {
+  justify-content: center;
+  gap: 26px;
+  margin-top: 20px;
+}
+.roadmapLegend span { font-size: 10px; }
+
+@media (max-width: 1050px) {
+  .heroRank { width: 240px; height: 240px; flex-basis: 240px; }
+  .heroRankInner { width: 220px; height: 220px; }
+  .roadmap { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding: 22px; }
+  .roadmapItem { min-height: 270px; }
+}
+@media (max-width: 760px) {
+  .hero { gap: 20px; }
+  .heroRank { width: 205px; height: 205px; flex-basis: 205px; margin: 0; }
+  .heroRankInner { width: 190px; height: 190px; }
+  .roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .roadmapItem { min-height: 250px; }
+  .roadmapEmblem { width: min(100%, 140px) !important; height: 136px !important; min-height: 136px !important; flex-basis: 136px !important; }
+}
+@media (max-width: 560px) {
+  .hero { align-items: center; text-align: center; }
+  .heroContent { width: 100%; }
+  .eyebrow { justify-content: center; }
+  .heroContent > p { margin-inline: auto; }
+  .heroRank { width: 210px; height: 210px; flex-basis: 210px; align-self: center; }
+  .heroRankInner { width: 200px; height: 200px; }
+  .heroRankTag { bottom: -2px; }
+  .roadmap { gap: 11px; padding: 14px; }
+  .roadmapItem { min-height: 226px; padding: 13px 7px 15px; border-radius: 16px; }
+  .roadmapEmblem { width: min(100%, 124px) !important; height: 120px !important; min-height: 120px !important; flex-basis: 120px !important; }
+  .roadmapItem .rankTitle, .roadmapItem > strong { font-size: 11px; min-height: 30px; }
+  .roadmapState { min-width: 0; padding: 6px 9px; font-size: 7px; }
+  .roadmapRank { font-size: 9px; }
+  .roadmapLegend { gap: 14px; }
+}
+@media (max-width: 360px) {
+  .roadmap { gap: 8px; padding: 10px; }
+  .roadmapEmblem { width: 108px !important; height: 108px !important; min-height: 108px !important; flex-basis: 108px !important; }
+}
+
+
+/* FINAL ALIGNMENT FIX — orbital nodes sit exactly on the circular stroke. */
+.heroRankOrbit::before {
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.heroRankOrbit::after {
+  right: auto;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.levelEmblemOrbit::before {
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.levelEmblemOrbit::after {
+  right: auto;
+  bottom: -5px;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  transform: translateX(-50%);
+}
+
+/* Prevent rank artwork from being clipped by grid/flex sizing. */
+.roadmap,
+.roadmapItem,
+.roadmapEmblem {
+  overflow: visible !important;
+}
+.roadmapItem {
+  align-self: stretch;
+  min-width: 0;
+}
+.roadmapEmblem {
+  display: grid !important;
+  place-items: center !important;
+  align-self: center !important;
+  flex-shrink: 0 !important;
+  aspect-ratio: 1 / 1;
+  max-width: 100%;
+}
+.roadmapEmblem img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+/* A layered metallic presentation around the original detailed crest. */
+.heroRankInner {
+  position: relative;
+  isolation: isolate;
+}
+.heroRankInner::before {
+  content: "";
+  position: absolute;
+  width: 82%;
+  height: 82%;
+  border: 1px solid rgba(255, 218, 139, .38);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 187, 74, .12), rgba(36, 24, 39, .12) 58%, transparent 72%);
+  box-shadow: 0 0 28px rgba(255, 173, 65, .16), inset 0 0 24px rgba(255, 216, 141, .08);
+  pointer-events: none;
+  z-index: -1;
+}
+.heroRankInner::after {
+  content: "";
+  position: absolute;
+  width: 94%;
+  height: 94%;
+  border: 1px dashed rgba(255, 220, 157, .22);
+  border-radius: 50%;
+  transform: rotate(-18deg);
+  pointer-events: none;
+  z-index: -1;
+}
+@media (max-width: 560px) {
+  .roadmapEmblem { aspect-ratio: 1 / 1; }
+}
+
+
+/* =========================================================
+   ORBIT BALL POSITIONING — anchored to the badge container,
+   not animated pseudo-elements on the rotating ring.
+   This prevents the particles drifting to the hero/page border.
+   ========================================================= */
+.heroRank {
+  position: relative !important;
+  isolation: isolate;
+}
+.heroRankOrbit {
+  position: absolute !important;
+  inset: 12px !important;
+  z-index: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 50% !important;
+  animation: none !important;
+  transform: none !important;
+  pointer-events: none !important;
+}
+.heroRankOrbit::before,
+.heroRankOrbit::after {
+  content: none !important;
+  display: none !important;
+}
+.heroOrbitBall {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(255, 239, 177, .95);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #fffbdc 0 10%, #ffe080 28%, #ffb72f 62%, #bd6818 100%);
+  box-shadow: 0 0 8px 2px rgba(255, 197, 69, .85), 0 0 20px 5px rgba(255, 169, 43, .48);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.heroOrbitBallTop { top: 7px; }
+.heroOrbitBallBottom { bottom: 7px; width: 11px; height: 11px; }
+@media (prefers-reduced-motion: reduce) {
+  .heroRankOrbit { animation: none !important; }
+}
+
+
+/* Orbit v4: the ring and BOTH particles share one rotating coordinate
+   system, so the particles travel around the circumference together. */
+.heroOrbitSystem {
+  position: absolute;
+  z-index: 2;
+  inset: 12px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: heroOrbitTravel 9s linear infinite;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.heroOrbitSystem .heroRankOrbit {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 1px solid rgba(244, 198, 107, .34) !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  box-shadow: 0 0 22px rgba(244, 198, 107, .08), inset 0 0 18px rgba(244, 198, 107, .035) !important;
+  animation: none !important;
+}
+.heroOrbitSystem .heroOrbitBall {
+  position: absolute;
+  left: 50%;
+  z-index: 4;
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 246, 204, .95);
+  background: radial-gradient(circle at 30% 25%, #fffde8 0 9%, #ffe38a 25%, #ffb82e 62%, #b96616 100%);
+  box-shadow: 0 0 9px 2px rgba(255, 198, 70, .95), 0 0 22px 6px rgba(255, 170, 45, .52);
+  transform: translateX(-50%);
+}
+.heroOrbitSystem .heroOrbitBallTop {
+  top: -5px;
+  bottom: auto;
+}
+.heroOrbitSystem .heroOrbitBallBottom {
+  top: auto;
+  bottom: -5px;
+  width: 11px;
+  height: 11px;
+}
+@keyframes heroOrbitTravel {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.heroRankInner {
+  position: relative;
+  z-index: 3;
+}
+.heroRankTag {
+  z-index: 5;
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroOrbitSystem { animation: none !important; }
+}
+
+
+/* =========================================================
+   BADGE LOWER JEWEL VISIBILITY FIX
+   The hero CTA was overlapping the bottom tip of the crest.
+   Move the CTA below the orbit and give the artwork its full
+   intrinsic aspect ratio. Roadmap cards get the same protection.
+   ========================================================= */
+.heroRank {
+  min-height: 316px;
+  margin-bottom: 10px;
+  overflow: visible !important;
+}
+.heroRankInner {
+  overflow: visible !important;
+}
+.heroRankEmblem {
+  position: relative !important;
+  top: -8px !important;
+  width: 270px !important;
+  height: 218px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  flex: 0 0 218px !important;
+  overflow: visible !important;
+  margin: 0 !important;
+}
+.heroRankEmblem img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+}
+.heroRankTag {
+  bottom: -7px !important;
+  z-index: 6 !important;
+  white-space: nowrap;
+}
+.roadmapEmblem {
+  width: min(100%, 190px) !important;
+  height: 172px !important;
+  min-height: 172px !important;
+  flex: 0 0 172px !important;
+  overflow: visible !important;
+}
+.roadmapEmblem img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+}
+.roadmapItem {
+  overflow: visible !important;
+  padding-bottom: 22px;
+}
+@media (max-width: 760px) {
+  .heroRank {
+    min-height: 286px;
+    margin-bottom: 8px;
+  }
+  .heroRankEmblem {
+    width: 236px !important;
+    height: 190px !important;
+    flex-basis: 190px !important;
+  }
+  .heroRankTag { bottom: -5px !important; }
+  .roadmapEmblem {
+    width: min(100%, 154px) !important;
+    height: 142px !important;
+    min-height: 142px !important;
+    flex-basis: 142px !important;
+  }
+}
+@media (max-width: 560px) {
+  .heroRank {
+    min-height: 282px;
+    margin-bottom: 8px;
+  }
+  .heroRankEmblem {
+    width: 228px !important;
+    height: 184px !important;
+    flex-basis: 184px !important;
+  }
+  .heroRankTag { bottom: -3px !important; }
+  .roadmapEmblem {
+    width: min(100%, 138px) !important;
+    height: 130px !important;
+    min-height: 130px !important;
+    flex-basis: 130px !important;
+  }
+}
+
+
+/* =========================================================
+   PREMIUM BADGE FINISH — restore the missing lower crest tips.
+   The supplied rank PNGs end with a flat lower jewel edge, so
+   this adds a matching beveled gold point without replacing art.
+   ========================================================= */
+.levelEmblem {
+  clip-path: none !important;
+  background: transparent !important;
+  isolation: isolate;
+  overflow: visible !important;
+  filter:
+    drop-shadow(0 10px 14px rgba(0,0,0,.42))
+    drop-shadow(0 0 18px rgba(244,177,91,.28)) !important;
+}
+.levelEmblem::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 !important;
+  clip-path: polygon(
+    50% 0%, 63% 8%, 79% 5%, 88% 19%,
+    99% 31%, 94% 47%, 100% 59%, 88% 74%,
+    86% 88%, 69% 94%, 50% 100%, 31% 94%,
+    14% 88%, 12% 74%, 0 59%, 6% 43%,
+    2% 29%, 14% 18%, 22% 5%, 38% 8%
+  );
+  border: 0 !important;
+  background:
+    linear-gradient(145deg, rgba(255,239,195,.96), transparent 18%) padding-box,
+    linear-gradient(145deg, #f9d18a 0%, #a85e32 35%, #542b28 72%, #17182c 100%);
+  box-shadow: inset 0 0 0 2px rgba(255,229,174,.55), inset 0 -12px 22px rgba(0,0,0,.28);
+}
+.levelEmblem::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: -7px;
+  width: 15px;
+  height: 15px;
+  transform: translateX(-50%) rotate(45deg);
+  border: 1px solid #ffe8a1;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #fff4bd 0%, #ffbd43 43%, #9e4b1d 100%);
+  box-shadow: 0 0 10px rgba(255,183,67,.65), inset 0 0 0 2px rgba(255,255,255,.25);
+}
+.levelEmblem .emblemInner {
+  z-index: 1;
+  width: 100% !important;
+  height: 100% !important;
+  padding-bottom: 5px;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(255,222,165,.19), transparent 50%),
+    linear-gradient(160deg, rgba(103,61,43,.86), rgba(30,22,35,.94) 78%) !important;
+  border: 1px solid rgba(255,231,185,.34);
+  clip-path: polygon(
+    50% 2%, 63% 10%, 78% 7%, 87% 21%,
+    97% 32%, 92% 48%, 98% 59%, 86% 74%,
+    84% 87%, 68% 92%, 50% 98%, 32% 92%,
+    16% 87%, 14% 74%, 2% 59%, 8% 43%,
+    4% 30%, 15% 19%, 23% 7%, 38% 10%
+  );
+  box-shadow: inset 0 0 18px rgba(255,231,190,.13), inset 0 -12px 18px rgba(0,0,0,.3);
+}
+.levelEmblem .emblemInner svg {
+  filter: drop-shadow(0 0 7px rgba(255,210,116,.8));
+}
+.levelEmblemJewel {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: -8px;
+  width: 13px;
+  height: 13px;
+  transform: translateX(-50%) rotate(45deg);
+  border: 1px solid rgba(255,241,183,.95);
+  border-radius: 2px;
+  background: linear-gradient(135deg, #fff2b0, #ffb938 55%, #9c4b20);
+  box-shadow: 0 0 12px rgba(255,185,66,.68), inset 0 0 0 2px rgba(255,255,255,.22);
+  pointer-events: none;
+}
+.levelEmblemStage {
+  overflow: visible !important;
+  padding-bottom: 9px;
+}
+.heroRank {
+  min-height: 330px !important;
+  overflow: visible !important;
+  padding-bottom: 12px;
+}
+.heroRankInner {
+  overflow: visible !important;
+}
+.heroRankEmblem {
+  width: 270px !important;
+  height: 218px !important;
+  flex: 0 0 218px !important;
+  overflow: visible !important;
+}
+.heroRankTag {
+  bottom: -2px !important;
+  transform: none;
+}
+@media (max-width: 760px) {
+  .heroRank { min-height: 300px !important; }
+  .heroRankEmblem {
+    width: 236px !important;
+    height: 190px !important;
+    flex-basis: 190px !important;
+  }
+}
+@media (max-width: 560px) {
+  .heroRank { min-height: 292px !important; }
+  .heroRankEmblem {
+    width: 228px !important;
+    height: 184px !important;
+    flex-basis: 184px !important;
   }
 }

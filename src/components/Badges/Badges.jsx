@@ -1,7 +1,20 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Trophy } from 'lucide-react';
+import {
+  ArrowLeft,
+  Trophy,
+  LockKeyhole,
+  Sparkles,
+  Zap,
+  Flame,
+  Target,
+  Gamepad2,
+  Crown,
+  Medal,
+  ShieldCheck,
+} from 'lucide-react';
+
 import { BADGES, BADGE_CATEGORIES } from '../../data/badges';
 import { XP_PER_LEVEL } from '../../data/levelData';
 import BadgeCelebration from '../BadgeCelebration/BadgeCelebration.jsx';
@@ -22,24 +35,15 @@ const readNum = (key) => Math.max(0, Number(localStorage.getItem(key)) || 0);
 function getAchievementData() {
   const xp = readNum('veloop-total-xp');
   const streak = readJSON('veloop-streak-data', {});
-  const missionStreak = readJSON(
-  'veloop-mission-streak-data',
-  {}
-);
+  const missionStreak = readJSON('veloop-mission-streak-data', {});
 
   return {
     xp,
     level: Math.floor(xp / XP_PER_LEVEL) + 1,
     streak: Number(streak.currentStreak ?? streak.streak ?? 0),
     missions: readNum('veloop-total-missions-completed'),
-    perfectWeekDays: Number(
-  missionStreak.bestStreak || 0
-),
-
-    // Total completed games
+    perfectWeekDays: Number(missionStreak.bestStreak || 0),
     gamesPlayed: readNum('veloop-games-played'),
-
-    // Highest objects caught in a single game
     singleGameObjects: readNum('veloop-best-single-game-objects'),
   };
 }
@@ -48,6 +52,14 @@ function getHistory() {
   const saved = readJSON(STORAGE_KEY, []);
   return Array.isArray(saved) ? saved : [];
 }
+
+const statItems = [
+  { key: 'xp', label: 'Total XP', icon: Zap, color: 'gold' },
+  { key: 'level', label: 'Player Level', icon: Crown, color: 'purple' },
+  { key: 'streak', label: 'Day Streak', icon: Flame, color: 'orange' },
+  { key: 'missions', label: 'Missions', icon: Target, color: 'cyan' },
+  { key: 'gamesPlayed', label: 'Games Played', icon: Gamepad2, color: 'pink' },
+];
 
 export default function Badges() {
   const [category, setCategory] = useState('All');
@@ -124,135 +136,287 @@ export default function Badges() {
     (badge) => unlockedIds.has(badge.id)
   ).length;
 
-  const percentage = Math.round(
-    (unlockedCount / BADGES.length) * 100
-  );
+  const percentage = BADGES.length
+    ? Math.round((unlockedCount / BADGES.length) * 100)
+    : 0;
+
+  const getRarityClass = (rarity) => {
+    const key = String(rarity || 'common').toLowerCase();
+    return styles[key] || styles.common;
+  };
 
   return (
     <main className={styles.page}>
+      <div className={styles.backgroundGrid} />
+      <div className={styles.ambientGold} />
+      <div className={styles.ambientPurple} />
+
       <header className={styles.topbar}>
         <Link to="/Lvl-Dashboard" className={styles.backLink}>
           <ArrowLeft size={17} />
-          Back to Dashboard
+          <span>Return to Dashboard</span>
         </Link>
 
-        <span className={styles.brand}>VELOOP REWARDS</span>
+        <div className={styles.brand}>
+          <span className={styles.brandMark}>
+            <Crown size={17} />
+          </span>
+          VELOOP <span>REWARDS</span>
+        </div>
+
+        <div className={styles.topbarStatus}>
+          <span className={styles.statusDot} />
+          PLAYER PROFILE
+        </div>
       </header>
 
       <section className={styles.container}>
-        <div className={styles.heading}>
-          <div>
-            <span className={styles.eyebrow}>YOUR ACHIEVEMENTS</span>
-            <h1>Badges &amp; Milestones</h1>
+        {/* HERO */}
+        <section className={styles.hero}>
+          <div className={styles.heroContent}>
+            <div className={styles.eyebrow}>
+              <Sparkles size={14} />
+              THE ACHIEVEMENT VAULT
+            </div>
+
+            <h1>
+              Prove Your <span>Legend.</span>
+            </h1>
+
             <p>
-              Complete challenges, unlock achievements and build your collection.
+              Every challenge tells a story. Every achievement earns its place.
+              Build your legacy and collect them all.
             </p>
+
+            <div className={styles.heroMeta}>
+              <div className={styles.playerLevel}>
+                <Crown size={16} />
+                LEVEL {stats.level}
+              </div>
+              <span className={styles.heroDivider} />
+              <span className={styles.playerName}>VELOOPER</span>
+            </div>
           </div>
 
-          <div className={styles.count}>
-            <Trophy size={17} />
-            {unlockedCount} / {BADGES.length} Unlocked
-          </div>
-        </div>
-
-        <section className={styles.progressCard}>
-          <div className={styles.progressHeader}>
-            <span>Collection Progress</span>
-            <strong>{percentage}%</strong>
-          </div>
-
-          <div className={styles.progressTrack}>
-            <div
-              className={styles.progressFill}
-              style={{ width: `${percentage}%` }}
-            />
+          <div className={styles.heroTrophy}>
+            <div className={`${styles.trophyOrbit} ${styles.trophyOrbitOne}`} />
+            <div className={`${styles.trophyOrbit} ${styles.trophyOrbitTwo}`} />
+            <div className={styles.trophyGlow} />
+            <div className={styles.trophyCore}>
+              <Trophy size={65} strokeWidth={1.3} />
+            </div>
+            <Sparkles className={styles.trophySparkleOne} size={19} />
+            <Sparkles className={styles.trophySparkleTwo} size={14} />
+            <span className={styles.trophyCaption}>YOUR LEGACY</span>
           </div>
         </section>
 
-        <nav className={styles.filters} aria-label="Filter badges">
-          {BADGE_CATEGORIES.map((item) => (
-            <button
-              key={item}
-              type="button"
-              className={category === item ? styles.activeFilter : ''}
-              onClick={() => setCategory(item)}
-            >
-              {item}
-            </button>
-          ))}
-        </nav>
-
-        <div className={styles.grid}>
-          {visibleBadges.map((badge) => {
-            const Icon = badge.icon;
-            const unlocked = unlockedIds.has(badge.id);
-
-            const value = Math.min(
-              Number(stats[badge.key] || 0),
-              badge.target
-            );
-
-            const progress = Math.min(
-              100,
-              (value / badge.target) * 100
-            );
+        {/* PLAYER STATS */}
+        <section className={styles.statsGrid}>
+          {statItems.map((item) => {
+            const Icon = item.icon;
 
             return (
               <article
-                key={badge.id}
-                className={`${styles.badgeCard} ${
-                  unlocked ? styles.unlocked : ''
-                }`}
+                key={item.key}
+                className={`${styles.statCard} ${styles[item.color]}`}
               >
-                <div className={styles.cardTop}>
-                  <div className={styles.badgeIcon}>
-                    {unlocked ? (
-                      <Icon size={27} />
-                    ) : (
-                      <span className={styles.lock}>🔒</span>
-                    )}
-                  </div>
-
-                  <span
-                    className={`${styles.rarity} ${
-                      styles[badge.rarity.toLowerCase()]
-                    }`}
-                  >
-                    {badge.rarity}
-                  </span>
+                <div className={styles.statIcon}>
+                  <Icon size={19} />
                 </div>
-
-                <span className={styles.category}>{badge.category}</span>
-
-                <h3>{badge.title}</h3>
-                <p>{badge.description}</p>
-
-                <div className={styles.progressInfo}>
-                  <span>{unlocked ? 'Completed' : 'Progress'}</span>
-                  <strong>
-                    {value.toLocaleString('en-IN')} /{' '}
-                    {badge.target.toLocaleString('en-IN')}
+                <div>
+                  <span className={styles.statLabel}>{item.label}</span>
+                  <strong className={styles.statValue}>
+                    {Number(stats[item.key] || 0).toLocaleString('en-IN')}
                   </strong>
                 </div>
-
-                <div className={styles.badgeTrack}>
-                  <div
-                    className={styles.badgeFill}
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-
-                <span
-                  className={
-                    unlocked ? styles.unlockedLabel : styles.lockedLabel
-                  }
-                >
-                  {unlocked ? 'UNLOCKED' : 'LOCKED'}
-                </span>
               </article>
             );
           })}
-        </div>
+        </section>
+
+        {/* COLLECTION PROGRESS */}
+        <section className={styles.collectionCard}>
+          <div className={styles.collectionTop}>
+            <div className={styles.collectionTitle}>
+              <div className={styles.collectionIcon}>
+                <Medal size={21} />
+              </div>
+              <div>
+                <span className={styles.smallLabel}>YOUR COLLECTION</span>
+                <h2>Achievement Progress</h2>
+              </div>
+            </div>
+
+            <div className={styles.collectionCount}>
+              <strong>{unlockedCount}</strong>
+              <span>/ {BADGES.length} UNLOCKED</span>
+            </div>
+          </div>
+
+          <div className={styles.collectionTrack}>
+            <div
+              className={styles.collectionFill}
+              style={{ width: `${percentage}%` }}
+            />
+          </div>
+
+          <div className={styles.collectionBottom}>
+            <span>{percentage}% of the vault discovered</span>
+            <span>{BADGES.length - unlockedCount} achievements remaining</span>
+          </div>
+        </section>
+
+        {/* BADGE COLLECTION */}
+        <section className={styles.vaultSection}>
+          <div className={styles.sectionHeading}>
+            <div>
+              <span className={styles.smallLabel}>CHOOSE YOUR CHALLENGE</span>
+              <h2>The Badge Vault</h2>
+              <p>Collect achievements and rise through the ranks.</p>
+            </div>
+
+            <div className={styles.vaultTotal}>
+              <ShieldCheck size={17} />
+              {unlockedCount} COLLECTED
+            </div>
+          </div>
+
+          <nav className={styles.filters} aria-label="Filter badges">
+            {BADGE_CATEGORIES.map((item) => (
+              <button
+                key={item}
+                type="button"
+                className={category === item ? styles.activeFilter : ''}
+                onClick={() => setCategory(item)}
+              >
+                {item === 'All' && <Trophy size={13} />}
+                {item}
+              </button>
+            ))}
+          </nav>
+
+          <div className={styles.grid}>
+            {visibleBadges.map((badge, index) => {
+              const Icon = badge.icon;
+              const unlocked = unlockedIds.has(badge.id);
+
+              const value = Math.min(
+                Number(stats[badge.key] || 0),
+                badge.target
+              );
+
+              const progress = badge.target > 0
+                ? Math.min(100, (value / badge.target) * 100)
+                : 0;
+
+              return (
+                <article
+                  key={badge.id}
+                  className={`${styles.badgeCard} ${
+                    unlocked ? styles.unlocked : styles.locked
+                  }`}
+                  style={{ '--card-index': index }}
+                >
+                  <div className={styles.cardTop}>
+                    <span className={styles.badgeCategory}>
+                      {badge.category}
+                    </span>
+
+                    <span
+                      className={`${styles.rarity} ${getRarityClass(
+                        badge.rarity
+                      )}`}
+                    >
+                      {badge.rarity}
+                    </span>
+                  </div>
+
+                  <div className={styles.emblemArea}>
+                    <div className={styles.emblemGlow} />
+                    <div className={styles.emblemOuter}>
+                      <div className={styles.emblemMiddle}>
+                        <div className={styles.emblemInner}>
+                          <div className={styles.emblemIcon}>
+                            {unlocked ? (
+                              <Icon size={34} strokeWidth={1.7} />
+                            ) : (
+                              <LockKeyhole size={29} strokeWidth={1.8} />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {unlocked && (
+                      <>
+                        <span className={styles.emblemSparkle}>
+                          <Sparkles size={15} />
+                        </span>
+                        <span className={styles.emblemCheck}>
+                          <ShieldCheck size={17} />
+                        </span>
+                      </>
+                    )}
+                  </div>
+
+                  <div className={styles.badgeDetails}>
+                    <h3>{badge.title}</h3>
+                    <p>{badge.description}</p>
+                  </div>
+
+                  <div className={styles.badgeProgress}>
+                    <div className={styles.progressHeading}>
+                      <span>{unlocked ? 'CHALLENGE COMPLETE' : 'CHALLENGE PROGRESS'}</span>
+                      <strong>
+                        {value.toLocaleString('en-IN')} /{' '}
+                        {badge.target.toLocaleString('en-IN')}
+                      </strong>
+                    </div>
+
+                    <div className={styles.badgeTrack}>
+                      <div
+                        className={styles.badgeFill}
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.cardFooter}>
+                    {unlocked ? (
+                      <span className={styles.unlockedLabel}>
+                        <ShieldCheck size={14} />
+                        UNLOCKED
+                      </span>
+                    ) : (
+                      <span className={styles.lockedLabel}>
+                        <LockKeyhole size={13} />
+                        LOCKED
+                      </span>
+                    )}
+
+                    <span className={styles.progressPercent}>
+                      {Math.floor(progress)}%
+                    </span>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          {visibleBadges.length === 0 && (
+            <div className={styles.emptyState}>
+              <Trophy size={35} />
+              <h3>No achievements found</h3>
+              <p>Try selecting another category.</p>
+            </div>
+          )}
+        </section>
+
+        <footer className={styles.footer}>
+          <span>VELOOP REWARDS</span>
+          <span>YOUR JOURNEY. YOUR LEGACY.</span>
+        </footer>
       </section>
 
       {celebration && (
