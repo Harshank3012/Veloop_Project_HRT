@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import {
   X,
   Award,
@@ -14,7 +15,7 @@ export default function BadgeCelebration({
 }) {
   if (!badge) return null;
 
-  return (
+  return createPortal((
     <div className={styles.overlay} onClick={onClose}>
       <div
         className={styles.modal}
@@ -68,5 +69,5 @@ export default function BadgeCelebration({
         </button>
       </div>
     </div>
-  );
+  ), document.body);
 }

@@ -1,0 +1,305 @@
+/* VELOOP rank emblem — clean, single sizing system */
+.emblem {
+  --rank-glow: rgba(255, 190, 80, .32);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  margin: 0 auto;
+  overflow: visible;
+  box-sizing: border-box;
+  transition: filter .28s ease;
+}
+
+.artwork {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  user-select: none;
+  pointer-events: none;
+  filter:
+    drop-shadow(0 8px 8px rgba(0, 0, 0, .34))
+    drop-shadow(0 0 5px rgba(255, 255, 255, .08));
+  transition: filter .28s ease;
+}
+
+.emblemAura {
+  position: absolute;
+  z-index: 0;
+  width: 78%;
+  height: 78%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--rank-glow), transparent 69%);
+  opacity: .28;
+  filter: blur(15px);
+  transform: scale(.88);
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: none;
+}
+
+.bronze { --rank-glow: rgba(255, 153, 55, .68); }
+.silver { --rank-glow: rgba(177, 216, 255, .55); }
+.gold { --rank-glow: rgba(255, 195, 52, .65); }
+.platinum { --rank-glow: rgba(73, 213, 255, .62); }
+.diamond { --rank-glow: rgba(179, 101, 255, .68); }
+.legendary { --rank-glow: rgba(255, 91, 46, .72); }
+.transcendent { --rank-glow: rgba(190, 91, 255, .8); }
+
+.current {
+  z-index: 2;
+  animation: currentEmblemFloat 3.4s ease-in-out infinite;
+}
+
+.current .emblemAura {
+  opacity: .95;
+  transform: scale(1.16);
+  animation: currentEmblemAura 2.5s ease-in-out infinite;
+}
+
+.current .artwork {
+  filter:
+    drop-shadow(0 0 10px var(--rank-glow))
+    drop-shadow(0 10px 10px rgba(0, 0, 0, .4));
+}
+
+.completed .artwork {
+  filter:
+    drop-shadow(0 7px 8px rgba(0, 0, 0, .35))
+    saturate(1.05);
+}
+
+.locked .artwork {
+  filter:
+    grayscale(.42)
+    brightness(.76)
+    saturate(.68)
+    drop-shadow(0 8px 10px rgba(0, 0, 0, .46));
+}
+
+.emblem:hover .emblemAura {
+  opacity: .9;
+  transform: scale(1.12);
+}
+
+.stateMark,
+.lockMark {
+  position: absolute;
+  z-index: 3;
+  right: 7px;
+  bottom: 9px;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(12, 17, 35, .92);
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .4);
+}
+
+.stateMark {
+  color: #c9ffe4;
+  background: linear-gradient(145deg, #36c88c, #08734f);
+}
+
+.lockMark {
+  color: #d9dff4;
+  background: linear-gradient(145deg, #697493, #303a59);
+  font-size: 11px;
+}
+
+/* Roadmap art: full 7-rank badge, including lower jewel. */
+.roadmapVariant {
+  width: min(100%, 194px);
+  height: 180px;
+  min-height: 180px;
+  flex: 0 0 180px;
+  padding: 0;
+  overflow: visible;
+}
+
+/* Hero artwork is centered in the orbit, slightly lifted independently
+   from the ring and CTA. Do not use transform here: current has float anim. */
+.heroVariant {
+  position: relative;
+  top: -8px;
+  width: 236px;
+  height: 194px;
+  min-height: 194px;
+  flex: 0 0 194px;
+  padding: 0;
+  overflow: visible;
+}
+
+@keyframes currentEmblemFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes currentEmblemAura {
+  0%, 100% { opacity: .65; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 1100px) {
+  .roadmapVariant {
+    width: min(100%, 180px);
+    height: 168px;
+    min-height: 168px;
+    flex-basis: 168px;
+  }
+
+  .heroVariant {
+    top: -7px;
+    width: 218px;
+    height: 180px;
+    min-height: 180px;
+    flex-basis: 180px;
+  }
+}
+
+@media (max-width: 760px) {
+  .roadmapVariant {
+    width: min(100%, 158px);
+    height: 150px;
+    min-height: 150px;
+    flex-basis: 150px;
+  }
+
+  .heroVariant {
+    top: -6px;
+    width: 190px;
+    height: 158px;
+    min-height: 158px;
+    flex-basis: 158px;
+  }
+
+  .stateMark,
+  .lockMark {
+    right: 3px;
+    bottom: 7px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .current,
+  .current .emblemAura {
+    animation: none !important;
+  }
+}
+
+
+/* Premium crest finish and consistent hero/roadmap sizing */
+.emblem { transition: transform .3s ease, filter .3s ease; }
+.emblem:hover { transform: translateY(-5px) scale(1.045); }
+.artwork {
+  filter: drop-shadow(0 10px 9px rgba(0,0,0,.42)) drop-shadow(0 0 8px rgba(255,255,255,.1));
+}
+.current .artwork {
+  filter: drop-shadow(0 0 13px var(--rank-glow)) drop-shadow(0 13px 12px rgba(0,0,0,.48));
+}
+.completed .artwork { filter: saturate(1.13) drop-shadow(0 9px 9px rgba(0,0,0,.4)); }
+.locked .artwork { filter: grayscale(.72) brightness(.68) saturate(.55) drop-shadow(0 8px 9px rgba(0,0,0,.42)); }
+.roadmapVariant { width: min(100%, 154px); height: 150px; min-height: 150px; flex: 0 0 150px; }
+.heroVariant { top: 0; width: 258px; height: 238px; min-height: 238px; flex: 0 0 238px; }
+.current .emblemAura { opacity: .95; transform: scale(1.28); }
+.stateMark, .lockMark { right: 4px; bottom: 8px; width: 27px; height: 27px; }
+@media (max-width: 1050px) {
+  .heroVariant { width: 220px; height: 205px; min-height: 205px; flex-basis: 205px; }
+}
+@media (max-width: 760px) {
+  .heroVariant { width: 190px; height: 180px; min-height: 180px; flex-basis: 180px; }
+  .roadmapVariant { width: min(100%, 140px); height: 136px; min-height: 136px; flex-basis: 136px; }
+}
+@media (max-width: 560px) {
+  .heroVariant { width: 200px; height: 190px; min-height: 190px; flex-basis: 190px; }
+  .roadmapVariant { width: min(100%, 124px); height: 120px; min-height: 120px; flex-basis: 120px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .emblem, .current { animation: none !important; transition: none !important; }
+}
+
+
+/* Keep full badge silhouette visible and add a premium metal halo. */
+.emblem {
+  overflow: visible !important;
+  flex-shrink: 0;
+}
+.artwork {
+  object-fit: contain !important;
+  object-position: center !important;
+  overflow: visible;
+  transform: scale(.96);
+  transition: transform .35s ease, filter .35s ease;
+}
+.emblem:hover .artwork { transform: scale(1.025); }
+.roadmapVariant {
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+}
+.heroVariant {
+  aspect-ratio: 1 / 1;
+}
+
+
+/* Never crop the bottom jewel or wing tips of any rank image. */
+.artwork {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  overflow: visible !important;
+}
+.roadmapVariant,
+.heroVariant {
+  overflow: visible !important;
+  flex-shrink: 0 !important;
+}
+
+
+
+
+/* Final crest cleanup: use the original integrated lower tip in each PNG.
+   No separate jewel is layered below the artwork, so nothing floats detached. */
+.emblem {
+  overflow: visible !important;
+  isolation: isolate;
+}
+.artwork {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+}
+.roadmapVariant {
+  width: min(100%, 190px);
+  height: 172px;
+  min-height: 172px;
+  flex: 0 0 172px;
+  overflow: visible !important;
+}
+.heroVariant {
+  overflow: visible !important;
+}
+.emblem:hover .artwork {
+  transform: scale(1.025) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .emblem:hover .artwork { transform: none !important; }
+}
