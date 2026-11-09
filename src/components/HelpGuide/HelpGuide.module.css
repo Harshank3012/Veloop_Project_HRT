@@ -210,3 +210,31 @@
     padding: 13px 16px;
   }
 }
+
+/* VELOOP heading polish */
+.headerText h2 {
+  color: #f1d69a;
+  background: linear-gradient(100deg, #fff0c7, #e5bd73 58%, #cbb7f0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* Help guide — premium modal treatment */
+.overlay { background:rgba(3,6,17,.72);backdrop-filter:blur(9px); }
+.modal {
+  border:1px solid rgba(190,170,255,.22);
+  border-radius:24px;
+  background:radial-gradient(ellipse at 90% 0%,rgba(151,113,222,.16),transparent 42%),linear-gradient(145deg,#18203a,#0c1328);
+  box-shadow:0 32px 90px rgba(0,0,0,.55),inset 0 1px rgba(255,255,255,.07);
+}
+.header { border-bottom-color:rgba(190,170,255,.12); }
+.sectionButton { border:1px solid rgba(190,170,255,.13);border-radius:13px;background:rgba(255,255,255,.025);transition:background .2s ease,border-color .2s ease; }
+.sectionButton:hover { border-color:rgba(185,154,255,.3);background:rgba(151,113,222,.09); }
+
+
+/* Help guide interactions */
+.modal { max-height:min(86vh,820px);overflow:auto; }
+.sectionButton { transition:transform .2s ease,border-color .2s ease,background .2s ease; }
+.sectionButton:hover { transform:translateX(2px); }

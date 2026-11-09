@@ -1,7 +1,6 @@
 export const XP_PER_LEVEL = 1500;
 
 export const levelData = {
-  userName: 'VeLooper',
 
   currentLevel: 1,
   levelName: 'Bronze Explorer',

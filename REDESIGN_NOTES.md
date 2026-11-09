@@ -22,3 +22,9 @@ npm run build
 ```
 
 This archive intentionally excludes `node_modules`; install dependencies on the target machine with `npm install`.
+
+## Rank collection refinement
+- Expanded the desktop rank roadmap into a seven-rank collectible gallery, with four-column tablet and two-column mobile layouts.
+- Added rank-specific metallic accent frames, inset crest borders, a moving light sweep on hover, and stronger dimensional shadows.
+- Gave the active rank a restrained breathing glow and a brighter double-edge treatment; completed ranks use a subtle achievement tint, while locked ranks remain visibly subdued.
+- Preserved the existing roadmap selection interaction and all progression/storage logic.

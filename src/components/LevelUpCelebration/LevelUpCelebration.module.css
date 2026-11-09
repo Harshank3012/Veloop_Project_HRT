@@ -626,3 +626,43 @@
   .overlay { padding: 10px; }
   .modal { max-height: calc(100dvh - 20px); padding: 24px 17px 17px; }
 }
+
+/* Tier-aware celebration typography */
+.modal h1 {
+  color: var(--accent-light);
+  background: linear-gradient(100deg, #fff2d0, var(--accent-light) 52%, #d6b5ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 24px var(--accent-glow);
+}
+.rankInformation h2 {
+  color: var(--accent-light);
+  background: linear-gradient(100deg, #fff0c7, var(--accent-light) 62%, #d7bdff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* Level-up celebration — cinematic reward stage */
+.overlay { background:rgba(3,5,15,.82);backdrop-filter:blur(12px); }
+.modal {
+  border:1px solid rgba(244,201,107,.34);
+  border-radius:28px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(171,122,240,.2),transparent 50%),linear-gradient(150deg,#202440,#10172c 72%,#171329);
+  box-shadow:0 35px 100px rgba(0,0,0,.58),0 0 55px rgba(173,128,239,.12),inset 0 1px rgba(255,255,255,.1);
+}
+.rankShowcase { filter:drop-shadow(0 18px 35px rgba(0,0,0,.24)); }
+.continueButton {
+  border:1px solid rgba(255,231,175,.68);
+  background:linear-gradient(135deg,#fff0bd,#e8bd6d 55%,#bd8540);
+  box-shadow:0 10px 26px rgba(198,143,65,.22),inset 0 1px rgba(255,255,255,.65);
+}
+.continueButton:hover { transform:translateY(-2px);filter:brightness(1.05); }
+
+
+/* Cinematic level-up modal */
+.modal { overflow:hidden; }
+.modal::before { content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 20%,rgba(255,255,255,.045) 50%,transparent 75%); }
+.continueButton { transition:transform .2s ease,filter .2s ease,box-shadow .2s ease; }

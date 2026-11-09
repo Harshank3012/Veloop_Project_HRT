@@ -700,3 +700,93 @@
     transition: none;
   }
 }
+
+/* Premium watch-and-earn heading hierarchy */
+.hero h1 {
+  color: #ffe6ad;
+  background: linear-gradient(105deg, #fff2d0 0%, #f2c66e 48%, #c9a5ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 8px 28px rgba(210, 163, 255, .12);
+}
+.sectionHeading h2 {
+  color: #f3d89d;
+  background: linear-gradient(100deg, #fff0c7, #e8c173 58%, #cbb7f1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.playerContent h3,
+.videoTitleRow h3 {
+  color: #ead9b9;
+  background: linear-gradient(100deg, #f7e9cb, #d9c6a4 65%, #c9b8e8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* Watch & Earn — premium media and reward surfaces */
+.page {
+  background:
+    radial-gradient(ellipse at 10% 0%,rgba(127,91,203,.15),transparent 36%),
+    radial-gradient(ellipse at 90% 20%,rgba(45,142,169,.09),transparent 30%),
+    linear-gradient(145deg,#080c1a,#0d1325 55%,#090d1b);
+}
+.earnedCard,.playerCard,.videoCard,.demoNotice {
+  border-color:rgba(190,170,255,.17);
+  box-shadow:0 18px 42px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.05);
+}
+.earnedCard {
+  background:linear-gradient(145deg,rgba(36,39,69,.95),rgba(17,22,43,.98));
+  border-radius:19px;
+}
+.playerCard {
+  border-radius:22px;
+  background:linear-gradient(145deg,rgba(27,34,61,.96),rgba(12,18,36,.98));
+}
+.playerScreen {
+  border:1px solid rgba(190,170,255,.18);
+  box-shadow:inset 0 0 55px rgba(115,85,180,.13),0 12px 28px rgba(0,0,0,.2);
+}
+.rewardPill {
+  border:1px solid rgba(244,201,107,.3);
+  background:linear-gradient(135deg,rgba(244,201,107,.16),rgba(185,154,255,.1));
+  box-shadow:0 0 18px rgba(244,201,107,.07);
+}
+.videoCard {
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(27,34,61,.92),rgba(13,19,38,.97));
+  transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease;
+}
+.videoCard:hover { transform:translateY(-4px);border-color:rgba(185,154,255,.34);box-shadow:0 22px 42px rgba(0,0,0,.25); }
+.demoNotice {
+  border-radius:15px;
+  background:linear-gradient(120deg,rgba(130,98,206,.12),rgba(50,100,133,.08));
+}
+@media(max-width:820px) { .page { padding-left:16px;padding-right:16px; } }
+
+
+/* Watch & Earn: media-player and reward polish */
+.hero { border-color:rgba(190,170,255,.2); box-shadow:0 22px 54px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.07); }
+.earnedIcon { box-shadow:0 8px 20px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.1); }
+.sectionHeading h2 { letter-spacing:-.035em; }
+.demoTag { border:1px solid rgba(244,201,107,.25); background:rgba(244,201,107,.09); }
+.playerScreen { position:relative; overflow:hidden; border-radius:18px; }
+.playerScreen::after {
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.06) 48%,transparent 72%);
+}
+.playOrb { box-shadow:0 0 0 9px rgba(185,154,255,.09),0 0 35px rgba(185,154,255,.3); transition:transform .22s ease,box-shadow .22s ease; }
+.playOrb:hover { transform:scale(1.07);box-shadow:0 0 0 12px rgba(185,154,255,.1),0 0 45px rgba(185,154,255,.4); }
+.videoTitleRow h3 { letter-spacing:-.025em; }
+.progressTrack { height:8px; overflow:hidden; border-radius:99px; background:rgba(255,255,255,.08); }
+.progressFill { border-radius:inherit; box-shadow:0 0 14px rgba(185,154,255,.3); }
+.watchButton,.claimButton { transition:transform .2s ease,filter .2s ease,box-shadow .2s ease; }
+.watchButton:hover,.claimButton:hover { transform:translateY(-2px);filter:brightness(1.06); }
+.videoItem { border:1px solid transparent; border-radius:15px; transition:transform .2s ease,border-color .2s ease,background .2s ease; }
+.videoItem:hover { transform:translateX(3px);border-color:rgba(185,154,255,.2); }
+.selectedVideo { border-color:rgba(244,201,107,.28);background:linear-gradient(100deg,rgba(244,201,107,.09),rgba(185,154,255,.07)); }
+.videoThumb { box-shadow:inset 0 1px rgba(255,255,255,.08),0 8px 18px rgba(0,0,0,.2); }
+.rulesCard { border:1px solid rgba(190,170,255,.14);border-radius:18px;background:rgba(16,22,42,.68); }

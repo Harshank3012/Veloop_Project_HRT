@@ -417,3 +417,122 @@
     transform: none;
   }
 }
+
+/* Premium heading hierarchy */
+.heading h1 {
+  color: #ffe5a3;
+  background: linear-gradient(105deg, #fff0c8 0%, #f2c86f 48%, #c9a5ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 8px 28px rgba(213, 163, 255, .12);
+}
+.sectionTitle,
+.activityToolbar h2 {
+  color: #f4d99e;
+  background: linear-gradient(100deg, #fff0c7, #e6bd72 58%, #c8b4ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cardBody h3,
+.emptyState h3 {
+  color: #ead9b7;
+  background: linear-gradient(100deg, #f6e8ca, #d9c7a5 65%, #cbb9e8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* Missions, streaks and activity — consistent premium quest UI */
+.page {
+  position: relative;
+  isolation: isolate;
+  max-width: 1480px;
+  padding-top: clamp(28px,4vw,54px);
+}
+.page::before {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  top:0; left:8%; right:8%; height:320px;
+  background:radial-gradient(ellipse,rgba(129,94,204,.12),transparent 68%);
+  pointer-events:none;
+}
+.heading { margin-bottom:38px; }
+.headingIcon {
+  border-color:rgba(244,201,107,.32);
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(244,201,107,.18),rgba(151,113,222,.12));
+  box-shadow:0 10px 28px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.1),0 0 25px rgba(244,201,107,.07);
+}
+.stats { gap:16px; }
+.stats > div {
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(190,170,255,.15);
+  border-radius:19px;
+  background:linear-gradient(145deg,rgba(28,35,63,.92),rgba(14,20,39,.96));
+  box-shadow:0 16px 38px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.055);
+  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+}
+.stats > div::after {
+  content:"";position:absolute;top:-80px;right:-55px;width:170px;height:170px;border-radius:50%;
+  background:radial-gradient(circle,rgba(185,154,255,.12),transparent 70%);pointer-events:none;
+}
+.stats > div:hover { transform:translateY(-4px);border-color:rgba(244,201,107,.28);box-shadow:0 22px 42px rgba(0,0,0,.25); }
+.stats strong { text-shadow:0 0 20px rgba(244,201,107,.16); }
+.cards { gap:16px; }
+.card {
+  position:relative;
+  border:1px solid rgba(190,170,255,.14);
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(28,35,63,.9),rgba(14,20,39,.96));
+  box-shadow:0 13px 32px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.045);
+  transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease;
+}
+.card:hover { transform:translateY(-3px);border-color:rgba(185,154,255,.3);box-shadow:0 20px 42px rgba(0,0,0,.24),0 0 22px rgba(153,119,220,.07); }
+.cardIcon { border:1px solid rgba(244,201,107,.18);background:linear-gradient(145deg,rgba(244,201,107,.16),rgba(185,154,255,.1)); }
+.actionButton {
+  border:1px solid rgba(255,226,160,.7);
+  border-radius:11px;
+  background:linear-gradient(135deg,#fff0bd 0%,#e8bd6d 52%,#c48c43 100%);
+  box-shadow:0 7px 18px rgba(198,143,65,.18),inset 0 1px rgba(255,255,255,.65);
+  transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;
+}
+.actionButton:hover { transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 12px 25px rgba(198,143,65,.25); }
+.completedButton { border-radius:11px; }
+.notice,.emptyState {
+  border:1px solid rgba(190,170,255,.14);
+  border-radius:17px;
+  background:linear-gradient(145deg,rgba(27,33,59,.72),rgba(13,18,36,.84));
+}
+.activityItem {
+  border-bottom-color:rgba(190,170,255,.09);
+  transition:background .2s ease;
+}
+.activityItem:hover { background:rgba(150,119,220,.07); }
+.filterButton { border:1px solid rgba(190,170,255,.13);border-radius:999px; }
+.activeFilter { border-color:rgba(244,201,107,.34);box-shadow:0 0 18px rgba(244,201,107,.08); }
+@media(max-width:640px) {
+  .page { padding-left:16px;padding-right:16px; }
+  .card { align-items:flex-start;flex-wrap:wrap; }
+  .actionButton,.completedButton { margin-left:auto; }
+}
+
+
+/* Review-day finish: missions, streaks and activity */
+.sectionTitle { color:#f5f1ff; letter-spacing:-.035em; text-shadow:0 6px 22px rgba(0,0,0,.22); }
+.cardBody { gap:8px; }
+.cardIcon,.emptyIcon,.activityIcon {
+  box-shadow:0 8px 20px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.09);
+}
+.unlocked { border-color:rgba(104,224,176,.25); box-shadow:inset 0 1px rgba(255,255,255,.05),0 0 20px rgba(104,224,176,.045); }
+.locked { filter:saturate(.78); }
+.activityToolbar { padding:14px 16px; border:1px solid rgba(190,170,255,.12); border-radius:16px; background:rgba(15,21,42,.55); }
+.clearButton,.filterButton { transition:transform .2s ease,border-color .2s ease,background .2s ease; }
+.clearButton:hover,.filterButton:hover { transform:translateY(-2px); }
+.activityList { overflow:hidden; border:1px solid rgba(190,170,255,.14); border-radius:18px; background:rgba(14,20,39,.6); }
+.activityItem { padding:15px 17px; }
+.activityXP { color:#f4d58d; text-shadow:0 0 16px rgba(244,201,107,.13); }

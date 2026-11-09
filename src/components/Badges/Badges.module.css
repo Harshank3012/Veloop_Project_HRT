@@ -1107,3 +1107,93 @@
     transition-duration: .01ms !important;
   }
 }
+
+/* Premium collection typography */
+.hero h1 {
+  color: #ffe7ad;
+  background: linear-gradient(105deg, #fff2d0 0%, #f3c76d 45%, #c9a4ff 82%, #fff0c8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 10px 30px rgba(214, 164, 255, .12);
+}
+.collectionTitle h2,
+.sectionHeading h2 {
+  color: #f4d99e;
+  background: linear-gradient(100deg, #fff0c7 0%, #e9c276 55%, #cbb6f2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.badgeDetails h3,
+.emptyState h3 {
+  color: #e8d9bc;
+  background: linear-gradient(100deg, #f5e7c9, #d8c5a3 65%, #cbb9e8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* Badge collection — premium collectible gallery */
+.collectionCard {
+  border:1px solid rgba(190,170,255,.17);
+  border-radius:22px;
+  background:linear-gradient(150deg,rgba(29,36,65,.92),rgba(13,19,38,.98));
+  box-shadow:0 18px 44px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.055);
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),border-color .28s ease,box-shadow .28s ease;
+}
+.collectionCard:hover {
+  transform:translateY(-6px);
+  border-color:rgba(244,201,107,.34);
+  box-shadow:0 25px 55px rgba(0,0,0,.3),0 0 28px rgba(153,119,220,.12),inset 0 1px rgba(255,255,255,.09);
+}
+.statCard {
+  border:1px solid rgba(190,170,255,.15);
+  border-radius:19px;
+  background:linear-gradient(145deg,rgba(28,35,63,.92),rgba(14,20,39,.97));
+  box-shadow:0 14px 34px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.05);
+  transition:transform .24s ease,border-color .24s ease;
+}
+.statCard:hover { transform:translateY(-4px);border-color:rgba(244,201,107,.28); }
+.hero {
+  border:1px solid rgba(244,201,107,.2);
+  background:radial-gradient(ellipse at 80% 20%,rgba(178,132,255,.15),transparent 44%),linear-gradient(130deg,rgba(34,38,65,.95),rgba(14,18,34,.98));
+  box-shadow:0 24px 58px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.07);
+}
+
+
+/* Badge vault: premium collectible hierarchy */
+.page { isolation:isolate; }
+.backgroundGrid { opacity:.34; }
+.topbar { border-bottom:1px solid rgba(190,170,255,.12); }
+.backLink { transition:transform .2s ease,color .2s ease; }
+.backLink:hover { transform:translateX(-3px);color:#fff; }
+.brandMark { box-shadow:0 5px 18px rgba(244,201,107,.22),inset 0 1px rgba(255,255,255,.6); }
+.heroContent { animation:vSoftRise .55s ease both; }
+.heroTrophy { filter:drop-shadow(0 16px 25px rgba(0,0,0,.3)); }
+.statIcon { box-shadow:0 7px 18px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.08); }
+.collectionTop,.collectionBottom { position:relative; }
+.collectionTrack,.badgeTrack { overflow:hidden; border-radius:999px; background:rgba(255,255,255,.075); }
+.collectionFill,.badgeFill { border-radius:inherit; box-shadow:0 0 12px currentColor; }
+.filters { gap:9px; }
+.filters button { border:1px solid rgba(190,170,255,.13); border-radius:999px; transition:all .2s ease; }
+.filters button:hover { transform:translateY(-2px);border-color:rgba(244,201,107,.28); }
+.badgeCard {
+  position:relative; isolation:isolate;
+  border:1px solid rgba(190,170,255,.15);
+  border-radius:20px;
+  background:linear-gradient(150deg,rgba(30,37,67,.94),rgba(12,18,36,.98));
+  box-shadow:0 15px 34px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.055);
+  transition:transform .26s ease,border-color .26s ease,box-shadow .26s ease;
+}
+.badgeCard:hover { transform:translateY(-5px);border-color:rgba(244,201,107,.3);box-shadow:0 23px 46px rgba(0,0,0,.3),0 0 24px rgba(155,117,223,.1); }
+.rarity { text-transform:uppercase; letter-spacing:1px; }
+.common { box-shadow:0 0 14px rgba(177,190,213,.08); }
+.rare { box-shadow:0 0 16px rgba(87,177,255,.1); }
+.epic { box-shadow:0 0 18px rgba(176,112,255,.13); }
+.legendary,.mythic { box-shadow:0 0 22px rgba(244,201,107,.13); }
+.emblemArea { filter:drop-shadow(0 12px 18px rgba(0,0,0,.25)); }
+.emblemIcon { transition:transform .3s ease,filter .3s ease; }
+.badgeCard:hover .emblemIcon { transform:scale(1.07) rotate(-3deg);filter:brightness(1.12); }
+.badgeProgress { gap:8px; }
