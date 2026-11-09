@@ -1,1 +1,63 @@
 .gameSection{margin-top:30px;padding:25px 26px 20px;border:1px solid rgba(255,255,255,.09);border-radius:20px;background:#1e2133;box-shadow:0 18px 55px rgba(0,0,0,.12)}.heading{display:flex;justify-content:space-between;align-items:center;gap:18px}.eyebrow{display:flex;align-items:center;gap:7px;color:#f4c96b;font-size:10px;font-weight:800;letter-spacing:1.2px}.heading h2{margin:8px 0 6px;font-size:25px}.heading p{margin:0;color:#aeb1c4;font-size:12px}.gameTag{display:flex;align-items:center;gap:7px;padding:9px 12px;border:1px solid rgba(244,201,107,.25);border-radius:20px;color:#f4c96b;font-size:10px;font-weight:700;white-space:nowrap}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0 14px}.stats>div{display:flex;flex-direction:column;gap:7px;padding:12px 14px;border-radius:11px;background:#292c40}.stats span{color:#aeb1c4;font-size:9px;font-weight:700;letter-spacing:1px}.stats strong{display:flex;align-items:center;gap:6px;color:#fff;font-size:18px}.stats .xpEarned{color:#f4c96b}.playArea{position:relative;height:235px;overflow:hidden;border:1px solid rgba(244,201,107,.18);border-radius:14px;background:radial-gradient(ellipse at center,rgba(86,74,126,.28),rgba(22,24,39,.92) 70%),#171a2b}.orb{position:absolute;width:48px;height:48px;display:grid;place-items:center;transform:translate(-50%,-50%);border:1px solid #ffe6a5;border-radius:50%;color:#342713;background:radial-gradient(circle at 35% 30%,#fff4c8,#f4c96b 48%,#bd812b);box-shadow:0 0 12px #f4c96b,0 0 30px rgba(244,201,107,.65);cursor:pointer;animation:pulse 1s infinite alternate}.orb:hover{transform:translate(-50%,-50%) scale(1.12)}.gameMessage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:18px;text-align:center}.gameIcon{width:48px;height:48px;display:grid;place-items:center;border:1px solid rgba(244,201,107,.3);border-radius:50%;color:#f4c96b;background:rgba(244,201,107,.08)}.gameMessage strong{font-size:17px}.gameMessage span{max-width:360px;color:#aeb1c4;font-size:11px;line-height:1.5}.startButton{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:5px;padding:10px 19px;border:0;border-radius:8px;color:#24202a;background:#f4c96b;font-size:11px;font-weight:800;cursor:pointer}.startButton:hover{background:#ffdc8c}.gameFootnote{margin-top:12px;color:#858aa5;font-size:10px}@keyframes pulse{from{box-shadow:0 0 9px #f4c96b,0 0 18px rgba(244,201,107,.4)}to{box-shadow:0 0 17px #f4c96b,0 0 35px rgba(244,201,107,.8)}}@media(max-width:560px){.gameSection{padding:20px 16px 17px}.heading{align-items:flex-start;flex-direction:column}.stats{gap:7px}.stats>div{padding:10px 8px}.stats span{font-size:8px}.stats strong{font-size:14px}.playArea{height:220px}}
+
+/* XP game heading treatment */
+.heading h2 {
+  color: #f4d99e;
+  background: linear-gradient(100deg, #fff0c7, #e9c276 58%, #cbb6f2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.stats strong {
+  color: #f8e6bd;
+}
+
+
+/* XP Catcher — arcade arena finish */
+.gameSection {
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(190,170,255,.18);
+  border-radius:24px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(128,91,200,.16),transparent 60%),linear-gradient(145deg,rgba(26,33,60,.96),rgba(11,17,35,.98));
+  box-shadow:0 22px 55px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.06);
+}
+.gameSection::before {
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background:linear-gradient(115deg,transparent 15%,rgba(255,255,255,.035) 48%,transparent 72%);
+}
+.stats>div {
+  border:1px solid rgba(190,170,255,.13);
+  background:linear-gradient(145deg,rgba(40,47,78,.85),rgba(19,25,47,.9));
+  box-shadow:inset 0 1px rgba(255,255,255,.05);
+}
+.playArea {
+  border-color:rgba(185,154,255,.25);
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(118,84,190,.24),transparent 36%),
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
+    #0d1428;
+  background-size:auto,28px 28px,28px 28px,auto;
+  box-shadow:inset 0 0 55px rgba(0,0,0,.42);
+}
+.orb { box-shadow:0 0 14px #f4c96b,0 0 36px rgba(244,201,107,.72),0 0 70px rgba(244,201,107,.2); }
+.startButton {
+  border:1px solid rgba(255,232,178,.72);
+  border-radius:11px;
+  background:linear-gradient(135deg,#fff0bd,#e8bd6d 55%,#bd8540);
+  box-shadow:0 8px 20px rgba(198,143,65,.2),inset 0 1px rgba(255,255,255,.65);
+}
+.startButton:hover { transform:translateY(-2px);box-shadow:0 13px 26px rgba(198,143,65,.28); }
+
+
+/* XP Catcher: arcade controls and score feedback */
+.heading h1 { letter-spacing:-.045em; }
+.stats { gap:12px; }
+.stats > div { border-radius:16px; }
+.playArea { isolation:isolate; }
+.orb { transition:transform .12s ease,filter .12s ease; cursor:pointer; }
+.orb:hover { transform:scale(1.12);filter:brightness(1.15); }
+.startButton { font-weight:900; letter-spacing:.02em; transition:transform .2s ease,box-shadow .2s ease; }
+.startButton:active { transform:scale(.97); }

@@ -189,3 +189,36 @@
     right: 35px;
   }
 }
+
+/* Celebration title treatment */
+.modal h1 {
+  color: #ffe5a3;
+  background: linear-gradient(100deg, #fff1c9, #f4c76d 52%, #d2a6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 24px rgba(246, 194, 91, .12);
+}
+
+
+/* Badge unlocked — collectible reveal */
+.overlay { background:rgba(3,5,15,.84);backdrop-filter:blur(12px); }
+.modal {
+  border:1px solid rgba(244,201,107,.34);
+  border-radius:26px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(174,127,245,.2),transparent 55%),linear-gradient(150deg,#202440,#10172c);
+  box-shadow:0 32px 95px rgba(0,0,0,.58),0 0 45px rgba(244,201,107,.09),inset 0 1px rgba(255,255,255,.09);
+}
+.badgeIcon { filter:drop-shadow(0 12px 24px rgba(244,201,107,.18)); }
+.claimButton {
+  border:1px solid rgba(255,231,175,.68);
+  background:linear-gradient(135deg,#fff0bd,#e8bd6d 55%,#bd8540);
+  box-shadow:0 9px 24px rgba(198,143,65,.2),inset 0 1px rgba(255,255,255,.65);
+}
+.claimButton:hover { transform:translateY(-2px);filter:brightness(1.05); }
+
+
+/* Badge unlock modal */
+.modal { overflow:hidden; }
+.modal::before { content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(255,222,150,.08),transparent 52%); }
+.claimButton { transition:transform .2s ease,filter .2s ease,box-shadow .2s ease; }

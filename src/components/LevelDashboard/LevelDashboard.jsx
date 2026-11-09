@@ -433,6 +433,11 @@ export default function LevelDashboard() {
   const remainingXP = XP_PER_LEVEL - xpIntoLevel;
   const nextLevel = currentLevel + 1;
   const currentTier = getTierForLevel(currentLevel);
+  const [selectedRoadmapTier, setSelectedRoadmapTier] = useState(currentTier.color);
+  const [pinnedFlippedRank, setPinnedFlippedRank] = useState(null);
+  useEffect(() => {
+    setSelectedRoadmapTier(currentTier.color);
+  }, [currentTier.color]);
 
   const formattedXP = useMemo(
     () => currentXP.toLocaleString('en-IN'),
@@ -566,8 +571,8 @@ export default function LevelDashboard() {
             </h1>
 
             <p>
-              Every activity takes you closer to the next rank.
-              Keep earning, keep progressing, and unlock your potential.
+              Every Activity takes you closer to the next Rank.
+              Keep Earning, Keep Progressing, and Unlock your Potential.
             </p>
 
           </div>
@@ -586,10 +591,6 @@ export default function LevelDashboard() {
                 className={styles.heroRankEmblem}
               />
             </div>
-            <div className={styles.heroRankTag}>
-              <Sparkles size={13} />
-              YOUR JOURNEY CONTINUES
-            </div>
           </div>
         </section>
 
@@ -601,7 +602,7 @@ export default function LevelDashboard() {
             <div className={styles.cardHeader}>
               <div>
                 <span className={styles.sectionLabel}>PLAYER STATUS</span>
-                <h2>Your current level</h2>
+                <h2>Your  Current  Level</h2>
               </div>
 
               <span className={styles.livePill}>
@@ -611,7 +612,7 @@ export default function LevelDashboard() {
             </div>
 
             <div className={styles.levelIdentity}>
-              <div className={styles.levelEmblemStage}>
+              <div className={`${styles.levelEmblemStage} ${styles[`${currentTier.color}Stage`] || ""}`}>
                 <div className={styles.levelEmblemOrbit} aria-hidden="true" />
                 <div
                   className={`${styles.levelEmblem} ${styles[currentTier.color]}`}
@@ -721,7 +722,7 @@ export default function LevelDashboard() {
             </div>
 
             <p className={styles.rewardSub}>
-              Your next milestone comes with a new reward.
+              Your next Milestone comes with a new Reward.
             </p>
 
             <div className={styles.rewardUnlock}>
@@ -746,10 +747,9 @@ export default function LevelDashboard() {
         <section className={styles.roadmapSection}>
           <div className={styles.sectionHeading}>
             <div>
-              <span className={styles.sectionLabel}>YOUR PROGRESSION</span>
-              <h2>The level roadmap</h2>
+              <h2>Level Roadmap</h2>
               <p className={styles.sectionDescription}>
-                Seven ranks. One journey. Keep moving forward.
+                Seven Ranks. One Journey. Keep Moving Forward.
               </p>
             </div>
 
@@ -760,8 +760,6 @@ export default function LevelDashboard() {
           </div>
 
           <div className={styles.roadmap}>
-            <div className={styles.roadmapTrack} aria-hidden="true" />
-
             {levelTiers.map((tier) => {
               const state =
                 currentLevel > tier.max
@@ -771,47 +769,105 @@ export default function LevelDashboard() {
                     : 'locked';
 
               return (
-                <div
-                  className={`${styles.roadmapItem} ${styles[`roadmap${state}`]}`}
+                <button
+                  type="button"
+                  className={`${styles.roadmapItem} ${styles[`roadmap${state}`]} ${selectedRoadmapTier === tier.color ? styles.roadmapSelected : ''} ${pinnedFlippedRank === tier.color ? styles.roadmapPinnedFlip : ''}`}
                   key={tier.color}
                   data-rank={tier.color}
+                  aria-pressed={pinnedFlippedRank === tier.color}
+                  aria-label={`${tier.name}. Hover or tap to view rank details.`}
+                  onClick={() => {
+                    setSelectedRoadmapTier(tier.color);
+                    setPinnedFlippedRank((active) => active === tier.color ? null : tier.color);
+                  }}
                 >
-                  <RankEmblem tier={tier.color} state={state} variant="roadmap" className={styles.roadmapEmblem} />
+                  <span className={styles.roadmapFlipInner}>
+                    <span className={styles.roadmapFlipFront}>
+                      <RankEmblem tier={tier.color} state={state} variant="roadmap" className={styles.roadmapEmblem} />
+                      <strong className={styles.rankTitle}>{tier.name}</strong>
+                      <span className={styles.roadmapState}>
+                        {state === 'completed' ? 'COMPLETED' : state === 'current' ? 'CURRENT RANK' : 'LOCKED'}
+                      </span>
+                      <small className={styles.roadmapRank}>
+                        {tier.max === Infinity ? `LEVEL ${tier.min}+` : `LEVEL ${tier.min}–${tier.max}`}
+                      </small>
+                    </span>
 
-                  <strong className={styles.rankTitle}>{tier.name}</strong>
-
-                  <span className={styles.roadmapState}>
-                    {state === 'completed'
-                      ? 'COMPLETED'
-                      : state === 'current'
-                        ? 'CURRENT RANK'
-                        : 'LOCKED'}
+                    <span className={styles.roadmapFlipBack}>
+                      <span className={styles.rankBackEyebrow}>RANK INTEL</span>
+                      <strong className={styles.rankBackTitle}>{tier.name}</strong>
+                      <span className={styles.rankBackStatus}>
+                        {state === 'completed' ? '✓ RANK COMPLETED' : state === 'current' ? '★ YOUR ACTIVE RANK' : '🔒 RANK LOCKED'}
+                      </span>
+                      <span className={styles.rankBackStat}>
+                        <small>LEVEL RANGE</small>
+                        <b>{tier.max === Infinity ? `${tier.min}+` : `${tier.min}–${tier.max}`}</b>
+                      </span>
+                      <span className={styles.rankBackStat}>
+                        <small>XP TO ENTER</small>
+                        <b>{((tier.min - 1) * XP_PER_LEVEL).toLocaleString('en-IN')} XP</b>
+                      </span>
+                      <span className={styles.rankBackStat}>
+                        <small>XP TO COMPLETE</small>
+                        <b>{tier.max === Infinity ? 'UNLIMITED' : `${(tier.max * XP_PER_LEVEL).toLocaleString('en-IN')} XP`}</b>
+                      </span>
+                      {state !== 'completed' && (
+                        <span className={styles.rankBackHint}>
+                          {state === 'current'
+                            ? `${Math.max(0, tier.max * XP_PER_LEVEL - currentXP).toLocaleString('en-IN')} XP until next rank.`
+                            : `Earn ${Math.max(0, (tier.min - 1) * XP_PER_LEVEL - currentXP).toLocaleString('en-IN')} more XP to unlock.`}
+                        </span>
+                      )}
+                    </span>
                   </span>
-
-                  <small className={styles.roadmapRank}>
-                    {tier.max === Infinity
-                      ? `LEVEL ${tier.min}+`
-                      : `LEVEL ${tier.min}–${tier.max}`}
-                  </small>
-                </div>
+                </button>
               );
             })}
+
+            <article className={styles.comingSoonRank} aria-label="More ranks coming soon">
+              <div className={styles.comingSoonIcon}>
+                <Sparkles size={34} />
+              </div>
+              <span className={styles.comingSoonKicker}>THE JOURNEY CONTINUES</span>
+              <strong>More Ranks</strong>
+              <span className={styles.comingSoonBadge}>COMING SOON</span>
+              <p>New challenges. New milestones. New legends to unlock.</p>
+            </article>
           </div>
 
-          <div className={styles.roadmapLegend}>
-            <span>
-              <i className={styles.legendCompleted} />
-              Completed
-            </span>
-            <span>
-              <i className={styles.legendCurrent} />
-              Current
-            </span>
-            <span>
-              <i className={styles.legendLocked} />
-              Locked
-            </span>
-          </div>
+          {(() => {
+            const selectedTier = levelTiers.find((tier) => tier.color === selectedRoadmapTier) || currentTier;
+            const selectedState = currentLevel > selectedTier.max
+              ? 'completed'
+              : currentLevel >= selectedTier.min
+                ? 'current'
+                : 'locked';
+            const TierIcon = selectedTier.icon;
+
+            return (
+              <div className={`${styles.rankIntelPanel} ${styles[`rankIntel${selectedTier.color}`]}`} key={selectedTier.color}>
+                <div className={styles.rankIntelIcon}>
+                  <TierIcon size={22} />
+                </div>
+                <div className={styles.rankIntelCopy}>
+                  <span>RANK INTEL · {selectedState === 'completed' ? 'CONQUERED' : selectedState === 'current' ? 'ACTIVE TIER' : 'UPCOMING TIER'}</span>
+                  <strong>{selectedTier.name}</strong>
+                  <p>
+                    {selectedState === 'completed'
+                      ? `Levels ${selectedTier.min}–${selectedTier.max} conquered. This rank is part of your legacy.`
+                      : selectedState === 'current'
+                        ? `You're competing in this tier now. Keep earning XP to reach level ${nextLevel}.`
+                        : `Reach level ${selectedTier.min} to unlock this rank and enter a new chapter of your journey.`}
+                  </p>
+                </div>
+                <div className={styles.rankIntelRange}>
+                  <small>RANK RANGE</small>
+                  <strong>{selectedTier.max === Infinity ? `${selectedTier.min}+` : `${selectedTier.min}–${selectedTier.max}`}</strong>
+                </div>
+              </div>
+            );
+          })()}
+
         </section>
 
         {/* EARNING FEATURES */}

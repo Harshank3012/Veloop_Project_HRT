@@ -193,8 +193,6 @@ export default function Badges() {
                 <Crown size={16} />
                 LEVEL {stats.level}
               </div>
-              <span className={styles.heroDivider} />
-              <span className={styles.playerName}>VELOOPER</span>
             </div>
           </div>
 
