@@ -19,6 +19,9 @@ import {
 import { Link } from 'react-router-dom';
 import styles from './FeaturePages.module.css';
 import { getLocalDateKey, getPreviousLocalDateKey } from '../utils/dateUtils';
+import RankEmblem from '../components/LevelDashboard/RankEmblem.jsx';
+import roadmapStyles from '../components/LevelDashboard/LevelDashboard.module.css';
+import { XP_PER_LEVEL } from '../data/levelData';
 
 function FeatureLayout({ eyebrow, title, description, icon: Icon, children }) {
   return (
@@ -789,6 +792,187 @@ export function ActivityPage() {
           </Link>
         </div>
       )}
+    </FeatureLayout>
+  );
+}
+
+// Dedicated Level Roadmap page — separate from the dashboard overview.
+const roadmapTiers = [
+  { name: 'Bronze Explorer', color: 'bronze', min: 1, max: 10 },
+  { name: 'Silver Adventurer', color: 'silver', min: 11, max: 20 },
+  { name: 'Gold Champion', color: 'gold', min: 21, max: 35 },
+  { name: 'Platinum Master', color: 'platinum', min: 36, max: 50 },
+  { name: 'Diamond Elite', color: 'diamond', min: 51, max: 75 },
+  { name: 'Legendary', color: 'legendary', min: 76, max: 100 },
+  { name: 'Transcendent', color: 'transcendent', min: 101, max: Infinity },
+];
+
+export function LevelRoadmapPage() {
+  const readXP = () => {
+    try {
+      return Math.max(0, Number(localStorage.getItem('veloop-total-xp')) || 0);
+    } catch {
+      return 0;
+    }
+  };
+  const [totalXP, setTotalXP] = useState(readXP);
+  const [flippedRank, setFlippedRank] = useState(null);
+  const currentLevel = Math.floor(totalXP / XP_PER_LEVEL) + 1;
+  const currentTier = roadmapTiers.find(
+    (tier) => currentLevel >= tier.min && currentLevel <= tier.max
+  ) || roadmapTiers[roadmapTiers.length - 1];
+  const levelXP = totalXP % XP_PER_LEVEL;
+  const levelProgress = Math.min(100, Math.round((levelXP / XP_PER_LEVEL) * 100));
+  const xpRemaining = XP_PER_LEVEL - levelXP;
+
+  useEffect(() => {
+    const syncXP = () => setTotalXP(readXP());
+    window.addEventListener('storage', syncXP);
+    window.addEventListener('focus', syncXP);
+    window.addEventListener('veloop-xp-updated', syncXP);
+    return () => {
+      window.removeEventListener('storage', syncXP);
+      window.removeEventListener('focus', syncXP);
+      window.removeEventListener('veloop-xp-updated', syncXP);
+    };
+  }, []);
+
+  return (
+    <FeatureLayout
+      eyebrow="YOUR VELOOP JOURNEY"
+      title="Level Roadmap"
+      description="Seven ranks. One journey. Keep moving forward."
+      icon={Trophy}
+    >
+      <div className={styles.royalRoadmapShell}>
+      <section className={styles.royalRoadmapHero}>
+        <div className={styles.royalHeroOrnament} aria-hidden="true">✦</div>
+        <div className={styles.royalHeroCopy}>
+          <span className={styles.royalHeroEyebrow}>THE ROYAL ASCENSION • SEASON OF GLORY</span>
+          <h2>Every rank is a new chapter.</h2>
+          <p>Earn experience, conquer milestones and rise through the VELOOP ranks.</p>
+        </div>
+        <div className={styles.royalHeroProgress}>
+          <div className={styles.royalHeroProgressTop}>
+            <span>LEVEL {currentLevel} PROGRESS</span>
+            <strong>{levelProgress}%</strong>
+          </div>
+          <div className={styles.royalProgressTrack}>
+            <span style={{ width: `${levelProgress}%` }} />
+          </div>
+          <small>{xpRemaining.toLocaleString('en-IN')} XP to your next level</small>
+        </div>
+      </section>
+
+      <div className={`${styles.stats} ${styles.roadmapStats}`}>
+        <div>
+          <span>TOTAL XP</span>
+          <strong>{totalXP.toLocaleString('en-IN')} XP</strong>
+        </div>
+        <div>
+          <span>CURRENT LEVEL</span>
+          <strong>{currentLevel}</strong>
+        </div>
+        <div>
+          <span>CURRENT RANK</span>
+          <strong>{currentTier.name}</strong>
+        </div>
+      </div>
+
+      <section className={`${roadmapStyles.roadmapSection} ${styles.royalRoadmapStage}`}>
+        <div className={`${roadmapStyles.sectionHeading} ${styles.royalStageHeading}`}>
+          <div>
+            <h2>Your Rank Journey</h2>
+            <p className={roadmapStyles.sectionDescription}>
+              Track completed ranks, your current milestone and the ranks still ahead.
+            </p>
+          </div>
+          <span className={roadmapStyles.roadmapCaption}>
+            <Trophy size={15} />
+            YOUR RANK JOURNEY
+          </span>
+        </div>
+
+        <div className={`${roadmapStyles.roadmap} ${styles.royalRoadmapGrid}`}>
+          {roadmapTiers.map((tier) => {
+            const state = currentLevel > tier.max
+              ? 'completed'
+              : currentLevel >= tier.min
+                ? 'current'
+                : 'locked';
+            const levelRange = tier.max === Infinity
+              ? `LEVEL ${tier.min}+`
+              : `LEVEL ${tier.min}–${tier.max}`;
+            const xpToEnter = (tier.min - 1) * XP_PER_LEVEL;
+            const xpToComplete = tier.max === Infinity
+              ? 'UNLIMITED'
+              : `${(tier.max * XP_PER_LEVEL).toLocaleString('en-IN')} XP`;
+            const isFlipped = flippedRank === tier.color;
+
+            return (
+              <button
+                type="button"
+                key={tier.color}
+                data-rank={tier.color}
+                aria-pressed={isFlipped}
+                aria-label={`${tier.name}, ${state}. Tap to view rank details.`}
+                className={`${roadmapStyles.roadmapItem} ${roadmapStyles[`roadmap${state}`]} ${styles.royalRankFrame} ${styles[`royalRank${state}`]} ${isFlipped ? roadmapStyles.roadmapPinnedFlip : ''}`}
+                onClick={() => setFlippedRank((active) => active === tier.color ? null : tier.color)}
+              >
+                <span className={roadmapStyles.roadmapFlipInner}>
+                  <span className={roadmapStyles.roadmapFlipFront}>
+                    <RankEmblem
+                      tier={tier.color}
+                      state={state}
+                      variant="roadmap"
+                      className={roadmapStyles.roadmapEmblem}
+                    />
+                    <span className={roadmapStyles.roadmapState}>
+                      {state === 'completed' ? 'COMPLETED' : state === 'current' ? 'CURRENT RANK' : 'LOCKED'}
+                    </span>
+                    <small className={roadmapStyles.roadmapRank}>{levelRange}</small>
+                  </span>
+
+                  <span className={roadmapStyles.roadmapFlipBack}>
+                    <span className={roadmapStyles.rankBackEyebrow}>RANK INTEL</span>
+                    <strong className={roadmapStyles.rankBackTitle}>{tier.name}</strong>
+                    <span className={roadmapStyles.rankBackStatus}>
+                      {state === 'completed' ? '✓ RANK COMPLETED' : state === 'current' ? '★ YOUR ACTIVE RANK' : '🔒 RANK LOCKED'}
+                    </span>
+                    <span className={roadmapStyles.rankBackStat}>
+                      <small>LEVEL RANGE</small><b>{levelRange.replace('LEVEL ', '')}</b>
+                    </span>
+                    <span className={roadmapStyles.rankBackStat}>
+                      <small>XP TO ENTER</small><b>{xpToEnter.toLocaleString('en-IN')} XP</b>
+                    </span>
+                    <span className={roadmapStyles.rankBackStat}>
+                      <small>XP TO COMPLETE</small><b>{xpToComplete}</b>
+                    </span>
+                    {state !== 'completed' && (
+                      <span className={roadmapStyles.rankBackHint}>
+                        {state === 'current'
+                          ? tier.max === Infinity
+                            ? 'You have reached the highest available rank.'
+                            : `${Math.max(0, tier.max * XP_PER_LEVEL - totalXP).toLocaleString('en-IN')} XP until next rank.`
+                          : `Earn ${Math.max(0, xpToEnter - totalXP).toLocaleString('en-IN')} more XP to unlock.`}
+                      </span>
+                    )}
+                  </span>
+                </span>
+              </button>
+            );
+          })}
+
+          <article className={`${roadmapStyles.comingSoonRank} ${styles.royalComingSoon}`} aria-label="More ranks coming soon">
+            <div className={roadmapStyles.comingSoonIcon}><Trophy size={34} /></div>
+            <span className={roadmapStyles.comingSoonKicker}>THE JOURNEY CONTINUES</span>
+            <strong>More Ranks</strong>
+            <span className={roadmapStyles.comingSoonBadge}>COMING SOON</span>
+            <p>New challenges. New milestones. New legends to unlock.</p>
+          </article>
+        </div>
+      </section>
+      </div>
     </FeatureLayout>
   );
 }

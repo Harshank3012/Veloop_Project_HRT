@@ -85,12 +85,12 @@
 }
 
 .nav {
-  min-height: 70px;
+  min-height: 76px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 10px 20px;
+  gap: 14px;
+  padding: 12px 24px;
   background: #0e1120;
 }
 
@@ -98,16 +98,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 16px;
+  gap: 9px;
+  padding: 14px 19px;
   border: none;
   border-radius: 12px;
   background: transparent;
   color: #aeb4c8;
   text-decoration: none;
   font: inherit;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 750;
   cursor: pointer;
   transition: 0.2s ease;
   white-space: nowrap;
@@ -434,3 +434,132 @@
 .dropdownMenu { border-color: rgba(225,195,139,.18); background: #202337; box-shadow: 0 18px 38px rgba(0,0,0,.4); }
 .dropdownMenu a:hover { color: #f5d38f; background: rgba(203,164,102,.10); }
 .profileIcon { border: 1px solid rgba(233,189,112,.4); color: #f8dfad; background: linear-gradient(145deg, #54432e, #292338); }
+
+/* Slightly larger desktop navigation for clearer hierarchy and readability. */
+.navLink > svg {
+  width: 17px;
+  height: 17px;
+}
+@media (min-width: 651px) {
+  .nav { gap: 14px; }
+  .navLink { min-height: 48px; }
+}
+@media (max-width: 650px) {
+  .navLink {
+    font-size: 13px;
+    padding: 12px 15px;
+  }
+  .navLink > svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+
+
+/* TEXT-ONLY NAVIGATION — larger labels with a refined royal hover state */
+.nav {
+  gap: clamp(12px, 2vw, 24px);
+  padding: 12px clamp(14px, 3vw, 32px);
+}
+.navLink {
+  position: relative;
+  gap: 0 !important;
+  min-height: 50px;
+  padding: 13px 21px !important;
+  border: 1px solid transparent;
+  border-radius: 13px;
+  color: #c5c2d2;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .12px;
+  line-height: 1.2;
+  text-shadow: 0 1px 8px rgba(0,0,0,.18);
+  transition:
+    color .24s ease,
+    background .24s ease,
+    border-color .24s ease,
+    box-shadow .28s ease,
+    transform .28s cubic-bezier(.2,.8,.2,1),
+    text-shadow .24s ease;
+}
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 22%;
+  right: 22%;
+  bottom: 5px;
+  height: 2px;
+  border-radius: 999px;
+  opacity: 0;
+  transform: scaleX(.35);
+  background: linear-gradient(90deg, #a87943, #ffe2a1, #a87943);
+  box-shadow: 0 0 10px rgba(255,211,133,.45);
+  transition: opacity .25s ease, transform .3s ease;
+}
+.navLink:hover {
+  transform: translateY(-3px);
+  color: #fff0c9;
+  border-color: rgba(238,202,139,.3);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(235,192,112,.13), transparent 72%),
+    linear-gradient(135deg, rgba(156,117,191,.13), rgba(30,40,62,.48));
+  box-shadow:
+    0 9px 22px rgba(0,0,0,.24),
+    0 0 18px rgba(220,177,103,.09),
+    inset 0 1px rgba(255,255,255,.07);
+  text-shadow: 0 0 14px rgba(255,220,160,.24);
+}
+.navLink:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+.navLink.active,
+.navLink.active:hover {
+  color: #ffe6ad;
+  border-color: rgba(239,197,112,.43);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(238,194,111,.18), transparent 75%),
+    linear-gradient(135deg, rgba(112,82,61,.25), rgba(75,61,103,.24));
+  box-shadow:
+    0 6px 20px rgba(0,0,0,.2),
+    0 0 18px rgba(221,177,99,.1),
+    inset 0 1px rgba(255,245,220,.1);
+}
+.navLink.active::after {
+  opacity: .9;
+  transform: scaleX(1);
+}
+.dropdown > .navLink {
+  font-family: inherit;
+}
+.navLink:focus-visible {
+  outline: 2px solid rgba(255,220,151,.85);
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  .nav {
+    gap: 8px;
+    padding: 10px 12px;
+  }
+  .navLink {
+    min-height: 46px;
+    padding: 11px 16px !important;
+    font-size: 15px !important;
+  }
+}
+@media (max-width: 420px) {
+  .navLink {
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .navLink,
+  .navLink::after {
+    transition: none !important;
+  }
+  .navLink:hover {
+    transform: none;
+  }
+}

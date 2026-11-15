@@ -2,12 +2,8 @@
 import { useCallback, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
-  ChevronDown,
-  LayoutDashboard,
   Target,
   Flame,
-  Award,
-  History,
   Bell,
   CircleHelp,
   PlayCircle,
@@ -79,7 +75,6 @@ export default function Navbar() {
             `${styles.navLink} ${isActive ? styles.active : ''}`
           }
         >
-          <LayoutDashboard size={16} />
           Overview
         </NavLink>
 
@@ -91,10 +86,6 @@ export default function Navbar() {
             aria-expanded={earnOpen}
           >
             Earn XP
-            <ChevronDown
-              size={15}
-              className={earnOpen ? styles.rotate : ''}
-            />
           </button>
 
           {earnOpen && (
@@ -136,8 +127,16 @@ export default function Navbar() {
             `${styles.navLink} ${isActive ? styles.active : ''}`
           }
         >
-          <Award size={16} />
           Rewards & Badges
+        </NavLink>
+
+        <NavLink
+          to="/Lvl-Dashboard/roadmap"
+          className={({ isActive }) =>
+            `${styles.navLink} ${isActive ? styles.active : ''}`
+          }
+        >
+          Level Roadmap
         </NavLink>
 
         <NavLink
@@ -146,7 +145,6 @@ export default function Navbar() {
             `${styles.navLink} ${isActive ? styles.active : ''}`
           }
         >
-          <History size={16} />
           Activity History
         </NavLink>
       </nav>

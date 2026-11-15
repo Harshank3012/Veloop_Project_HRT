@@ -145,64 +145,16 @@
 .heroVariant {
   isolation: isolate;
 }
-.heroVariant .sphericalOrbit {
-  position: absolute;
-  z-index: 0;
-  left: 50%;
-  top: 50%;
-  width: 164%;
-  height: 164%;
-  box-sizing: border-box;
-  border: 4px solid rgba(255, 218, 132, 1);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  background: transparent;
-  box-shadow:
-    0 0 3px rgba(255, 239, 190, 1),
-    0 0 10px rgba(255, 205, 104, .95),
-    0 0 24px rgba(255, 184, 72, .62),
-    inset 0 0 8px rgba(255, 218, 132, .22);
-  animation: royalOrbitalSweep 36s linear infinite, royalHaloBreath 7s ease-in-out infinite;
-}
-.heroVariant .sphericalOrbit::before {
-  content: "";
-  position: absolute;
-  inset: 13%;
-  border: 3px dashed rgba(255, 218, 132, .96);
-  filter: drop-shadow(0 0 5px rgba(255, 197, 86, .85));
-  border-radius: 50%;
-  pointer-events: none;
-}
-.heroVariant .sphericalOrbit::after {
-  content: "";
-  position: absolute;
-  inset: 26%;
-  border: 3px solid rgba(255, 224, 157, .98);
-  border-radius: 50%;
-  box-shadow:
-    0 0 3px rgba(255, 241, 199, .95),
-    0 0 12px rgba(255, 201, 100, .85),
-    0 0 22px rgba(255, 184, 72, .42),
-    inset 0 0 8px rgba(255, 218, 132, .12);
-  /* Keep the inner halo visible only outside the badge's central silhouette.
-     This prevents the ring from showing through transparent parts of the PNG. */
-  -webkit-mask-image: radial-gradient(ellipse 34% 42% at 50% 50%, transparent 98%, #000 100%);
-  mask-image: radial-gradient(ellipse 34% 42% at 50% 50%, transparent 98%, #000 100%);
-}
-@keyframes royalOrbitalSweep {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-@keyframes royalHaloBreath {
-  0%, 100% { border-color: rgba(255, 218, 132, .94); box-shadow: 0 0 10px rgba(255, 197, 86, .65), 0 0 22px rgba(255, 184, 72, .35); }
-  50% { border-color: rgba(255, 244, 204, 1); box-shadow: 0 0 16px rgba(255, 221, 145, .95), 0 0 32px rgba(255, 184, 72, .62); }
-}
+
+
+
+
+
 @media (max-width: 760px) {
-  .heroVariant .sphericalOrbit { width: 172%; height: 172%; }
+
 }
 @media (prefers-reduced-motion: reduce) {
-  .heroVariant .sphericalOrbit { animation: none !important; }
+
 }
 
 
@@ -213,4 +165,81 @@
 }
 .heroVariant:hover {
   transform: none !important;
+}
+
+
+/* FIXED HERO BADGE ARTBOARD
+   Every rank uses the same physical frame and bottom baseline.
+   This prevents tier swaps from shifting the badge/pedestal position. */
+.heroVariant {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 205px !important;
+  height: 240px !important;
+  min-width: 205px !important;
+  min-height: 240px !important;
+  max-width: 205px !important;
+  max-height: 240px !important;
+  flex: 0 0 240px !important;
+  transform: none !important;
+}
+.heroVariant .artwork {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  transform: none !important;
+  transition: filter .3s ease !important;
+}
+.heroVariant:hover .artwork {
+  transform: none !important;
+}
+@media (max-width: 760px) {
+  .heroVariant {
+    width: 180px !important;
+    height: 210px !important;
+    min-width: 180px !important;
+    min-height: 210px !important;
+    max-width: 180px !important;
+    max-height: 210px !important;
+    flex-basis: 210px !important;
+  }
+}
+@media (max-width: 560px) {
+  .heroVariant {
+    width: 165px !important;
+    height: 193px !important;
+    min-width: 165px !important;
+    min-height: 193px !important;
+    max-width: 165px !important;
+    max-height: 193px !important;
+    flex-basis: 193px !important;
+  }
+}
+
+
+
+/* Hero badge: restrained glow to keep the crest crisp inside the halo. */
+.heroVariant .emblemAura {
+  opacity: .38 !important;
+  filter: blur(11px) !important;
+  transform: scale(1.02) !important;
+  animation: none !important;
+}
+
+.heroVariant.current .artwork {
+  filter:
+    drop-shadow(0 7px 7px rgba(0, 0, 0, .42))
+    drop-shadow(0 0 5px rgba(210, 125, 67, .30)) !important;
+}
+
+.heroVariant:hover .emblemAura {
+  opacity: .42 !important;
+  transform: scale(1.04) !important;
 }

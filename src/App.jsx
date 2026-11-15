@@ -11,6 +11,7 @@ import {
   MissionsPage,
   StreaksPage,
   ActivityPage,
+  LevelRoadmapPage,
 } from './pages/FeaturePages.jsx';
 
 function AppLayout({ children }) {
@@ -54,6 +55,11 @@ export default function App() {
         <Route
           path="/Lvl-Dashboard/badges"
           element={<AppLayout><Badges /></AppLayout>}
+        />
+
+        <Route
+          path="/Lvl-Dashboard/roadmap"
+          element={<AppLayout><LevelRoadmapPage /></AppLayout>}
         />
 
         <Route
