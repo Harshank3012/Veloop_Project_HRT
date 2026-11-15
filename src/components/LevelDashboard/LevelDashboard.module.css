@@ -2770,3 +2770,77 @@
 @media (prefers-reduced-motion: reduce) {
   .heroHaloOuter { animation: none !important; }
 }
+
+
+/* MOBILE PERFORMANCE PROFILE
+   Keep the premium palette and card surfaces, but avoid continuously repainting
+   large blurred layers on touch devices. Desktop effects remain unchanged. */
+@media (max-width: 768px) and (pointer: coarse) {
+  .ambientGlow,
+  .ambientGlowSecondary {
+    animation: none !important;
+    filter: none !important;
+    opacity: .07 !important;
+  }
+
+  .hero,
+  .progressCard,
+  .rewardCard,
+  .gameCard,
+  .rankIntelPanel,
+  .earningCard {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .rewardOrbitOne,
+  .rewardOrbitTwo,
+  .rewardSparkleOne,
+  .rewardSparkleTwo,
+  .rewardSparkleThree,
+  .rewardVisual::after {
+    animation: none !important;
+  }
+
+  .rewardIcon {
+    animation: none !important;
+  }
+
+  .progressFill::after {
+    animation: none !important;
+  }
+
+  .roadmapItem.roadmapcurrent {
+    animation: none !important;
+  }
+
+  .earningCard {
+    animation: none !important;
+    transition: border-color .18s ease, background-color .18s ease !important;
+  }
+
+  .heroRankHalo {
+    animation: none !important;
+    filter: drop-shadow(0 0 2px rgba(var(--hero-halo-rgb, 216, 137, 79), .28)) !important;
+  }
+
+  .heroHaloOuter {
+    animation: heroOuterGlowSoft 6s ease-in-out infinite !important;
+  }
+
+  .heroHaloOrbit {
+    animation: heroDottedRingTravel 30s linear infinite !important;
+    filter: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero,
+  .progressCard,
+  .rewardCard,
+  .gameCard,
+  .rankIntelPanel,
+  .earningCard {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .20) !important;
+  }
+}

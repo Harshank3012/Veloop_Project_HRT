@@ -222,3 +222,11 @@
 .modal { overflow:hidden; }
 .modal::before { content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(255,222,150,.08),transparent 52%); }
 .claimButton { transition:transform .2s ease,filter .2s ease,box-shadow .2s ease; }
+
+
+/* Reduce backdrop-filter compositing cost on touch devices. */
+@media (max-width: 768px) and (pointer: coarse) {
+  .overlay { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  /* Badge unlocked — collectible reveal */
+.overlay { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}

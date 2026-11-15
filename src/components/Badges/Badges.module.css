@@ -1208,3 +1208,11 @@
 .statValue, .collectionCount strong { color: #edc77f; }
 .collectionTrack { background: rgba(5,8,17,.7); }
 .collectionFill { background: linear-gradient(90deg,#9a7ac8,#e9bd70); }
+
+
+/* Reduce backdrop-filter compositing cost on touch devices. */
+@media (max-width: 768px) and (pointer: coarse) {
+  /* TOP BAR */
+
+.topbar { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}

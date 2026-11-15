@@ -563,3 +563,15 @@
     transform: none;
   }
 }
+
+
+/* Reduce backdrop-filter compositing cost on touch devices. */
+@media (max-width: 768px) and (pointer: coarse) {
+  /* ===== VELOOP PREMIUM GAME NAVIGATION ===== */
+.header { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .dropdownMenu { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  /* Premium navigation finish */
+.header { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  /* ROYAL REALM NAVIGATION */
+.header { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}

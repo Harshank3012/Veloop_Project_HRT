@@ -94,13 +94,22 @@ export default function Badges() {
     window.addEventListener('storage', refresh);
     window.addEventListener('veloop-achievements-updated', refresh);
 
-    const timer = window.setInterval(refresh, 1500);
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === 'visible') refresh();
+    };
+
+    window.addEventListener('focus', refresh);
+    window.addEventListener('storage', refresh);
+    window.addEventListener('veloop-achievements-updated', refresh);
+    document.addEventListener('visibilitychange', refreshWhenVisible);
+    window.addEventListener('pageshow', refresh);
 
     return () => {
       window.removeEventListener('focus', refresh);
       window.removeEventListener('storage', refresh);
       window.removeEventListener('veloop-achievements-updated', refresh);
-      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', refreshWhenVisible);
+      window.removeEventListener('pageshow', refresh);
     };
   }, [refresh]);
 

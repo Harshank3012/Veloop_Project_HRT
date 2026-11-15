@@ -238,3 +238,11 @@
 .modal { max-height:min(86vh,820px);overflow:auto; }
 .sectionButton { transition:transform .2s ease,border-color .2s ease,background .2s ease; }
 .sectionButton:hover { transform:translateX(2px); }
+
+
+/* Reduce backdrop-filter compositing cost on touch devices. */
+@media (max-width: 768px) and (pointer: coarse) {
+  .overlay { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  /* Help guide — premium modal treatment */
+.overlay { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}

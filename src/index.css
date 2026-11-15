@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
-
 :root {
   font-family: 'DM Sans', 'Manrope', sans-serif;
   color: #f6f3ec;
@@ -50,4 +48,10 @@ a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transpar
 ::-webkit-scrollbar-thumb { border: 2px solid #111422; border-radius: 99px; background: linear-gradient(180deg, #b99560, #8872ad); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+
+/* Avoid forcing smooth-scroll animations on touch devices. */
+@media (pointer: coarse) {
+  html { scroll-behavior: auto; }
 }

@@ -1084,3 +1084,9 @@
     transition: none !important;
   }
 }
+
+
+/* Reduce backdrop-filter compositing cost on touch devices. */
+@media (max-width: 768px) and (pointer: coarse) {
+  .royalHeroProgress { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
