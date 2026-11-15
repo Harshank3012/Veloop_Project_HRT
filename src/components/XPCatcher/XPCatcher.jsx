@@ -113,26 +113,8 @@ export default function XPCatcher({ onEarnXP }) {
   };
 
   return (
-    <section className={styles.gameSection} aria-labelledby="xp-catcher-title">
-      <div className={styles.heading}>
-        <div>
-          <div className={styles.eyebrow}>
-            <Zap size={14} /> MINI GAME
-          </div>
-
-          <h2 id="xp-catcher-title">XP Catcher</h2>
-
-          <p>
-            Catch as many glowing XP orbs as you can before time runs out.
-          </p>
-        </div>
-
-        <div className={styles.gameTag}>
-          <Target size={15} /> +{XP_PER_CATCH} XP / catch
-        </div>
-      </div>
-
-      <div className={styles.stats}>
+    <section className={styles.gameSection}>
+<div className={styles.stats}>
         <div>
           <span>TIME LEFT</span>
           <strong>

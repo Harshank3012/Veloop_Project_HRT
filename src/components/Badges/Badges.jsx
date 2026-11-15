@@ -19,6 +19,7 @@ import { BADGES, BADGE_CATEGORIES } from '../../data/badges';
 import { XP_PER_LEVEL } from '../../data/levelData';
 import BadgeCelebration from '../BadgeCelebration/BadgeCelebration.jsx';
 import styles from './Badges.module.css';
+import { getLocalDateKey, getPreviousLocalDateKey } from '../../utils/dateUtils';
 
 const STORAGE_KEY = 'veloop-unlocked-badges';
 
@@ -34,15 +35,31 @@ const readNum = (key) => Math.max(0, Number(localStorage.getItem(key)) || 0);
 
 function getAchievementData() {
   const xp = readNum('veloop-total-xp');
-  const streak = readJSON('veloop-streak-data', {});
+  const legacyStreak = readJSON('veloop-streak-data', {});
   const missionStreak = readJSON('veloop-mission-streak-data', {});
+  const streakData = { ...legacyStreak, ...missionStreak };
+  const lastCompletedDate = streakData.lastCompletedDate;
+  const savedCurrentStreak = Number(
+    streakData.currentStreak ?? streakData.streak ?? 0
+  ) || 0;
+  const currentStreak = lastCompletedDate
+    ? (lastCompletedDate === getLocalDateKey() ||
+        lastCompletedDate === getPreviousLocalDateKey()
+        ? savedCurrentStreak
+        : 0)
+    : savedCurrentStreak;
+  const bestStreak = Math.max(
+    Number(legacyStreak.bestStreak ?? legacyStreak.longestStreak ?? 0) || 0,
+    Number(missionStreak.bestStreak ?? missionStreak.longestStreak ?? 0) || 0,
+    currentStreak
+  );
 
   return {
     xp,
     level: Math.floor(xp / XP_PER_LEVEL) + 1,
-    streak: Number(streak.currentStreak ?? streak.streak ?? 0),
+    streak: currentStreak,
     missions: readNum('veloop-total-missions-completed'),
-    perfectWeekDays: Number(missionStreak.bestStreak || 0),
+    perfectWeekDays: bestStreak,
     gamesPlayed: readNum('veloop-games-played'),
     singleGameObjects: readNum('veloop-best-single-game-objects'),
   };

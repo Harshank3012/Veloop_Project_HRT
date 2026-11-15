@@ -11,6 +11,7 @@ import {
   Bell,
   CircleHelp,
   PlayCircle,
+  Gift,
 } from 'lucide-react';
 
 import Notifications from '../Notifications/Notifications';
@@ -117,6 +118,13 @@ export default function Navbar() {
                 onClick={() => setEarnOpen(false)}
               >
                 <Flame size={16} /> Streak Rewards
+              </Link>
+
+              <Link
+                to="/Lvl-Dashboard/refer-earn"
+                onClick={() => setEarnOpen(false)}
+              >
+                <Gift size={16} /> Refer & Earn
               </Link>
             </div>
           )}

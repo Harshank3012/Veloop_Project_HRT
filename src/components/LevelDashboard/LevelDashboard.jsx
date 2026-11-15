@@ -1,6 +1,5 @@
 
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import {
   ArrowRight,
   Check,
@@ -103,44 +102,6 @@ const levelTiers = [
 const getTierForLevel = (level) =>
   levelTiers.find((tier) => level >= tier.min && level <= tier.max) ||
   levelTiers[levelTiers.length - 1];
-
-const earningFeatures = [
-  {
-    title: 'Daily Missions',
-    description: 'Complete daily activities and earn XP.',
-    reward: '+30 XP',
-    status: 'AVAILABLE',
-    icon: Target,
-    color: 'gold',
-    link: '/Lvl-Dashboard/missions',
-  },
-  {
-    title: 'Streak Bonus',
-    description: 'Maintain your daily activity streak.',
-    reward: 'View Streaks',
-    status: 'AVAILABLE',
-    icon: Zap,
-    color: 'purple',
-    link: '/Lvl-Dashboard/streaks',
-  },
-  {
-    title: 'Watch & Earn',
-    description: 'Watch eligible videos and earn XP.',
-    reward: 'Up to +100 XP',
-    status: 'AVAILABLE',
-    icon: PlayCircle,
-    color: 'blue',
-    link: '/Lvl-Dashboard/watch-earn',
-  },
-  {
-    title: 'Refer & Earn',
-    description: 'Invite friends to join the VELOOP journey.',
-    reward: 'Coming Soon',
-    status: 'COMING SOON',
-    icon: Gift,
-    color: 'green',
-  },
-];
 
 function consumePendingMissionCelebrations() {
   try {
@@ -556,33 +517,24 @@ export default function LevelDashboard() {
 
       <div className={styles.content} id="home">
 
-        {/* HERO */}
-        <section className={styles.hero}>
+        {/* HERO — ROYAL PLAYER INTRO */}
+        <section className={styles.hero} aria-labelledby="level-hero-title">
           <div className={styles.heroContent}>
-            <div className={styles.eyebrow}>
-              <Sparkles size={15} />
-              <span>VELOOP REWARDS EXPERIENCE</span>
-            </div>
-
-            <h1>
+            <h1 id="level-hero-title">
               YOUR JOURNEY.
               <br />
               <span>YOUR LEGACY.</span>
             </h1>
 
             <p>
-              Every Activity takes you closer to the next Rank.
-              Keep Earning, Keep Progressing, and Unlock your Potential.
+              Every activity brings you closer to your next rank. Earn XP,
+              conquer challenges, and unlock rewards worthy of your progress.
             </p>
 
           </div>
 
           <div className={styles.heroRank}>
-            <div className={styles.heroOrbitSystem} aria-hidden="true">
-              <div className={styles.heroRankOrbit} />
-              <span className={`${styles.heroOrbitBall} ${styles.heroOrbitBallTop}`} />
-              <span className={`${styles.heroOrbitBall} ${styles.heroOrbitBallBottom}`} />
-            </div>
+            <div className={styles.heroRankHalo} aria-hidden="true" />
             <div className={styles.heroRankInner}>
               <RankEmblem
                 tier={currentTier.color}
@@ -591,7 +543,13 @@ export default function LevelDashboard() {
                 className={styles.heroRankEmblem}
               />
             </div>
+            <div className={styles.heroRankCaption}>
+              <span>YOUR CURRENT RANK</span>
+              <strong>{currentTier.name}</strong>
+              <small>LEVEL {String(currentLevel).padStart(2, '0')}</small>
+            </div>
           </div>
+          <div className={styles.heroBottomRule} aria-hidden="true" />
         </section>
 
         {/* OVERVIEW */}
@@ -600,15 +558,9 @@ export default function LevelDashboard() {
           {/* CURRENT LEVEL */}
           <article className={styles.progressCard}>
             <div className={styles.cardHeader}>
-              <div>
-                <span className={styles.sectionLabel}>PLAYER STATUS</span>
-                <h2>Your  Current  Level</h2>
+              <div className={styles.currentLevelHeading}>
+                <h2>Your Current Level</h2>
               </div>
-
-              <span className={styles.livePill}>
-                <span />
-                ACTIVE
-              </span>
             </div>
 
             <div className={styles.levelIdentity}>
@@ -744,7 +696,7 @@ export default function LevelDashboard() {
 
 
 {/* LEVEL ROADMAP */}
-        <section className={styles.roadmapSection}>
+        <section className={styles.roadmapSection} id="level-roadmap">
           <div className={styles.sectionHeading}>
             <div>
               <h2>Level Roadmap</h2>
@@ -835,138 +787,19 @@ export default function LevelDashboard() {
             </article>
           </div>
 
-          {(() => {
-            const selectedTier = levelTiers.find((tier) => tier.color === selectedRoadmapTier) || currentTier;
-            const selectedState = currentLevel > selectedTier.max
-              ? 'completed'
-              : currentLevel >= selectedTier.min
-                ? 'current'
-                : 'locked';
-            const TierIcon = selectedTier.icon;
 
-            return (
-              <div className={`${styles.rankIntelPanel} ${styles[`rankIntel${selectedTier.color}`]}`} key={selectedTier.color}>
-                <div className={styles.rankIntelIcon}>
-                  <TierIcon size={22} />
-                </div>
-                <div className={styles.rankIntelCopy}>
-                  <span>RANK INTEL · {selectedState === 'completed' ? 'CONQUERED' : selectedState === 'current' ? 'ACTIVE TIER' : 'UPCOMING TIER'}</span>
-                  <strong>{selectedTier.name}</strong>
-                  <p>
-                    {selectedState === 'completed'
-                      ? `Levels ${selectedTier.min}–${selectedTier.max} conquered. This rank is part of your legacy.`
-                      : selectedState === 'current'
-                        ? `You're competing in this tier now. Keep earning XP to reach level ${nextLevel}.`
-                        : `Reach level ${selectedTier.min} to unlock this rank and enter a new chapter of your journey.`}
-                  </p>
-                </div>
-                <div className={styles.rankIntelRange}>
-                  <small>RANK RANGE</small>
-                  <strong>{selectedTier.max === Infinity ? `${selectedTier.min}+` : `${selectedTier.min}–${selectedTier.max}`}</strong>
-                </div>
-              </div>
-            );
-          })()}
 
-        </section>
-
-        {/* EARNING FEATURES */}
-        <section className={styles.earnSection}>
-          <div className={styles.sectionHeading}>
-            <div>
-              <span className={styles.sectionLabel}>LEVEL UP FASTER</span>
-              <h2>Choose your next move</h2>
-              <p className={styles.sectionDescription}>
-                Explore activities and collect more experience points.
-              </p>
-            </div>
-
-            <span className={styles.roadmapCaption}>
-              <Zap size={15} />
-              EARN MORE XP
-            </span>
-          </div>
-
-          <div className={styles.earningGrid}>
-            {earningFeatures.map((feature, index) => {
-              const Icon = feature.icon;
-
-              const cardContent = (
-                <>
-                  <div className={styles.featureTop}>
-                    <div
-                      className={`${styles.earningIcon} ${styles[feature.color]}`}
-                    >
-                      <Icon size={23} />
-                    </div>
-
-                    <span
-                      className={`${styles.earningState} ${
-                        feature.status === 'AVAILABLE'
-                          ? styles.available
-                          : ''
-                      }`}
-                    >
-                      {feature.status}
-                    </span>
-                  </div>
-
-                  <div className={styles.earningInfo}>
-                    <strong>{feature.title}</strong>
-                    <p>{feature.description}</p>
-                  </div>
-
-                  <div className={styles.featureBottom}>
-                    <span>{feature.reward}</span>
-                    {feature.link ? (
-                      <ArrowRight size={17} />
-                    ) : (
-                      <LockKeyhole size={16} />
-                    )}
-                  </div>
-                </>
-              );
-
-              return feature.link ? (
-                <Link
-                  to={feature.link}
-                  className={styles.earningCard}
-                  key={feature.title}
-                  style={{ '--feature-index': index }}
-                >
-                  {cardContent}
-                </Link>
-              ) : (
-                <article
-                  className={styles.earningCard}
-                  key={feature.title}
-                  style={{ '--feature-index': index }}
-                >
-                  {cardContent}
-                </article>
-              );
-            })}
-          </div>
         </section>
 
         {/* XP CATCHER */}
         <section className={styles.gameSection}>
-          <div className={styles.sectionHeading}>
-            <div>
-              <span className={styles.sectionLabel}>PLAY TO EARN</span>
-              <h2>XP Catcher Arena</h2>
-              <p className={styles.sectionDescription}>
-                Catch XP and get closer to your next level.
-              </p>
-            </div>
-
-            <span className={styles.gamePill}>
-              <PlayCircle size={15} />
-              MINI GAME
-            </span>
-          </div>
-
           <div className={styles.gameCard}>
+            <div className={styles.gameTitle}>
+              <h2>XP CATCHER ARENA</h2>
+            </div>
+            <p className={styles.gameIntroNote}>
+              Tap the glowing XP orbs before the 15-second timer runs out to collect XP and boost your level progress.
+            </p>
             <XPCatcher onEarnXP={addXP} />
           </div>
         </section>

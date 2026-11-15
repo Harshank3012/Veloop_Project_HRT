@@ -1,5 +1,5 @@
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft,
   CheckCircle2,
@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 
 import { logActivity } from '../../utils/ActivityTracker';
 import styles from './WatchEarn.module.css';
+import { getLocalDateKey } from '../../utils/dateUtils';
 
 const XP_STORAGE_KEY = 'veloop-total-xp';
 const CLAIMED_STORAGE_KEY = 'veloop-watch-earn-claimed';
@@ -57,15 +58,38 @@ const DEMO_VIDEOS = [
   },
 ];
 
-function getClaimedVideos() {
+function getDailyClaimState() {
+  const today = getLocalDateKey();
+
   try {
     const saved = JSON.parse(
-      localStorage.getItem(CLAIMED_STORAGE_KEY) || '[]'
+      localStorage.getItem(CLAIMED_STORAGE_KEY) || 'null'
     );
-    return Array.isArray(saved) ? saved : [];
+
+    // Current daily format: { date: YYYY-MM-DD, claimed: [video IDs] }.
+    if (saved && !Array.isArray(saved) && saved.date === today) {
+      return {
+        date: today,
+        claimed: Array.isArray(saved.claimed) ? saved.claimed : [],
+      };
+    }
+
+    // Old versions stored a permanent array. Treat it as legacy data and
+    // start a clean daily allowance so old claims do not block today's videos.
+    const freshState = { date: today, claimed: [] };
+    localStorage.setItem(CLAIMED_STORAGE_KEY, JSON.stringify(freshState));
+    return freshState;
   } catch {
-    return [];
+    return { date: today, claimed: [] };
   }
+}
+
+function getEarnedToday(claimedVideos) {
+  return DEMO_VIDEOS.reduce(
+    (total, video) =>
+      claimedVideos.includes(video.id) ? total + video.reward : total,
+    0
+  );
 }
 
 export default function WatchEarn() {
@@ -73,27 +97,58 @@ export default function WatchEarn() {
   const [secondsLeft, setSecondsLeft] = useState(DEMO_VIDEOS[0].duration);
   const [isWatching, setIsWatching] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [claimedVideos, setClaimedVideos] = useState(getClaimedVideos);
+  const [claimedVideos, setClaimedVideos] = useState(
+    () => getDailyClaimState().claimed
+  );
   const [totalEarned, setTotalEarned] = useState(() =>
-    DEMO_VIDEOS.reduce(
-      (total, video) =>
-        getClaimedVideos().includes(video.id)
-          ? total + video.reward
-          : total,
-      0
-    )
+    getEarnedToday(getDailyClaimState().claimed)
   );
 
   const selectedVideo = useMemo(
     () => DEMO_VIDEOS.find((video) => video.id === selectedVideoId),
     [selectedVideoId]
   );
+  const activeDateRef = useRef(getLocalDateKey());
+  const selectedVideoRef = useRef(selectedVideo);
+  selectedVideoRef.current = selectedVideo;
 
   const isClaimed = claimedVideos.includes(selectedVideo.id);
   const progress = Math.min(
     100,
     ((selectedVideo.duration - secondsLeft) / selectedVideo.duration) * 100
   );
+
+  useEffect(() => {
+    const syncDailyClaims = () => {
+      const dailyState = getDailyClaimState();
+      setClaimedVideos(dailyState.claimed);
+      setTotalEarned(getEarnedToday(dailyState.claimed));
+
+      // A completed session from yesterday must never be claimable today.
+      if (dailyState.date !== activeDateRef.current) {
+        activeDateRef.current = dailyState.date;
+        setIsWatching(false);
+        setIsCompleted(false);
+        setSecondsLeft(selectedVideoRef.current.duration);
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') syncDailyClaims();
+    };
+
+    const interval = window.setInterval(syncDailyClaims, 30_000);
+    window.addEventListener('focus', syncDailyClaims);
+    window.addEventListener('storage', syncDailyClaims);
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      window.clearInterval(interval);
+      window.removeEventListener('focus', syncDailyClaims);
+      window.removeEventListener('storage', syncDailyClaims);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, []);
 
   useEffect(() => {
     if (!isWatching || secondsLeft <= 0) return undefined;
@@ -132,26 +187,36 @@ export default function WatchEarn() {
   };
 
   const claimReward = () => {
-    if (!isCompleted || isClaimed) return;
+    if (!isCompleted) return;
 
-    const updatedClaimed = [...claimedVideos, selectedVideo.id];
+    // Re-read storage at claim time to prevent duplicate claims across tabs.
+    const dailyState = getDailyClaimState();
+    if (dailyState.claimed.includes(selectedVideo.id)) {
+      setClaimedVideos(dailyState.claimed);
+      setTotalEarned(getEarnedToday(dailyState.claimed));
+      return;
+    }
+
+    const updatedClaimed = [...dailyState.claimed, selectedVideo.id];
     const currentXP = Math.max(
       0,
       Number(localStorage.getItem(XP_STORAGE_KEY) || 0) || 0
     );
     const updatedXP = currentXP + selectedVideo.reward;
 
-    // Save claimed video IDs to prevent duplicate claims.
-    localStorage.setItem(
-      CLAIMED_STORAGE_KEY,
-      JSON.stringify(updatedClaimed)
-    );
-
-    // Update the same XP value used by the Level Dashboard.
-    localStorage.setItem(XP_STORAGE_KEY, String(updatedXP));
+    try {
+      localStorage.setItem(
+        CLAIMED_STORAGE_KEY,
+        JSON.stringify({ date: getLocalDateKey(), claimed: updatedClaimed })
+      );
+      localStorage.setItem(XP_STORAGE_KEY, String(updatedXP));
+    } catch (error) {
+      console.error('Unable to save Watch & Earn reward:', error);
+      return;
+    }
 
     setClaimedVideos(updatedClaimed);
-    setTotalEarned((previous) => previous + selectedVideo.reward);
+    setTotalEarned(getEarnedToday(updatedClaimed));
 
     logActivity({
       type: 'xp',
@@ -160,8 +225,8 @@ export default function WatchEarn() {
       xp: selectedVideo.reward,
     });
 
-    // Notify the existing dashboard XP listener.
     window.dispatchEvent(new Event('veloop-xp-updated'));
+    window.dispatchEvent(new Event('veloop-achievements-updated'));
   };
 
   const formatTime = (seconds) => {
@@ -207,7 +272,7 @@ export default function WatchEarn() {
               <Coins size={23} />
             </div>
             <div>
-              <span>TOTAL XP EARNED HERE</span>
+              <span>XP EARNED TODAY</span>
               <strong>{totalEarned.toLocaleString('en-IN')} XP</strong>
             </div>
           </div>
@@ -420,7 +485,7 @@ export default function WatchEarn() {
                 <li>Select an available video.</li>
                 <li>Start and complete its watch timer.</li>
                 <li>Claim your XP after completion.</li>
-                <li>Each demo video can be claimed once.</li>
+                <li>Each demo video can be claimed once per day.</li>
               </ul>
               <div className={styles.rulesFooter}>
                 <Info size={14} />

@@ -536,3 +536,18 @@
 .activityList { overflow:hidden; border:1px solid rgba(190,170,255,.14); border-radius:18px; background:rgba(14,20,39,.6); }
 .activityItem { padding:15px 17px; }
 .activityXP { color:#f4d58d; text-shadow:0 0 16px rgba(244,201,107,.13); }
+
+/* ROYAL REALM — missions, streaks and activity surfaces */
+.page { color: #f4efe5; }
+.headingIcon { color: #f0cb83; border-color: rgba(233,189,112,.24); background: linear-gradient(145deg, rgba(233,189,112,.15), rgba(173,145,232,.08)); box-shadow: inset 0 1px rgba(255,255,255,.06); }
+.heading span { color: #c5a879; }
+.heading h1 { color: #f3dfb8; }
+.stats > div, .card, .emptyState { border-color: rgba(222,198,154,.14); border-radius: 18px; background: linear-gradient(145deg, rgba(35,39,57,.96), rgba(22,26,42,.98)); box-shadow: 0 14px 36px rgba(0,0,0,.17), inset 0 1px rgba(255,255,255,.035); }
+.stats strong, .cardBody strong { color: #e9c27b; }
+.card { transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.card:hover { transform: translateY(-2px); border-color: rgba(233,189,112,.34); box-shadow: 0 18px 40px rgba(0,0,0,.22); }
+.cardIcon { color: #e9c27b; border: 1px solid rgba(233,189,112,.15); background: rgba(233,189,112,.09); }
+.actionButton { border-color: #d6a85f; color: #211a12; background: linear-gradient(135deg,#ffe4a2,#d4a052); box-shadow: 0 6px 18px rgba(204,155,78,.16); }
+.actionButton:hover { color: #211a12; filter: brightness(1.06); }
+.completedButton { color: #8dd5b1; }
+.notice { color: #a0a5b8; }

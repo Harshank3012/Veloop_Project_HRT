@@ -1197,3 +1197,14 @@
 .emblemIcon { transition:transform .3s ease,filter .3s ease; }
 .badgeCard:hover .emblemIcon { transform:scale(1.07) rotate(-3deg);filter:brightness(1.12); }
 .badgeProgress { gap:8px; }
+
+/* ROYAL REALM — collectible badge vault */
+.page { --bg: #161827; --panel: #202438; --panel-light: #292d43; --border: rgba(225,205,164,.14); --text: #f6f1e7; --muted: #a4a8bb; --gold: #e9bd70; background: radial-gradient(ellipse at 50% -15%,rgba(147,111,189,.17),transparent 48%),linear-gradient(145deg,#161827,#101423 60%,#171827); }
+.topbar { border-bottom-color: rgba(225,205,164,.13); background: rgba(17,20,34,.9); }
+.hero { border-color: rgba(225,195,139,.22); background: radial-gradient(ellipse at 78% 50%,rgba(158,119,193,.18),transparent 38%),linear-gradient(115deg,#24263a,#171b2d 58%,#292238); }
+.hero h1 { color: #f3dfb8; }
+.hero h1 span { color: #e9bd70; }
+.statCard, .collectionCard { border-color: rgba(225,205,164,.14); background: linear-gradient(145deg,rgba(36,40,59,.97),rgba(21,25,42,.98)); box-shadow: 0 16px 40px rgba(0,0,0,.2); }
+.statValue, .collectionCount strong { color: #edc77f; }
+.collectionTrack { background: rgba(5,8,17,.7); }
+.collectionFill { background: linear-gradient(90deg,#9a7ac8,#e9bd70); }
