@@ -368,3 +368,69 @@
 .profileIcon { border:1px solid rgba(244,201,107,.32);box-shadow:0 5px 15px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.1); }
 .navLink { white-space:nowrap; }
 .notificationDot { box-shadow:0 0 0 4px rgba(244,201,107,.1),0 0 12px rgba(244,201,107,.7); }
+
+/* MOBILE NAV: keep Earn XP choices below the navigation instead of clipping them */
+@media (max-width: 760px) {
+  .header {
+    overflow: visible;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    min-height: auto;
+    overflow: visible;
+    padding: 10px 14px;
+  }
+
+  .dropdown {
+    position: relative;
+    flex: 0 0 auto;
+  }
+
+  .dropdownMenu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: auto;
+    left: 0;
+    z-index: 1200;
+    width: min(230px, calc(100vw - 32px));
+    min-width: 205px;
+    max-width: calc(100vw - 32px);
+  }
+
+  .dropdownMenu a {
+    min-height: 46px;
+    padding: 13px 14px;
+    font-size: 14px;
+  }
+}
+
+/* ROYAL REALM NAVIGATION */
+.header {
+  background: rgba(17, 20, 34, .94);
+  border-bottom: 1px solid rgba(225, 195, 139, .18);
+  box-shadow: 0 10px 32px rgba(0,0,0,.22);
+  backdrop-filter: blur(18px);
+}
+.brandRow { border-bottom-color: rgba(225,195,139,.10); }
+.brand { color: #f4ead8; letter-spacing: -.7px; }
+.brand b { color: #e9bd70; }
+.logo {
+  border: 1px solid rgba(255,235,190,.75);
+  border-radius: 12px;
+  color: #211a12;
+  background: linear-gradient(145deg, #ffe5a3, #c28c43);
+  box-shadow: 0 5px 18px rgba(204,157,84,.2), inset 0 1px rgba(255,255,255,.55);
+}
+.notification { border-color: rgba(225,195,139,.18); color: #d9cfbd; background: rgba(255,255,255,.035); }
+.notification:hover { color: #ffe2a0; border-color: rgba(233,189,112,.42); background: rgba(233,189,112,.08); }
+.nav { background: rgba(13,16,28,.72); }
+.navLink { color: #aeb2c2; }
+.navLink:hover, .active { color: #f5dfb1; background: rgba(203,164,102,.10); }
+.dropdownMenu { border-color: rgba(225,195,139,.18); background: #202337; box-shadow: 0 18px 38px rgba(0,0,0,.4); }
+.dropdownMenu a:hover { color: #f5d38f; background: rgba(203,164,102,.10); }
+.profileIcon { border: 1px solid rgba(233,189,112,.4); color: #f8dfad; background: linear-gradient(145deg, #54432e, #292338); }

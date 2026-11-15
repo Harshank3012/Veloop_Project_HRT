@@ -155,34 +155,6 @@
   justify-self: center;
   overflow: visible;
 }
-.heroOrbitSystem {
-  position: absolute;
-  inset: 5px;
-  z-index: 1;
-  border: 1px solid rgba(255, 211, 126, .34);
-  border-radius: 50%;
-  box-shadow: 0 0 36px rgba(170, 116, 255, .16), inset 0 0 28px rgba(255, 211, 126, .06);
-  animation: orbitSpin 16s linear infinite;
-}
-.heroRankOrbit {
-  position: absolute;
-  inset: 14px;
-  border: 1px dashed rgba(206, 174, 255, .34);
-  border-radius: 50%;
-}
-.heroOrbitBall {
-  position: absolute;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  border: 1px solid rgba(255,255,255,.9);
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 25%, #fff, #ffe39a 34%, #ffb83e 72%, #9b551b);
-  box-shadow: 0 0 10px 3px rgba(255,190,76,.8), 0 0 25px 7px rgba(255,164,54,.3);
-  transform: translateX(-50%);
-}
-.heroOrbitBallTop { top: -5px; }
-.heroOrbitBallBottom { bottom: -5px; width: 12px; height: 12px; }
 .heroRankInner {
   position: relative;
   z-index: 2;
@@ -865,6 +837,14 @@
 .earningCard:hover .featureBottom svg { transform: translateX(4px); }
 
 /* XP CATCHER GAME ARENA */
+.gameIntroNote {
+  margin: 0 0 16px;
+  color: #c9c2df;
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: .01em;
+}
+
 .gameCard {
   position: relative;
   padding: clamp(14px, 2vw, 24px);
@@ -1502,4 +1482,547 @@
 .footer { border-top-color:rgba(190,170,255,.16); }
 @media(hover:hover) {
   .roadmapItem,.earningCard,.progressCard,.rewardCard { will-change:transform; }
+}
+
+/* MISSION CELEBRATION: separate the full-screen backdrop from the dialog card.
+   Keeping these as separate layout roles prevents the dialog from becoming
+   another fixed full-screen black layer on mobile. */
+.celebrationOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  padding: max(20px, env(safe-area-inset-top)) 18px max(20px, env(safe-area-inset-bottom));
+  background:
+    radial-gradient(ellipse at 50% 18%, rgba(119, 75, 191, .34), transparent 54%),
+    rgba(5, 7, 18, .84);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: missionBackdropIn .24s ease both;
+}
+
+.missionCelebration {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 3vh, 28px);
+  width: min(100%, 520px);
+  min-height: 0;
+  max-height: min(88dvh, 760px);
+  overflow-y: auto;
+  padding: clamp(28px, 6vw, 48px) clamp(22px, 6vw, 44px);
+  border: 1px solid rgba(195, 158, 255, .42);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 197, 89, .16), transparent 38%),
+    radial-gradient(circle at 100% 100%, rgba(145, 89, 224, .22), transparent 46%),
+    linear-gradient(145deg, #211b3c 0%, #15172f 55%, #101629 100%);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .55), 0 0 55px rgba(144, 91, 225, .2), inset 0 1px rgba(255,255,255,.1);
+  text-align: center;
+  animation: missionCardIn .42s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.missionCelebration::before,
+.missionCelebration::after {
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ffd77d;
+  box-shadow: 0 0 18px 5px rgba(255, 198, 89, .48);
+  pointer-events: none;
+}
+
+.missionCelebration::before { top: 18%; left: 12%; }
+.missionCelebration::after { right: 12%; bottom: 18%; background: #c9a5ff; box-shadow: 0 0 18px 5px rgba(174, 123, 255, .42); }
+
+.missionCelebration .celebrationIcon {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border: 1px solid rgba(255, 211, 127, .48);
+  border-radius: 24px;
+  color: #ffe2a1;
+  background: linear-gradient(145deg, rgba(255, 201, 93, .2), rgba(157, 102, 226, .2));
+  box-shadow: 0 0 34px rgba(255, 190, 75, .18), inset 0 1px rgba(255,255,255,.12);
+}
+
+.missionCelebration .celebrationEyebrow {
+  color: #ffdc91;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.missionCelebration h2 {
+  max-width: 100%;
+  margin: 0;
+  color: #fff0c9;
+  font-size: clamp(25px, 5vw, 38px);
+  line-height: 1.16;
+  letter-spacing: -.8px;
+  text-wrap: balance;
+}
+
+.missionCelebration p {
+  max-width: 360px;
+  margin: 0;
+  color: #d4d1e6;
+  font-size: clamp(15px, 3.6vw, 19px);
+  line-height: 1.65;
+}
+
+.missionCelebration .celebrationXP {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 9px;
+  color: #ffd16d;
+  font-size: clamp(30px, 7vw, 42px);
+  line-height: 1.1;
+  text-shadow: 0 0 24px rgba(255, 190, 75, .3);
+}
+
+.missionCelebration .celebrationXP span {
+  font-size: .52em;
+  letter-spacing: 1.5px;
+}
+
+.missionCelebration .celebrationContinue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  margin-top: 4px;
+  padding: 11px 22px;
+  border: 1px solid rgba(255, 211, 127, .5);
+  border-radius: 999px;
+  color: #fff1ca;
+  background: linear-gradient(135deg, rgba(255, 190, 75, .2), rgba(143, 91, 214, .2));
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .2), inset 0 1px rgba(255,255,255,.12);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.missionCelebration .celebrationContinue:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255, 190, 75, .16), inset 0 1px rgba(255,255,255,.16);
+}
+
+@keyframes missionBackdropIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes missionCardIn { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+@media (max-width: 480px) {
+  .missionCelebration {
+    width: 100%;
+    max-height: 84dvh;
+    border-radius: 24px;
+    gap: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .celebrationOverlay,
+  .missionCelebration { animation: none; }
+}
+
+/* =========================================================
+   ROYAL REALM PASS — premium fintech + achievement language
+   ========================================================= */
+.dashboard {
+  --bg: #161827;
+  --panel: rgba(29, 33, 50, .92);
+  --panel-strong: rgba(35, 39, 58, .97);
+  --line: rgba(225, 204, 164, .16);
+  --muted: #a3a8bc;
+  --text: #f6f3ec;
+  --violet: #ad91e8;
+  --gold: #e9bd70;
+  padding-top: clamp(22px, 3vw, 42px);
+  background:
+    radial-gradient(ellipse at 80% 2%, rgba(142, 104, 191, .18), transparent 32%),
+    radial-gradient(ellipse at 5% 38%, rgba(195, 145, 75, .07), transparent 30%),
+    linear-gradient(145deg, #161827 0%, #111523 54%, #171827 100%);
+}
+.dashboard::before { opacity: .12; background-size: 54px 54px; }
+.dashboard::after { background: linear-gradient(180deg, transparent 0%, rgba(7, 9, 18, .10) 60%, rgba(7, 9, 18, .42) 100%); }
+.content { gap: clamp(27px, 3.3vw, 46px); }
+.hero {
+  min-height: 390px;
+  grid-template-columns: minmax(0, 1.2fr) minmax(270px, .8fr);
+  padding: clamp(30px, 4.2vw, 60px) clamp(25px, 5vw, 70px);
+  border: 1px solid rgba(222, 190, 132, .25);
+  border-radius: 28px;
+  background:
+    radial-gradient(ellipse at 80% 50%, rgba(157, 113, 204, .20), transparent 34%),
+    radial-gradient(ellipse at 12% 0%, rgba(227, 184, 111, .10), transparent 34%),
+    linear-gradient(115deg, rgba(22, 25, 43, .99), rgba(25, 26, 46, .96) 58%, rgba(31, 25, 47, .98));
+  box-shadow: 0 26px 70px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.075);
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(231, 196, 133, .12);
+  border-radius: 21px;
+  pointer-events: none;
+}
+.hero::after {
+  opacity: .52;
+  background:
+    radial-gradient(circle at 72% 22%, rgba(255,255,255,.45) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 90% 68%, rgba(236,202,143,.55) 0 1px, transparent 1.8px),
+    linear-gradient(125deg, transparent 0 58%, rgba(255,255,255,.035) 58.2%, transparent 58.5%);
+}
+.heroContent { max-width: 720px; }
+.hero h1 {
+  color: #f9e7bd;
+  font-size: clamp(39px, 5.4vw, 76px);
+  font-weight: 900;
+  letter-spacing: -.075em;
+  line-height: .96;
+  text-shadow: 0 8px 34px rgba(0,0,0,.32);
+}
+.hero h1 span {
+  margin-top: 10px;
+  background: linear-gradient(100deg, #ffe7ad 0%, #e9bd70 38%, #c9a8ed 86%, #f3e7ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.heroContent p { max-width: 540px; margin-top: 22px; color: #c0c2d0; font-size: 14px; line-height: 1.8; }
+.heroRank { width: min(100%, 340px); height: 315px; }
+.heroRankHalo { position: absolute; width: 270px; height: 270px; border: 1px solid rgba(228,192,128,.22); border-radius: 50%; box-shadow: 0 0 0 15px rgba(228,192,128,.025), 0 0 70px rgba(164,118,207,.16), inset 0 0 45px rgba(164,118,207,.10); }
+.heroRankHalo::before, .heroRankHalo::after { content: ""; position: absolute; inset: 14px; border: 1px dashed rgba(206,179,137,.25); border-radius: 50%; }
+.heroRankHalo::after { inset: 29px; border-style: solid; border-color: rgba(174,145,213,.17); }
+.heroRankInner { width: 238px; height: 238px; }
+.heroRankEmblem { filter: drop-shadow(0 16px 28px rgba(0,0,0,.48)); }
+.heroRankCaption { position: absolute; bottom: -2px; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 180px; padding: 9px 18px; border: 1px solid rgba(226,193,136,.2); border-radius: 12px; background: rgba(13,16,30,.78); box-shadow: 0 12px 25px rgba(0,0,0,.22); backdrop-filter: blur(10px); }
+.heroRankCaption span { color: #a8a4b5; font-size: 8px; font-weight: 900; letter-spacing: 1.8px; }
+.heroRankCaption strong { color: #f5dfb1; font-size: 12px; font-weight: 900; }
+.heroRankCaption small { color: #c5a66e; font-size: 8px; font-weight: 900; letter-spacing: 1.4px; }
+.heroBottomRule { position: absolute; bottom: 0; left: 8%; width: 84%; height: 1px; background: linear-gradient(90deg, transparent, rgba(231,190,117,.58), rgba(187,150,223,.48), transparent); }
+
+/* Shared premium card language */
+.progressCard, .rewardCard, .roadmapSection, .earningCard, .gameCard {
+  border-color: rgba(222, 198, 154, .15);
+  box-shadow: 0 18px 48px rgba(0,0,0,.22), inset 0 1px rgba(255,255,255,.045);
+}
+.progressCard, .rewardCard { background: linear-gradient(145deg, rgba(34,37,55,.97), rgba(22,26,42,.98)); }
+.progressCard::before, .rewardCard::before { background: linear-gradient(90deg, transparent, rgba(233,189,112,.8), transparent); }
+.sectionLabel, .mutedLabel { color: #c0a77d; }
+.sectionHeading h2, .cardHeader h2 { color: #f3e8d2; }
+.sectionDescription { color: #a5a9bd; }
+.livePill { color: #83d3ad; border-color: rgba(115,203,164,.22); background: rgba(67,143,108,.10); }
+.progressTrack { border-color: rgba(233,189,112,.18); background: rgba(8,10,19,.8); }
+.progressFill { background: linear-gradient(90deg, #9272bd, #c6a1e6 42%, #e9bd70 100%); box-shadow: 0 0 15px rgba(210,170,112,.34); }
+.progressMeta strong, .progressFoot b, .xpTotal { color: #f1ce8a; }
+.levelCardFooter { border-top-color: rgba(222,198,154,.13); }
+.rewardCard { background: radial-gradient(ellipse at 50% 32%, rgba(178,136,207,.13), transparent 46%), linear-gradient(145deg, rgba(35,34,54,.98), rgba(21,24,41,.99)); }
+.rewardIcon { border-color: rgba(233,189,112,.44); color: #f2cf8e; background: radial-gradient(circle, rgba(224,183,113,.22), rgba(105,76,129,.15)); box-shadow: 0 0 40px rgba(210,169,111,.14), inset 0 0 20px rgba(255,255,255,.05); }
+.rewardValue { color: #f1ce8a; }
+.rewardUnlock { border-color: rgba(233,189,112,.16); background: rgba(233,189,112,.055); }
+.roadmapSection { padding: clamp(20px, 3vw, 32px); border: 1px solid rgba(222,198,154,.14); border-radius: 24px; background: linear-gradient(145deg, rgba(30,34,52,.88), rgba(19,23,39,.92)); }
+.roadmapCaption, .gamePill { color: #e4c58e; border-color: rgba(233,189,112,.22); background: rgba(233,189,112,.07); }
+.earningCard { border-color: rgba(222,198,154,.15); background: linear-gradient(145deg, rgba(37,39,58,.96), rgba(22,26,43,.98)); }
+.earningCard:hover { border-color: rgba(233,189,112,.48); box-shadow: 0 18px 38px rgba(0,0,0,.26), 0 0 28px rgba(233,189,112,.07); }
+.earningIcon.gold { color: #f2cf8c; background: rgba(233,189,112,.12); }
+.earningIcon.purple { color: #c7a9ef; background: rgba(173,145,232,.13); }
+.earningIcon.blue { color: #a9c8e8; background: rgba(121,160,207,.12); }
+.earningIcon.green { color: #91d5b2; background: rgba(115,203,164,.12); }
+.gameSection .gameCard { border-color: rgba(222,198,154,.16); border-radius: 22px; background: linear-gradient(145deg, rgba(31,34,52,.95), rgba(17,21,37,.98)); }
+.footer { border-top-color: rgba(222,198,154,.13); color: #9297aa; }
+
+@media (max-width: 850px) {
+  .hero { grid-template-columns: minmax(0,1fr) 240px; gap: 12px; }
+  .heroRank { height: 270px; }
+  .heroRankHalo { width: 225px; height: 225px; }
+  .heroRankInner { width: 205px; height: 205px; }
+}
+@media (max-width: 650px) {
+  .hero { grid-template-columns: 1fr; min-height: 0; padding: 28px 22px 26px; text-align: left; }
+  .heroContent { max-width: none; }
+  .hero h1 { font-size: clamp(39px, 11vw, 58px); }
+  .heroContent p { margin-top: 16px; font-size: 12px; }
+  .heroRank { width: 100%; height: 245px; margin-top: 5px; }
+  .heroRankHalo { width: 210px; height: 210px; }
+  .heroRankInner { width: 190px; height: 190px; }
+  .heroRankCaption { bottom: -1px; }
+  .roadmapSection { padding: 20px 14px; }
+  .sectionHeading { align-items: flex-start; flex-direction: column; }
+}
+
+
+/* ROYAL REWARD VAULT — premium two-ring motion pass */
+.rewardVisual {
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(194,145,255,.19), transparent 43%),
+    radial-gradient(ellipse at 50% 100%, rgba(233,189,112,.10), transparent 56%),
+    linear-gradient(145deg, rgba(35,28,63,.78), rgba(10,15,34,.72));
+  border: 1px solid rgba(224,190,124,.12);
+}
+/* Exactly two rings: a luminous solid outer ring and a dotted inner ring. */
+.rewardOrbit {
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.rewardOrbitOne {
+  border: 1.5px solid rgba(255,215,139,.82);
+  box-shadow: 0 0 8px rgba(255,203,112,.45), 0 0 22px rgba(255,190,87,.23), inset 0 0 12px rgba(255,211,133,.12);
+  animation: royalOuterRingPulse 3.2s ease-in-out infinite;
+}
+.rewardOrbitTwo {
+  width: 112px;
+  height: 112px;
+  border: 1.5px dotted rgba(255,207,116,.88);
+  box-shadow: 0 0 10px rgba(239,190,104,.18);
+  animation: royalDottedRingTurn 18s linear infinite;
+}
+.rewardVisual::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: -35%;
+  left: -45%;
+  width: 32%;
+  height: 170%;
+  pointer-events: none;
+  transform: rotate(24deg);
+  background: linear-gradient(90deg, transparent, rgba(255,231,181,.16), rgba(255,255,255,.34), rgba(255,220,151,.12), transparent);
+  filter: blur(5px);
+  animation: royalRewardSweep 6.5s ease-in-out infinite;
+}
+.rewardIcon {
+  border: 1px solid rgba(255,220,151,.76);
+  color: #ffe0a0;
+  background: radial-gradient(circle at 35% 25%, rgba(255,226,165,.28), transparent 48%), linear-gradient(145deg, #7651a7 0%, #39265e 58%, #1a1838 100%);
+  box-shadow: 0 0 20px rgba(177,119,255,.34), 0 0 42px rgba(239,190,104,.22), inset 0 1px 2px rgba(255,255,255,.35), inset 0 -12px 20px rgba(0,0,0,.3);
+  animation: rewardFloat 3.6s ease-in-out infinite, royalGiftGlow 2.8s ease-in-out infinite;
+  transition: transform .35s ease, box-shadow .35s ease, filter .35s ease;
+}
+.rewardSparkleOne { animation: royalStarTwinkle 2.1s ease-in-out infinite; transform-origin: center; }
+.rewardSparkleTwo { animation: royalStarTwinkle 2.7s ease-in-out .45s infinite; transform-origin: center; }
+.rewardSparkleThree { animation: royalStarTwinkle 1.9s ease-in-out .8s infinite; transform-origin: center; }
+.rewardCard:hover .rewardIcon {
+  transform: translateY(-5px) rotate(0deg) scale(1.07);
+  filter: brightness(1.16);
+  box-shadow: 0 0 26px rgba(190,130,255,.48), 0 0 58px rgba(255,204,113,.34), inset 0 1px 3px rgba(255,255,255,.42), inset 0 -12px 20px rgba(0,0,0,.25);
+}
+.rewardCard:hover .rewardOrbitOne { border-color: #ffe6ad; box-shadow: 0 0 12px rgba(255,220,151,.72), 0 0 30px rgba(255,194,91,.36), inset 0 0 15px rgba(255,218,143,.18); }
+.rewardCard:hover .rewardOrbitTwo { border-color: #ffe0a0; }
+.rewardCard:hover .rewardSparkleOne,
+.rewardCard:hover .rewardSparkleTwo,
+.rewardCard:hover .rewardSparkleThree { color: #fff0c8; filter: drop-shadow(0 0 12px #ffd47d); }
+.rewardValue strong { text-shadow: 0 0 18px rgba(255,205,116,.2); }
+.rewardUnlock { border-color: rgba(233,189,112,.28); box-shadow: inset 0 1px rgba(255,255,255,.04), 0 8px 22px rgba(0,0,0,.12); }
+@keyframes royalOuterRingPulse {
+  0%,100% { opacity: .78; filter: drop-shadow(0 0 3px rgba(255,208,123,.38)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 10px rgba(255,211,132,.82)); }
+}
+@keyframes royalDottedRingTurn {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes royalStarTwinkle {
+  0%,100% { opacity: .55; transform: scale(.82) rotate(-8deg); filter: drop-shadow(0 0 3px currentColor); }
+  50% { opacity: 1; transform: scale(1.22) rotate(12deg); filter: drop-shadow(0 0 11px currentColor); }
+}
+@keyframes royalGiftGlow {
+  0%,100% { filter: drop-shadow(0 0 4px rgba(255,208,124,.18)); }
+  50% { filter: drop-shadow(0 0 13px rgba(255,208,124,.52)); }
+}
+@keyframes royalRewardSweep {
+  0%,15% { left: -45%; opacity: 0; }
+  28% { opacity: .85; }
+  62% { left: 115%; opacity: .5; }
+  63%,100% { left: 115%; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rewardOrbitOne,.rewardOrbitTwo,.rewardIcon,.rewardSparkleOne,.rewardSparkleTwo,.rewardSparkleThree,.rewardVisual::after { animation: none !important; }
+}
+
+
+/* CURRENT LEVEL — royal profile finish */
+.progressCard {
+  border-color: rgba(218, 177, 105, .34);
+  background:
+    radial-gradient(ellipse at 10% 16%, rgba(255, 198, 105, .105), transparent 34%),
+    radial-gradient(ellipse at 92% 4%, rgba(161, 103, 231, .18), transparent 42%),
+    linear-gradient(145deg, rgba(29, 29, 54, .985), rgba(13, 17, 37, .99));
+  box-shadow: 0 20px 52px rgba(0,0,0,.3), 0 0 28px rgba(174, 121, 245, .075), inset 0 1px rgba(255,239,199,.09);
+}
+.progressCard::before {
+  left: 7%;
+  width: 58%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,211,128,.9), rgba(198,151,255,.65), transparent);
+  filter: drop-shadow(0 0 6px rgba(255,195,104,.5));
+}
+.currentLevelHeading {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+}
+.currentLevelHeading h2 {
+  margin: 0;
+  color: #fff0c9;
+  font-size: clamp(22px, 2.35vw, 29px);
+  font-weight: 950;
+  letter-spacing: -.055em;
+  text-shadow: 0 2px 16px rgba(255, 190, 92, .12);
+}
+.currentLevelAccent {
+  width: 68px;
+  height: 2px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #ffe2a0, #c18bff 72%, transparent);
+  box-shadow: 0 0 10px rgba(255, 198, 105, .42);
+}
+.levelEmblemStage {
+  filter: drop-shadow(0 0 13px rgba(190, 128, 255, .18));
+}
+.levelEmblemOrbit {
+  box-shadow: 0 0 30px var(--orbit-glow, rgba(204,135,55,.3)), 0 0 56px color-mix(in srgb, var(--orbit-glow, #c58af4) 35%, transparent), inset 0 0 24px rgba(255,190,95,.07);
+}
+.levelEmblem {
+  filter: drop-shadow(0 0 18px var(--orbit-glow, rgba(190,130,255,.4))) drop-shadow(0 0 34px rgba(255,194,100,.12)) drop-shadow(0 13px 16px rgba(0,0,0,.52));
+}
+.identityText h3 {
+  color: #ffe3a1;
+  text-shadow: 0 0 20px rgba(255, 193, 95, .15);
+}
+.xpTotal {
+  color: #ffd77e;
+  text-shadow: 0 0 22px rgba(255, 190, 78, .16);
+}
+.progressTrack {
+  height: 12px;
+  border-color: rgba(255, 209, 127, .24);
+  background: linear-gradient(90deg, rgba(8,10,25,.92), rgba(30,22,47,.96));
+  box-shadow: inset 0 2px 6px rgba(0,0,0,.62), 0 0 12px rgba(171,118,235,.08);
+}
+.progressFill {
+  background: linear-gradient(90deg, #8c5bd7 0%, #c18bff 38%, #f4c66f 78%, #ffe7a8 100%);
+  box-shadow: 0 0 12px rgba(185,130,255,.55), 0 0 24px rgba(255,195,91,.22);
+}
+.progressFoot b { color: #f7d58c; }
+.levelCardFooter {
+  border-color: rgba(218, 177, 105, .24);
+  background: linear-gradient(105deg, rgba(255,196,99,.075), rgba(126,83,181,.09) 55%, rgba(8,10,25,.38));
+  box-shadow: inset 0 1px rgba(255,232,186,.055), 0 8px 22px rgba(0,0,0,.12);
+}
+.levelCardFooter strong { color: #ffe5ae; }
+.milestoneIcon {
+  border-color: rgba(255,205,112,.42);
+  color: #ffe0a0;
+  background: linear-gradient(145deg, rgba(255,202,103,.18), rgba(143,88,206,.15));
+  box-shadow: 0 0 16px rgba(255,191,89,.13), inset 0 1px rgba(255,238,192,.14);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .progressCard { transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease; }
+  .progressCard:hover { border-color: rgba(239,197,119,.52); box-shadow: 0 24px 58px rgba(0,0,0,.34), 0 0 32px rgba(181,125,245,.12), inset 0 1px rgba(255,239,199,.12); }
+}
+
+
+/* XP CATCHER — royal arena container and integrated title */
+.gameSection {
+  position: relative;
+  margin-top: 30px;
+}
+.gameCard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(20px, 2.5vw, 32px);
+  border: 1px solid rgba(231, 195, 119, .42);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(137, 91, 202, .22), transparent 48%),
+    radial-gradient(ellipse at 100% 100%, rgba(207, 158, 83, .09), transparent 38%),
+    linear-gradient(145deg, #202139 0%, #171a30 48%, #0e1528 100%);
+  box-shadow:
+    0 22px 58px rgba(0,0,0,.30),
+    0 0 28px rgba(173, 125, 226, .08),
+    inset 0 1px 0 rgba(255, 241, 207, .10);
+}
+.gameCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .55;
+  background:
+    linear-gradient(110deg, transparent 12%, rgba(255, 237, 194, .055) 48%, transparent 76%),
+    radial-gradient(ellipse at 50% 0%, rgba(242, 202, 129, .09), transparent 55%);
+}
+.gameTitle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 8px;
+  padding: 0 0 15px;
+  text-align: center;
+}
+.gameTitle::before,
+.gameTitle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: min(18%, 150px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(226, 184, 105, .75));
+  box-shadow: 0 0 10px rgba(226, 184, 105, .28);
+}
+.gameTitle::before { left: 2%; }
+.gameTitle::after {
+  right: 2%;
+  transform: scaleX(-1);
+}
+.gameTitle h2 {
+  margin: 0;
+  color: #f3d69a;
+  background: linear-gradient(100deg, #fff1c9 0%, #e8bd70 52%, #d8b8f3 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 950;
+  letter-spacing: .10em;
+  line-height: 1.2;
+  text-shadow: 0 5px 24px rgba(226, 184, 105, .12);
+}
+.gameIntroNote {
+  position: relative;
+  margin: 0 0 20px;
+  color: #d0c8dc;
+  font-size: 12px;
+  line-height: 1.65;
+  letter-spacing: .015em;
+  text-align: center;
+}
+.gameCard .gameSection {
+  margin-top: 0;
+}
+@media (max-width: 650px) {
+  .gameCard { padding: 18px 14px; border-radius: 19px; }
+  .gameTitle { padding-bottom: 12px; }
+  .gameTitle::before, .gameTitle::after { width: 10%; }
+  .gameTitle h2 { font-size: clamp(17px, 5vw, 22px); letter-spacing: .065em; }
+  .gameIntroNote { font-size: 11px; margin-bottom: 16px; }
 }

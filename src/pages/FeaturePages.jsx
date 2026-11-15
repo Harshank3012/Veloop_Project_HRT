@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import styles from './FeaturePages.module.css';
+import { getLocalDateKey, getPreviousLocalDateKey } from '../utils/dateUtils';
 
 function FeatureLayout({ eyebrow, title, description, icon: Icon, children }) {
   return (
@@ -39,6 +40,7 @@ function FeatureLayout({ eyebrow, title, description, icon: Icon, children }) {
 
 
 const MISSION_STREAK_KEY = 'veloop-mission-streak-data';
+const STREAK_KEY = 'veloop-streak-data';
 export function MissionsPage() {
   const missions = [
     {
@@ -66,18 +68,9 @@ export function MissionsPage() {
   const DATE_KEY = 'veloop-daily-missions-date';
   const TOTAL_KEY = 'veloop-total-missions-completed';
 
-  const getToday = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-  };
-
   const [completed, setCompleted] = useState(() => {
     try {
-      const today = getToday();
+      const today = getLocalDateKey();
       const savedDate = localStorage.getItem(DATE_KEY);
 
       if (savedDate !== today) {
@@ -96,66 +89,113 @@ export function MissionsPage() {
     }
   });
 
+  // Keep daily missions in sync if the page remains open across local midnight.
+  useEffect(() => {
+    const syncDailyMissions = () => {
+      try {
+        const today = getLocalDateKey();
+        const savedDate = localStorage.getItem(DATE_KEY);
+
+        if (savedDate !== today) {
+          localStorage.setItem(DATE_KEY, today);
+          localStorage.setItem(DAILY_KEY, '[]');
+          setCompleted([]);
+          return;
+        }
+
+        const saved = JSON.parse(localStorage.getItem(DAILY_KEY) || '[]');
+        setCompleted(Array.isArray(saved) ? saved : []);
+      } catch (error) {
+        console.error('Unable to refresh daily missions:', error);
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') syncDailyMissions();
+    };
+
+    const interval = window.setInterval(syncDailyMissions, 30_000);
+    window.addEventListener('focus', syncDailyMissions);
+    window.addEventListener('storage', syncDailyMissions);
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      window.clearInterval(interval);
+      window.removeEventListener('focus', syncDailyMissions);
+      window.removeEventListener('storage', syncDailyMissions);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, []);
+
   const toggleMission = (id) => {
-    // Prevent duplicate completion and duplicate XP.
-    if (completed.includes(id)) return;
+    // Prevent duplicate completion and duplicate XP, including another open tab.
+    let latestCompleted = completed;
+    try {
+      if (localStorage.getItem(DATE_KEY) === getLocalDateKey()) {
+        const saved = JSON.parse(localStorage.getItem(DAILY_KEY) || '[]');
+        if (Array.isArray(saved)) latestCompleted = saved;
+      }
+    } catch {
+      // Fall back to the current in-memory state if storage is unavailable.
+    }
+    if (latestCompleted.includes(id)) {
+      setCompleted(latestCompleted);
+      return;
+    }
 
     const mission = missions.find((item) => item.id === id);
     if (!mission) return;
 
-    const updated = [...completed, id];
+    const updated = [...latestCompleted, id];
 
     // Save today's completed missions.
     setCompleted(updated);
     localStorage.setItem(DAILY_KEY, JSON.stringify(updated));
-    // Update daily mission streak only after all missions are completed.
-if (updated.length === missions.length) {
-  const today = getToday();
+    // Update the shared streak only after all daily missions are completed.
+    if (updated.length === missions.length) {
+      const today = getLocalDateKey();
+      const yesterday = getPreviousLocalDateKey();
+      let previousData;
 
-  const yesterdayDate = new Date();
-  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+      try {
+        const missionData = JSON.parse(
+          localStorage.getItem(MISSION_STREAK_KEY) || '{}'
+        );
+        const legacyData = JSON.parse(
+          localStorage.getItem(STREAK_KEY) || '{}'
+        );
+        previousData = { ...legacyData, ...missionData };
+        previousData.bestStreak = Math.max(
+          Number(legacyData.bestStreak ?? legacyData.longestStreak ?? 0) || 0,
+          Number(missionData.bestStreak ?? missionData.longestStreak ?? 0) || 0
+        );
+      } catch {
+        previousData = {};
+      }
 
-  const yesterday = [
-    yesterdayDate.getFullYear(),
-    String(yesterdayDate.getMonth() + 1).padStart(2, '0'),
-    String(yesterdayDate.getDate()).padStart(2, '0'),
-  ].join('-');
+      if (previousData.lastCompletedDate !== today) {
+        const previousStreak = Number(previousData.currentStreak) || 0;
+        const newStreak =
+          previousData.lastCompletedDate === yesterday
+            ? previousStreak + 1
+            : 1;
+        const bestStreak = Math.max(
+          Number(previousData.bestStreak) || 0,
+          newStreak
+        );
+        const updatedStreak = {
+          currentStreak: newStreak,
+          bestStreak,
+          lastCompletedDate: today,
+        };
 
-let missionStreak;
-
-try {
-  missionStreak = JSON.parse(
-    localStorage.getItem(MISSION_STREAK_KEY) || '{}'
-  );
-} catch {
-  missionStreak = {};
-}
-
-  if (missionStreak.lastCompletedDate !== today) {
-    const previousStreak =
-      Number(missionStreak.currentStreak) || 0;
-
-    const newStreak =
-      missionStreak.lastCompletedDate === yesterday
-        ? previousStreak + 1
-        : 1;
-
-    const bestStreak = Math.max(
-      Number(missionStreak.bestStreak) || 0,
-      newStreak
-    );
-
-    localStorage.setItem(
-      MISSION_STREAK_KEY,
-      JSON.stringify({
-        currentStreak: newStreak,
-        bestStreak,
-        lastCompletedDate: today,
-      })
-    );
-  }
-}
-    localStorage.setItem(DATE_KEY, getToday());
+        // Keep both historical keys synchronized for existing dashboard consumers.
+        localStorage.setItem(MISSION_STREAK_KEY, JSON.stringify(updatedStreak));
+        localStorage.setItem(STREAK_KEY, JSON.stringify(updatedStreak));
+        window.dispatchEvent(new Event('veloop-streak-updated'));
+      }
+    }
+    localStorage.setItem(DATE_KEY, getLocalDateKey());
 
     // Update total lifetime mission count.
     const previousTotal = Number(
@@ -295,7 +335,6 @@ try {
 
 
 export function StreaksPage() {
-  const STREAK_KEY = 'veloop-streak-data';
   const CLAIMED_KEY = 'veloop-claimed-streak-rewards';
   const XP_KEY = 'veloop-total-xp';
 
@@ -308,9 +347,36 @@ export function StreaksPage() {
 
   const readStreakData = () => {
     try {
-      return JSON.parse(localStorage.getItem(STREAK_KEY) || '{}');
+      const missionData = JSON.parse(
+        localStorage.getItem(MISSION_STREAK_KEY) || '{}'
+      );
+      const legacyData = JSON.parse(
+        localStorage.getItem(STREAK_KEY) || '{}'
+      );
+      const data = { ...legacyData, ...missionData };
+      const lastCompletedDate = data.lastCompletedDate;
+      const today = getLocalDateKey();
+      const yesterday = getPreviousLocalDateKey();
+      const savedCurrent = Number(
+        data.currentStreak ?? data.streak ?? 0
+      ) || 0;
+      const currentStreak = lastCompletedDate
+        ? (lastCompletedDate === today || lastCompletedDate === yesterday
+            ? savedCurrent
+            : 0)
+        : savedCurrent;
+
+      return {
+        ...data,
+        currentStreak,
+        bestStreak: Math.max(
+          currentStreak,
+          Number(legacyData.bestStreak ?? legacyData.longestStreak ?? 0) || 0,
+          Number(missionData.bestStreak ?? missionData.longestStreak ?? 0) || 0
+        ),
+      };
     } catch {
-      return {};
+      return { currentStreak: 0, bestStreak: 0 };
     }
   };
 
@@ -409,6 +475,7 @@ export function StreaksPage() {
 
     window.dispatchEvent(new Event('veloop-xp-updated'));
     window.dispatchEvent(new Event('veloop-achievements-updated'));
+    window.dispatchEvent(new Event('veloop-streak-updated'));
   };
 
   return (

@@ -38,6 +38,9 @@ export default function RankEmblem({ tier, state = 'locked', className = '', var
       data-state={state}
     >
       <span className={styles.emblemAura} aria-hidden="true" />
+      {variant === 'hero' && (
+        <span className={styles.sphericalOrbit} aria-hidden="true" />
+      )}
       <img
         className={styles.artwork}
         src={artwork}

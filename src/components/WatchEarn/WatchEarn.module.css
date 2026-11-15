@@ -790,3 +790,14 @@
 .selectedVideo { border-color:rgba(244,201,107,.28);background:linear-gradient(100deg,rgba(244,201,107,.09),rgba(185,154,255,.07)); }
 .videoThumb { box-shadow:inset 0 1px rgba(255,255,255,.08),0 8px 18px rgba(0,0,0,.2); }
 .rulesCard { border:1px solid rgba(190,170,255,.14);border-radius:18px;background:rgba(16,22,42,.68); }
+
+/* ROYAL REALM — watch & earn */
+.page { background: radial-gradient(ellipse at 85% 0%, rgba(142,105,183,.14), transparent 32%), linear-gradient(145deg,#161827,#111523 58%,#171827); }
+.hero h1 { color: #f2dfba; }
+.hero h1 span { color: #e9bd70; }
+.earnedCard, .playerCard, .videoColumn > *, .demoNotice { border-color: rgba(222,198,154,.16); background: linear-gradient(145deg,rgba(35,39,57,.96),rgba(22,26,42,.98)); box-shadow: 0 16px 42px rgba(0,0,0,.18); }
+.earnedIcon { color: #e9bd70; background: rgba(233,189,112,.10); }
+.earnedCard strong { color: #f0cf8c; }
+.eyebrow, .sectionEyebrow { color: #c6a879; }
+.demoNotice { color: #c2bfd0; }
+.demoNotice strong { color: #e8d5ae; }

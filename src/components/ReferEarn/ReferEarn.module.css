@@ -1,0 +1,239 @@
+ .page {
+  min-height: calc(100vh - 136px);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 48px 20px;
+  color: #f7e8c4;
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(198, 151, 73, .16), transparent 34%),
+    radial-gradient(ellipse at 50% 55%, rgba(111, 76, 157, .16), transparent 58%),
+    #161827;
+}
+
+.comingSoon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  cursor: default;
+  outline: none;
+}
+
+.rings {
+  position: relative;
+  width: clamp(230px, 34vw, 340px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  transition: transform .55s cubic-bezier(.2,.8,.2,1), filter .55s ease;
+}
+
+.outerRing,
+.innerRing {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transition: border-color .45s ease, box-shadow .45s ease, transform .65s cubic-bezier(.2,.8,.2,1);
+}
+
+.outerRing {
+  inset: 0;
+  border: 1px solid rgba(224, 181, 91, .52);
+  box-shadow: 0 0 26px rgba(222, 177, 83, .12), inset 0 0 24px rgba(222, 177, 83, .045);
+  animation: royalOuterBreath 5.5s ease-in-out infinite;
+}
+
+.innerRing {
+  inset: 17%;
+  border: 1px solid rgba(238, 195, 105, .82);
+  background: radial-gradient(circle, rgba(132, 79, 188, .20), rgba(222, 177, 83, .055) 68%, transparent 69%);
+  box-shadow: 0 0 30px rgba(222, 177, 83, .16), inset 0 0 26px rgba(154, 93, 210, .13);
+  animation: royalInnerBreath 4.4s ease-in-out infinite;
+}
+
+.giftBox {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  color: #f8d77f;
+  border-radius: 30px;
+  background: radial-gradient(circle, rgba(159, 91, 222, .30), rgba(46, 31, 76, .16) 70%, transparent 72%);
+  filter: drop-shadow(0 0 14px rgba(255, 205, 103, .36)) drop-shadow(0 0 30px rgba(150, 88, 218, .38));
+  transform-origin: 50% 70%;
+  animation: royalGiftFloat 3.4s ease-in-out infinite, giftRadiance 3s ease-in-out infinite;
+  transition: color .4s ease, filter .4s ease, transform .5s cubic-bezier(.2,.8,.2,1);
+}
+
+.giftBox svg {
+  filter: drop-shadow(0 0 10px rgba(255, 210, 117, .48));
+  transition: stroke-width .35s ease;
+}
+
+.decoration {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  color: #f6d17b;
+  pointer-events: none;
+  filter: drop-shadow(0 0 8px rgba(255, 204, 103, .68));
+}
+
+.decoration svg { width: 100%; height: 100%; stroke-width: 1.8; }
+
+.sparkle {
+  width: 27px;
+  height: 27px;
+  top: 12%;
+  left: 5%;
+  animation: sparkleTwinkle 2.8s ease-in-out infinite;
+}
+
+.starOne {
+  width: 22px;
+  height: 22px;
+  top: 14%;
+  right: 8%;
+  animation: starTwinkle 2.2s ease-in-out infinite .3s;
+}
+
+.starTwo {
+  width: 17px;
+  height: 17px;
+  bottom: 17%;
+  left: 10%;
+  animation: starTwinkle 2.6s ease-in-out infinite 1s;
+}
+
+.rocketOne {
+  width: 25px;
+  height: 25px;
+  right: 5%;
+  bottom: 23%;
+  color: #d9adff;
+  animation: rocketDrift 4.8s ease-in-out infinite;
+}
+
+.rocketTwo {
+  width: 19px;
+  height: 19px;
+  top: 35%;
+  left: 1%;
+  color: #f3c96d;
+  opacity: .8;
+  animation: rocketDriftAlt 5.4s ease-in-out infinite 1s;
+}
+
+.label {
+  margin: 0;
+  color: #ffe0a0;
+  font-size: clamp(22px, 2.5vw, 28px);
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: .24em;
+  text-align: center;
+  text-shadow: 0 0 14px rgba(237, 202, 123, .42), 0 0 30px rgba(166, 105, 226, .28);
+  transition: color .35s ease, text-shadow .35s ease, letter-spacing .35s ease, transform .35s ease;
+}
+
+.comingSoon:hover .rings,
+.comingSoon:focus-visible .rings {
+  transform: scale(1.035);
+  filter: brightness(1.14);
+}
+
+.comingSoon:hover .outerRing,
+.comingSoon:focus-visible .outerRing {
+  border-color: rgba(255, 220, 145, .98);
+  box-shadow: 0 0 38px rgba(244, 196, 100, .32), inset 0 0 28px rgba(222, 177, 83, .10);
+}
+
+.comingSoon:hover .innerRing,
+.comingSoon:focus-visible .innerRing {
+  border-color: #ffe2a0;
+  box-shadow: 0 0 42px rgba(242, 195, 79, .32), inset 0 0 30px rgba(154, 93, 210, .24);
+  transform: scale(1.035);
+}
+
+.comingSoon:hover .giftBox,
+.comingSoon:focus-visible .giftBox {
+  color: #fff0bd;
+  transform: translateY(-10px) rotate(-5deg) scale(1.12);
+  filter: drop-shadow(0 0 22px rgba(255, 207, 104, .72)) drop-shadow(0 0 42px rgba(163, 94, 235, .58));
+}
+
+.comingSoon:hover .decoration,
+.comingSoon:focus-visible .decoration {
+  filter: drop-shadow(0 0 12px rgba(255, 218, 130, .95));
+}
+
+.comingSoon:hover .label,
+.comingSoon:focus-visible .label {
+  color: #fff0c5;
+  letter-spacing: .27em;
+  text-shadow: 0 0 18px rgba(255, 211, 125, .62), 0 0 36px rgba(166, 105, 226, .38);
+  transform: translateY(-3px);
+}
+
+@keyframes royalGiftFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-9px) rotate(2deg); }
+}
+
+@keyframes giftRadiance {
+  0%, 100% { filter: drop-shadow(0 0 12px rgba(255, 205, 103, .30)) drop-shadow(0 0 25px rgba(150, 88, 218, .30)); }
+  50% { filter: drop-shadow(0 0 20px rgba(255, 205, 103, .58)) drop-shadow(0 0 36px rgba(150, 88, 218, .48)); }
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% { opacity: .65; transform: scale(.88) rotate(-8deg); }
+  50% { opacity: 1; transform: scale(1.16) rotate(8deg); }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: .55; transform: scale(.82) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.18) rotate(18deg); }
+}
+
+@keyframes rocketDrift {
+  0%, 100% { transform: translate(0, 0) rotate(34deg); }
+  50% { transform: translate(-8px, -13px) rotate(22deg); }
+}
+
+@keyframes rocketDriftAlt {
+  0%, 100% { transform: translate(0, 0) rotate(-42deg); }
+  50% { transform: translate(7px, -10px) rotate(-28deg); }
+}
+
+@keyframes royalOuterBreath {
+  0%, 100% { opacity: .78; }
+  50% { opacity: 1; }
+}
+
+@keyframes royalInnerBreath {
+  0%, 100% { box-shadow: 0 0 24px rgba(222, 177, 83, .12), inset 0 0 22px rgba(154, 93, 210, .10); }
+  50% { box-shadow: 0 0 36px rgba(222, 177, 83, .22), inset 0 0 30px rgba(154, 93, 210, .18); }
+}
+
+@media (max-width: 600px) {
+  .page { min-height: calc(100vh - 112px); padding: 36px 16px; }
+  .rings { width: min(76vw, 290px); }
+  .giftBox { width: 88px; height: 88px; }
+  .giftBox svg { width: 60px; height: 60px; }
+  .label { font-size: clamp(19px, 5.5vw, 23px); letter-spacing: .19em; }
+  .sparkle { width: 23px; height: 23px; }
+  .starOne { width: 19px; height: 19px; }
+  .starTwo { width: 15px; height: 15px; }
+  .rocketOne { width: 21px; height: 21px; }
+  .rocketTwo { width: 17px; height: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .giftBox, .outerRing, .innerRing, .decoration { animation: none; }
+  .rings, .outerRing, .innerRing, .giftBox, .label { transition: none; }
+}

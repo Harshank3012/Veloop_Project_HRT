@@ -101,10 +101,10 @@
 .heroVariant {
   display: grid;
   place-items: center;
-  width: 255px;
-  height: 255px;
-  min-height: 255px;
-  flex: 0 0 255px;
+  width: 225px;
+  height: 225px;
+  min-height: 225px;
+  flex: 0 0 225px;
   transform: none !important;
 }
 .heroVariant .artwork {
@@ -122,11 +122,11 @@
   50% { opacity: 1; transform: scale(1.3); }
 }
 @media (max-width: 760px) {
-  .heroVariant { width: 205px; height: 205px; min-height: 205px; flex-basis: 205px; }
+  .heroVariant { width: 185px; height: 185px; min-height: 185px; flex-basis: 185px; }
   .roadmapVariant { width: min(100%,145px); height: 135px; min-height: 135px; flex-basis: 135px; }
 }
 @media (max-width: 560px) {
-  .heroVariant { width: 185px; height: 185px; min-height: 185px; flex-basis: 185px; }
+  .heroVariant { width: 165px; height: 165px; min-height: 165px; flex-basis: 165px; }
   .roadmapVariant { width: min(100%,122px); height: 116px; min-height: 116px; flex-basis: 116px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -139,3 +139,78 @@
 .artwork { transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s ease; }
 .roadmapVariant:hover .artwork,.heroVariant:hover .artwork { transform:translateY(-3px) scale(1.035);filter:brightness(1.08) saturate(1.08); }
 .emblemAura { opacity:.9;filter:blur(14px); }
+
+/* Refined royal halo: three concentric reference rings with three moving orbs.
+   The badge artwork and pedestal are deliberately not transformed or resized. */
+.heroVariant {
+  isolation: isolate;
+}
+.heroVariant .sphericalOrbit {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  width: 164%;
+  height: 164%;
+  box-sizing: border-box;
+  border: 4px solid rgba(255, 218, 132, 1);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  box-shadow:
+    0 0 3px rgba(255, 239, 190, 1),
+    0 0 10px rgba(255, 205, 104, .95),
+    0 0 24px rgba(255, 184, 72, .62),
+    inset 0 0 8px rgba(255, 218, 132, .22);
+  animation: royalOrbitalSweep 36s linear infinite, royalHaloBreath 7s ease-in-out infinite;
+}
+.heroVariant .sphericalOrbit::before {
+  content: "";
+  position: absolute;
+  inset: 13%;
+  border: 3px dashed rgba(255, 218, 132, .96);
+  filter: drop-shadow(0 0 5px rgba(255, 197, 86, .85));
+  border-radius: 50%;
+  pointer-events: none;
+}
+.heroVariant .sphericalOrbit::after {
+  content: "";
+  position: absolute;
+  inset: 26%;
+  border: 3px solid rgba(255, 224, 157, .98);
+  border-radius: 50%;
+  box-shadow:
+    0 0 3px rgba(255, 241, 199, .95),
+    0 0 12px rgba(255, 201, 100, .85),
+    0 0 22px rgba(255, 184, 72, .42),
+    inset 0 0 8px rgba(255, 218, 132, .12);
+  /* Keep the inner halo visible only outside the badge's central silhouette.
+     This prevents the ring from showing through transparent parts of the PNG. */
+  -webkit-mask-image: radial-gradient(ellipse 34% 42% at 50% 50%, transparent 98%, #000 100%);
+  mask-image: radial-gradient(ellipse 34% 42% at 50% 50%, transparent 98%, #000 100%);
+}
+@keyframes royalOrbitalSweep {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes royalHaloBreath {
+  0%, 100% { border-color: rgba(255, 218, 132, .94); box-shadow: 0 0 10px rgba(255, 197, 86, .65), 0 0 22px rgba(255, 184, 72, .35); }
+  50% { border-color: rgba(255, 244, 204, 1); box-shadow: 0 0 16px rgba(255, 221, 145, .95), 0 0 32px rgba(255, 184, 72, .62); }
+}
+@media (max-width: 760px) {
+  .heroVariant .sphericalOrbit { width: 172%; height: 172%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroVariant .sphericalOrbit { animation: none !important; }
+}
+
+
+/* Keep hero art perfectly stable on hover; only the halo animates. */
+.heroVariant:hover .artwork {
+  transform: translateY(0) scale(1) rotate(0deg) !important;
+  filter: inherit;
+}
+.heroVariant:hover {
+  transform: none !important;
+}

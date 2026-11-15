@@ -33,7 +33,6 @@ export default function LevelUpCelebration({
   isOpen,
   previousLevel,
   newLevel,
-  levelName,
   onClose,
 }) {
   if (!isOpen) return null;
