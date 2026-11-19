@@ -1209,10 +1209,35 @@
 .collectionTrack { background: rgba(5,8,17,.7); }
 .collectionFill { background: linear-gradient(90deg,#9a7ac8,#e9bd70); }
 
-
-/* Reduce backdrop-filter compositing cost on touch devices. */
-@media (max-width: 768px) and (pointer: coarse) {
-  /* TOP BAR */
-
-.topbar { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+/* Badges page mobile density and scroll performance. */
+@media (max-width: 600px) {
+  .page, .container { padding-inline: 12px !important; }
+  .badgeGrid, .grid { gap: 10px !important; }
+  .badgeCard, .card { box-shadow: 0 6px 16px rgba(0,0,0,.14) !important; transition: none !important; }
+  .badgeCard:hover, .card:hover { transform: none !important; box-shadow: 0 6px 16px rgba(0,0,0,.14) !important; }
+  .badgeImage, .badgeEmblem img { filter: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .badgeCard, .card, * { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+/* Small-screen badge grid: tighter cards and fewer expensive visual effects. */
+@media (max-width: 600px) {
+  .page { padding: 16px 12px 30px !important; }
+  .container { width: 100% !important; }
+  .hero { padding: 18px 14px !important; min-height: 0 !important; border-radius: 18px !important; }
+  .heroContent { gap: 8px !important; }
+  .hero h1 { font-size: clamp(22px, 7vw, 29px) !important; }
+  .statsGrid { gap: 9px !important; }
+  .statCard { padding: 12px !important; min-height: 0 !important; box-shadow: none !important; }
+  .filters { gap: 7px !important; overflow-x: auto; flex-wrap: nowrap !important; padding-bottom: 4px; }
+  .filterButton { flex: 0 0 auto; padding: 8px 11px !important; font-size: 11px !important; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .badgeCard { padding: 10px !important; border-radius: 14px !important; box-shadow: 0 5px 14px rgba(0,0,0,.12) !important; transition: none !important; }
+  .badgeCard:hover { transform: none !important; box-shadow: 0 5px 14px rgba(0,0,0,.12) !important; }
+  .emblemGlow, .emblemSparkle, .trophyGlow, .trophyOrbit, .trophySparkleOne, .trophySparkleTwo { animation: none !important; filter: none !important; }
+  .emblemGlow, .trophyGlow { opacity: .3 !important; }
+}
+@media (max-width: 360px) {
+  .grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .badgeCard { padding: 12px !important; }
 }

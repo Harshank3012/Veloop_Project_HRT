@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './RankEmblem.module.css';
 
-import bronzeEmblem from '../../assets/rank-emblems/bronze.webp';
-import silverEmblem from '../../assets/rank-emblems/silver.webp';
-import goldEmblem from '../../assets/rank-emblems/gold.webp';
-import platinumEmblem from '../../assets/rank-emblems/platinum.webp';
-import diamondEmblem from '../../assets/rank-emblems/diamond.webp';
-import legendaryEmblem from '../../assets/rank-emblems/legendary.webp';
-import transcendentEmblem from '../../assets/rank-emblems/transcendent.webp';
+import bronzeEmblem from '../../assets/rank-emblems/bronze.png';
+import silverEmblem from '../../assets/rank-emblems/silver.png';
+import goldEmblem from '../../assets/rank-emblems/gold.png';
+import platinumEmblem from '../../assets/rank-emblems/platinum.png';
+import diamondEmblem from '../../assets/rank-emblems/diamond.png';
+import legendaryEmblem from '../../assets/rank-emblems/legendary.png';
+import transcendentEmblem from '../../assets/rank-emblems/transcendent.png';
 
 const rankArtwork = {
   bronze: bronzeEmblem,
@@ -42,9 +42,6 @@ export default function RankEmblem({ tier, state = 'locked', className = '', var
         className={styles.artwork}
         src={artwork}
         alt={`${rankNames[tier] || 'Rank'} emblem`}
-        loading={variant === 'hero' ? 'eager' : 'lazy'}
-        decoding="async"
-        fetchPriority={variant === 'hero' ? 'high' : 'auto'}
         draggable="false"
       />
       {state === 'completed' && (

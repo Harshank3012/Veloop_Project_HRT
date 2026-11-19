@@ -289,12 +289,3 @@
 .notificationItem:last-child { border-bottom:0; }
 .notificationItem strong { color:#f7f4ff; }
 .notificationItem small { color:#9ca6c2; }
-
-
-/* Reduce backdrop-filter compositing cost on touch devices. */
-@media (max-width: 768px) and (pointer: coarse) {
-  .backdrop { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-  /* Notifications — glass command-center panel */
-.backdrop { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-  .panel { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-}

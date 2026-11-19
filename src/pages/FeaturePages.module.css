@@ -1085,8 +1085,45 @@
   }
 }
 
-
-/* Reduce backdrop-filter compositing cost on touch devices. */
-@media (max-width: 768px) and (pointer: coarse) {
-  .royalHeroProgress { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+/* Mobile-first card layout fix: prevent mission text from being squeezed into narrow columns. */
+@media (max-width: 600px) {
+  .page { padding: 20px 12px 34px !important; }
+  .container { width: 100%; padding-top: 22px !important; }
+  .hero { min-height: 0; padding: 22px 17px !important; border-radius: 18px !important; }
+  .hero h1 { font-size: clamp(22px, 7vw, 29px) !important; line-height: 1.15; }
+  .hero p { font-size: 13px !important; line-height: 1.5; }
+  .stats { gap: 9px !important; }
+  .stats > div { min-height: 0; padding: 13px 12px !important; border-radius: 14px !important; }
+  .stats span { font-size: 9px !important; letter-spacing: .7px; }
+  .stats strong { font-size: 19px !important; }
+  .sectionTitle { margin: 18px 0 11px !important; font-size: 16px !important; }
+  .cards { gap: 10px !important; }
+  .card { display: grid !important; grid-template-columns: 44px minmax(0, 1fr) !important; align-items: start !important; gap: 12px !important; padding: 13px !important; border-radius: 15px !important; box-shadow: 0 6px 16px rgba(0,0,0,.12) !important; transition: none !important; }
+  .card:hover { transform: none !important; box-shadow: 0 6px 16px rgba(0,0,0,.12) !important; }
+  .cardIcon { width: 44px !important; height: 44px !important; border-radius: 11px !important; box-shadow: none !important; }
+  .cardBody { min-width: 0 !important; width: auto !important; flex: 1 1 auto !important; }
+  .cardBody h3 { font-size: 15px !important; line-height: 1.25 !important; margin: 1px 0 5px !important; overflow-wrap: anywhere; }
+  .cardBody p { font-size: 12px !important; line-height: 1.45 !important; margin: 0 0 8px !important; overflow-wrap: anywhere; }
+  .cardBody strong { font-size: 12px !important; }
+  .card > button, .card > span { grid-column: 2 !important; margin: 0 !important; max-width: 100% !important; width: fit-content; }
+  .actionButton, .completedButton { min-height: 34px !important; padding: 8px 11px !important; border-radius: 9px !important; font-size: 11px !important; white-space: nowrap !important; box-shadow: none !important; }
+  .notice { margin-top: 12px; padding: 13px !important; font-size: 12px; line-height: 1.5; }
+}
+@media (max-width: 360px) {
+  .card { gap: 9px !important; padding: 11px !important; grid-template-columns: 40px minmax(0, 1fr) !important; }
+  .cardIcon { width: 40px !important; height: 40px !important; }
+  .cardBody h3 { font-size: 14px !important; }
+  .cardBody p { font-size: 11.5px !important; }
+}
+@media (max-width: 600px), (prefers-reduced-motion: reduce) {
+  .ambientGold, .ambientPurple { filter: none !important; opacity: .07 !important; }
+}
+/* Roadmap-specific mobile performance tuning while preserving artwork and rank styling. */
+@media (max-width: 600px) {
+  .royalRoadmapShell { padding: 10px !important; }
+  .royalRoadmapHero { border-radius: 18px !important; box-shadow: 0 8px 22px rgba(0,0,0,.16) !important; }
+  .royalRoadmapGrid { gap: 10px !important; }
+  .royalRoadmapStage, .royalRankFrame { transition: none !important; box-shadow: 0 6px 16px rgba(0,0,0,.12) !important; }
+  .royalRoadmapStage:hover, .royalRankFrame:hover { transform: none !important; }
+  .royalHeroOrnament, .royalStageHeading::before { animation: none !important; filter: none !important; }
 }

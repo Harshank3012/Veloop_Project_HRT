@@ -89,29 +89,18 @@ export default function Badges() {
     setHistory(getHistory());
   }, []);
 
-  useEffect(() => {
-    window.addEventListener('focus', refresh);
-    window.addEventListener('storage', refresh);
-    window.addEventListener('veloop-achievements-updated', refresh);
+  
+useEffect(() => {
+  window.addEventListener('focus', refresh);
+  window.addEventListener('storage', refresh);
+  window.addEventListener('veloop-achievements-updated', refresh);
 
-    const refreshWhenVisible = () => {
-      if (document.visibilityState === 'visible') refresh();
-    };
-
-    window.addEventListener('focus', refresh);
-    window.addEventListener('storage', refresh);
-    window.addEventListener('veloop-achievements-updated', refresh);
-    document.addEventListener('visibilitychange', refreshWhenVisible);
-    window.addEventListener('pageshow', refresh);
-
-    return () => {
-      window.removeEventListener('focus', refresh);
-      window.removeEventListener('storage', refresh);
-      window.removeEventListener('veloop-achievements-updated', refresh);
-      document.removeEventListener('visibilitychange', refreshWhenVisible);
-      window.removeEventListener('pageshow', refresh);
-    };
-  }, [refresh]);
+  return () => {
+    window.removeEventListener('focus', refresh);
+    window.removeEventListener('storage', refresh);
+    window.removeEventListener('veloop-achievements-updated', refresh);
+  };
+}, [refresh]);
 
   // Automatically unlock badges when their target is reached.
   useEffect(() => {

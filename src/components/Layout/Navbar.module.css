@@ -564,14 +564,26 @@
   }
 }
 
-
-/* Reduce backdrop-filter compositing cost on touch devices. */
-@media (max-width: 768px) and (pointer: coarse) {
-  /* ===== VELOOP PREMIUM GAME NAVIGATION ===== */
-.header { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-  .dropdownMenu { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-  /* Premium navigation finish */
-.header { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-  /* ROYAL REALM NAVIGATION */
-.header { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+/* Mobile layout refinement: compact header and single-row scroll navigation. */
+@media (max-width: 600px) {
+  .brandRow { padding: 10px 12px; min-height: 62px; gap: 8px; }
+  .brand { gap: 7px; font-size: clamp(15px, 4.4vw, 19px); letter-spacing: -.45px; }
+  .logo { width: 40px; height: 40px; border-radius: 11px; font-size: 20px; }
+  .headerActions { gap: 6px; }
+  .notification { width: 39px; height: 39px; min-width: 39px; padding: 0; border-radius: 50%; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .profileIcon { width: 39px; height: 39px; min-width: 39px; display: grid; place-items: center; font-size: 16px; }
+  .nav { flex-wrap: nowrap !important; overflow-x: auto !important; overflow-y: hidden; gap: 6px; padding: 8px 10px; min-height: 0; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+  .navLink { min-height: 38px !important; padding: 9px 12px !important; font-size: 12.5px !important; border-radius: 10px; scroll-snap-align: start; }
+  .navLink:hover { transform: none; box-shadow: none; }
+  .navLink::after { display: none; }
+  .dropdown { flex: 0 0 auto; }
+  .dropdownMenu { position: fixed; left: 12px; right: 12px; top: auto; width: min(280px, calc(100vw - 24px)); }
+  .header { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (max-width: 380px) {
+  .brandRow { padding-inline: 9px; }
+  .brand { font-size: 14px; }
+  .headerActions { gap: 4px; }
+  .notification, .profileIcon { width: 35px; height: 35px; min-width: 35px; }
+  .navLink { padding-inline: 10px !important; font-size: 12px !important; }
 }

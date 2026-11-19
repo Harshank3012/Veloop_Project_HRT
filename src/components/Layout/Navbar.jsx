@@ -132,6 +132,8 @@ export default function Navbar() {
 
         <NavLink
           to="/Lvl-Dashboard/roadmap"
+          onPointerEnter={() => import('../../pages/LevelRoadmapPage.jsx')}
+          onFocus={() => import('../../pages/LevelRoadmapPage.jsx')}
           className={({ isActive }) =>
             `${styles.navLink} ${isActive ? styles.active : ''}`
           }

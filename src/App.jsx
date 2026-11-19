@@ -16,9 +16,7 @@ const StreaksPage = lazy(() =>
 const ActivityPage = lazy(() =>
   import('./pages/FeaturePages.jsx').then((module) => ({ default: module.ActivityPage }))
 );
-const LevelRoadmapPage = lazy(() =>
-  import('./pages/FeaturePages.jsx').then((module) => ({ default: module.LevelRoadmapPage }))
-);
+const LevelRoadmapPage = lazy(() => import('./pages/LevelRoadmapPage.jsx'));
 
 function PageFallback() {
   return (
