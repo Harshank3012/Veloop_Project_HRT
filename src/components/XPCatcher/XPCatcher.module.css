@@ -247,3 +247,491 @@
 @media (max-width: 560px) {
   .stats { margin-bottom: 14px; }
 }
+
+/* Premium arena refinement */
+.arenaHeader { display:flex; justify-content:space-between; align-items:center; gap:18px; margin-bottom:18px; padding:4px 2px 14px; border-bottom:1px solid rgba(225,198,145,.12); }
+.arenaHeadingCopy { min-width:0; }
+.arenaEyebrow { display:flex; align-items:center; gap:7px; color:#e6bd72; font-size:9px; font-weight:900; letter-spacing:1.5px; }
+.arenaHeadingCopy h3 { margin:7px 0 5px; color:#f6f0e5; font-size:clamp(20px,2.2vw,27px); letter-spacing:-.5px; }
+.arenaHeadingCopy p { margin:0; color:#a9aec2; font-size:11px; line-height:1.55; }
+.arenaPill { display:flex; align-items:center; gap:7px; flex-shrink:0; padding:10px 13px; border:1px solid rgba(240,199,112,.24); border-radius:12px; color:#f0c977; background:linear-gradient(145deg,rgba(241,199,112,.10),rgba(241,199,112,.025)); font-size:11px; font-weight:850; }
+.arenaPill span { color:#a9aec2; font-size:9px; font-weight:600; }
+.stats>div { position:relative; overflow:hidden; backdrop-filter:blur(8px); }
+.stats>div::before { content:''; position:absolute; width:70px; height:70px; top:-42px; right:-30px; border-radius:50%; background:rgba(241,199,112,.06); pointer-events:none; }
+.playArea { height:260px; border-radius:17px; background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),radial-gradient(ellipse at 50% 45%,rgba(120,90,172,.22),transparent 55%),linear-gradient(145deg,#101626,#17192a); background-size:28px 28px,28px 28px,auto,auto; }
+.playArea.isPlaying { cursor:crosshair; }
+.gameMessage { z-index:1; }
+.gameIcon { border-radius:15px; width:54px; height:54px; box-shadow:0 0 30px rgba(240,199,112,.08); background:linear-gradient(145deg,rgba(240,199,112,.14),rgba(240,199,112,.03)); }
+.startButton { padding:12px 23px; border-radius:10px; box-shadow:0 8px 22px rgba(212,164,79,.16); transition:transform .2s,box-shadow .2s,filter .2s; }
+.startButton:hover { transform:translateY(-2px); box-shadow:0 11px 27px rgba(212,164,79,.25); filter:brightness(1.04); }
+.orb { width:46px; height:46px; border:2px solid rgba(255,248,222,.9); box-shadow:0 0 14px #e8bd70,0 0 32px rgba(232,189,112,.55),0 0 60px rgba(232,189,112,.2); }
+.gameFootnote { display:flex; align-items:center; gap:6px; color:#8f95aa; }
+@media(max-width:560px) { .arenaHeader { align-items:flex-start; flex-direction:column; gap:12px; margin-bottom:12px; } .arenaPill { padding:8px 10px; } .playArea { height:230px; } .gameMessage strong { font-size:15px; } }
+@media(prefers-reduced-motion:reduce) { .startButton:hover { transform:none; } }
+
+/* Stability fix: preserve centering on hover and remove distracting orb pulsing. */
+.orb {
+  transform: translate(-50%, -50%);
+  transition: filter .12s ease;
+  animation: none !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.orb:hover,
+.orb:focus-visible {
+  transform: translate(-50%, -50%);
+  filter: brightness(1.08);
+}
+.orb::before {
+  animation: none !important;
+  opacity: .32;
+  transform: scale(1.05);
+}
+
+/* Final screen: richer result hierarchy, with no changes to the catching mechanics. */
+.isFinished {
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(218, 174, 95, .14), transparent 34%),
+    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(145deg, #11182b, #19182a);
+  background-size: auto, 30px 30px, 30px 30px, auto;
+}
+.isFinished .gameMessage {
+  gap: 8px;
+  padding: 20px;
+}
+.isFinished .gameIcon {
+  width: 52px;
+  height: 52px;
+  color: #ffe2a1;
+  border-color: rgba(242, 203, 128, .58);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(244, 204, 127, .18), rgba(146, 105, 185, .12));
+  box-shadow: 0 0 26px rgba(233, 190, 112, .13);
+}
+.resultEyebrow {
+  color: #d8b76e !important;
+  font-size: 9px !important;
+  font-weight: 900;
+  letter-spacing: 1.7px;
+}
+.isFinished .gameMessage strong {
+  font-size: clamp(20px, 2.2vw, 26px);
+  letter-spacing: -.4px;
+}
+.messageDescription { margin-bottom: 1px; }
+.resultStats {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 5px 0 2px;
+}
+.resultStat {
+  min-width: 112px;
+  padding: 9px 14px;
+  border: 1px solid rgba(226, 194, 139, .16);
+  border-radius: 12px;
+  background: rgba(10, 14, 27, .48);
+  box-shadow: inset 0 1px rgba(255,255,255,.04);
+}
+.resultStat span {
+  display: block;
+  margin-bottom: 4px;
+  color: #aeb3c8 !important;
+  font-size: 8px !important;
+  letter-spacing: 1.2px;
+  font-weight: 800;
+}
+.resultStat strong {
+  display: block;
+  color: #f3e7d1;
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+.resultXp strong { color: #f2ca7d; }
+.isFinished .startButton { margin-top: 5px; }
+@media (max-width: 560px) {
+  .isFinished .gameMessage { gap: 7px; padding: 14px; }
+  .resultStats { gap: 7px; width: 100%; max-width: 270px; }
+  .resultStat { min-width: 0; flex: 1; padding: 8px 10px; }
+  .resultStat strong { font-size: 15px; }
+}
+
+/* FINAL PREMIUM SPACING PASS — spacious, intentional and calm */
+.arenaHeader {
+  margin-bottom: 26px;
+  padding: 8px 6px 22px;
+  align-items: flex-end;
+}
+.arenaHeadingCopy h3 {
+  margin: 12px 0 8px;
+  font-size: clamp(24px, 2.4vw, 32px);
+  letter-spacing: -0.65px;
+}
+.arenaHeadingCopy p { font-size: 12px; line-height: 1.7; }
+.arenaPill { padding: 12px 16px; border-radius: 14px; }
+.stats { gap: 16px; margin-bottom: 24px; }
+.stats > div { min-height: 92px; padding: 18px 20px; border-radius: 17px; justify-content: center; gap: 10px; }
+.stats span { font-size: 9px; letter-spacing: 1.55px; }
+.stats strong { font-size: 23px; }
+.playArea { height: 360px; border-radius: 22px; }
+.gameMessage { gap: 14px; padding: 30px 24px; }
+.gameIcon { width: 66px; height: 66px; border-radius: 22px; }
+.gameMessage strong { font-size: clamp(22px, 2.4vw, 29px); letter-spacing: -.4px; }
+.gameMessage span { font-size: 13px; line-height: 1.65; }
+.resultStats { display: flex; gap: 14px; margin: 8px 0 4px; }
+.resultStat { min-width: 140px; padding: 18px 22px; border: 1px solid rgba(225,198,145,.18); border-radius: 16px; background: linear-gradient(145deg,rgba(32,37,59,.85),rgba(15,20,35,.88)); box-shadow: inset 0 1px rgba(255,255,255,.045); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.resultStat span { color: #aaaec1; font-size: 9px; font-weight: 800; letter-spacing: 1.5px; }
+.resultStat strong { color: #f5ead5; font-size: 28px; line-height: 1.1; }
+.resultXp strong { color: #efc879; }
+.startButton { margin-top: 10px; padding: 14px 28px; min-width: 150px; font-size: 12px; border-radius: 14px; }
+.gameFootnote { margin-top: 16px; font-size: 11px; line-height: 1.6; }
+/* Keep orb anchored on its coordinates while hovered; no jump/flicker */
+.orb { transform: translate(-50%,-50%); animation: none; transition: filter .14s ease, box-shadow .14s ease; }
+.orb:hover { transform: translate(-50%,-50%) scale(1.06); filter: brightness(1.08); }
+.orb:active { transform: translate(-50%,-50%) scale(.96); }
+.orb::before { animation: none; opacity: .42; }
+@media (max-width: 760px) {
+  .arenaHeader { align-items: flex-start; flex-direction: column; gap: 16px; margin-bottom: 20px; padding-bottom: 18px; }
+  .stats { gap: 10px; margin-bottom: 18px; }
+  .stats > div { min-height: 78px; padding: 13px 12px; }
+  .stats strong { font-size: 18px; }
+  .playArea { height: 320px; }
+  .resultStat { min-width: 0; width: min(42vw, 150px); padding: 15px 12px; }
+  .resultStat strong { font-size: 24px; }
+}
+@media (max-width: 480px) {
+  .playArea { height: 300px; }
+  .gameMessage { gap: 11px; padding: 18px 12px; }
+  .gameIcon { width: 56px; height: 56px; }
+  .gameMessage strong { font-size: 22px; }
+  .gameMessage span { font-size: 11px; }
+  .resultStats { gap: 8px; margin-top: 4px; }
+  .resultStat { padding: 13px 8px; border-radius: 13px; }
+  .resultStat span { font-size: 8px; }
+  .resultStat strong { font-size: 20px; }
+  .startButton { min-width: 136px; padding: 12px 20px; }
+}
+
+/* =========================================================
+   ROYAL XP ARENA — engagement & premium polish pass
+   Visual-only refinement: gameplay, XP, timer and orb logic untouched.
+   ========================================================= */
+.gameSection {
+  padding-top: 4px;
+}
+.arenaHeader {
+  margin-bottom: 28px;
+  padding: 12px 4px 24px;
+  border-bottom-color: rgba(227, 194, 132, .16);
+}
+.arenaEyebrow {
+  gap: 8px;
+  color: #e9c77f;
+  letter-spacing: 1.9px;
+  font-size: 10px;
+}
+.arenaHeadingCopy h3 {
+  margin: 12px 0 8px;
+  font-size: clamp(24px, 2.5vw, 31px);
+  letter-spacing: -.7px;
+  color: #fff2dc;
+  text-shadow: 0 5px 24px rgba(226, 184, 105, .12);
+}
+.arenaHeadingCopy p {
+  font-size: 12px;
+  line-height: 1.7;
+  max-width: 560px;
+}
+.arenaPill {
+  padding: 12px 16px;
+  border-radius: 14px;
+  border-color: rgba(236, 198, 124, .34);
+  background: linear-gradient(135deg, rgba(236,198,124,.13), rgba(150,112,196,.09));
+  box-shadow: inset 0 1px rgba(255,255,255,.08), 0 10px 24px rgba(0,0,0,.14);
+}
+.stats {
+  gap: 16px;
+  margin: 0 0 24px;
+}
+.stats > div {
+  min-height: 94px;
+  padding: 18px 20px;
+  gap: 10px;
+  border-radius: 17px;
+  border-color: rgba(225, 198, 145, .20);
+  background: linear-gradient(145deg, rgba(37,43,67,.92), rgba(15,20,36,.97));
+  box-shadow: inset 0 1px rgba(255,255,255,.06), 0 12px 26px rgba(0,0,0,.14);
+}
+.stats span {
+  font-size: 9px;
+  letter-spacing: 1.6px;
+}
+.stats strong {
+  font-size: 24px;
+  color: #f5ead7;
+}
+.stats .xpEarned {
+  color: #f1cb82;
+  text-shadow: 0 0 18px rgba(241,203,130,.12);
+}
+.playArea {
+  position: relative;
+  height: clamp(330px, 31vw, 410px);
+  border-radius: 24px;
+  border-color: rgba(226, 192, 125, .36);
+  background:
+    radial-gradient(ellipse at 50% 46%, rgba(126,92,177,.22), transparent 39%),
+    radial-gradient(ellipse at 12% 10%, rgba(234,194,118,.06), transparent 24%),
+    linear-gradient(rgba(224,193,137,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(224,193,137,.045) 1px, transparent 1px),
+    linear-gradient(145deg, #10172b, #19182d 58%, #101629);
+  background-size: auto, auto, 34px 34px, 34px 34px, auto;
+  box-shadow: inset 0 0 75px rgba(0,0,0,.48), 0 16px 34px rgba(0,0,0,.18);
+}
+.playArea::before {
+  width: 260px;
+  height: 260px;
+  border-color: rgba(230,194,125,.16);
+  box-shadow: 0 0 42px rgba(161,115,208,.12), inset 0 0 42px rgba(161,115,208,.07);
+}
+.gameMessage {
+  gap: 16px;
+  padding: 32px 24px;
+}
+.gameIcon {
+  width: 72px;
+  height: 72px;
+  border-radius: 23px;
+  border-color: rgba(240,205,133,.58);
+  background: linear-gradient(145deg, rgba(239,202,131,.18), rgba(132,96,178,.14));
+  box-shadow: 0 12px 34px rgba(0,0,0,.16), 0 0 30px rgba(240,202,131,.10), inset 0 1px rgba(255,255,255,.12);
+}
+.gameMessage strong {
+  font-size: clamp(24px, 2.7vw, 32px);
+  color: #fff0d4;
+  letter-spacing: -.55px;
+}
+.gameMessage .messageDescription {
+  color: #c2c4d4;
+  font-size: 13px;
+  line-height: 1.7;
+  max-width: 420px;
+}
+.startButton {
+  min-width: 170px;
+  padding: 15px 28px;
+  margin-top: 8px;
+  border-radius: 14px;
+  font-size: 12px;
+  letter-spacing: .03em;
+  box-shadow: 0 10px 28px rgba(202,151,73,.22), inset 0 1px rgba(255,255,255,.72);
+}
+.startButton:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(202,151,73,.28), inset 0 1px rgba(255,255,255,.75);
+}
+.startButton:focus-visible {
+  outline: 2px solid #f5dba0;
+  outline-offset: 4px;
+}
+.gameFootnote {
+  margin-top: 18px;
+  color: #9ca2b8;
+  font-size: 11px;
+  line-height: 1.7;
+}
+/* Keep targets calm and predictable: no hover jump or pulsing flicker. */
+.orb,
+.orb:hover,
+.orb:focus-visible,
+.orb:active {
+  transform: translate(-50%, -50%);
+}
+.orb:hover { filter: brightness(1.12); }
+.orb:active { filter: brightness(1.18); }
+@media (max-width: 760px) {
+  .arenaHeader { padding: 8px 2px 20px; margin-bottom: 20px; }
+  .arenaHeadingCopy h3 { font-size: 23px; }
+  .stats { gap: 10px; margin-bottom: 18px; }
+  .stats > div { min-height: 82px; padding: 14px 12px; }
+  .stats strong { font-size: 19px; }
+  .playArea { height: 330px; border-radius: 19px; }
+  .gameMessage { gap: 12px; padding: 22px 14px; }
+  .gameIcon { width: 60px; height: 60px; border-radius: 19px; }
+  .gameMessage strong { font-size: 23px; }
+  .gameMessage .messageDescription { font-size: 11px; }
+  .startButton { min-width: 148px; padding: 13px 22px; }
+}
+@media (max-width: 480px) {
+  .playArea { height: 300px; }
+  .stats > div { min-height: 72px; padding: 12px 9px; }
+  .stats span { font-size: 8px; letter-spacing: 1.1px; }
+  .stats strong { font-size: 16px; }
+  .gameMessage { gap: 10px; }
+}
+
+/* ROYAL XP CATCHER — interactive hover polish */
+@media (hover: hover) and (pointer: fine) {
+  .arenaPill {
+    transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background .22s ease;
+  }
+  .arenaPill:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 221, 153, .58);
+    box-shadow: 0 0 18px rgba(224, 179, 94, .12), inset 0 1px rgba(255,255,255,.1);
+    background: linear-gradient(145deg,rgba(241,199,112,.17),rgba(145,105,190,.14));
+  }
+  .stats > div {
+    transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease, background .24s ease;
+  }
+  .stats > div:hover {
+    transform: translateY(-3px);
+    border-color: rgba(232, 198, 137, .36);
+    background: linear-gradient(145deg,rgba(49,52,79,.94),rgba(24,29,50,.96));
+    box-shadow: 0 12px 26px rgba(0,0,0,.2), inset 0 1px rgba(255,255,255,.08);
+  }
+  .stats > div::before {
+    transition: transform .35s ease, opacity .35s ease;
+    opacity: .65;
+  }
+  .stats > div:hover::before {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+  .playArea {
+    transition: border-color .25s ease, box-shadow .25s ease, background-position .4s ease;
+  }
+  .playArea:hover {
+    border-color: rgba(232, 198, 137, .48);
+    box-shadow: inset 0 0 70px rgba(0,0,0,.38), 0 0 24px rgba(173,115,220,.08);
+  }
+  .orb {
+    transform: translate(-50%, -50%);
+    transition: transform .14s ease, filter .14s ease, box-shadow .14s ease;
+    will-change: transform;
+  }
+  .orb:hover {
+    transform: translate(-50%, -50%) scale(1.12);
+    filter: brightness(1.18) saturate(1.1);
+    box-shadow: 0 0 18px rgba(255,235,183,1), 0 0 42px rgba(229,179,91,.9), 0 0 82px rgba(173,115,220,.35), inset 0 2px 7px rgba(255,255,255,1);
+  }
+  .startButton {
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s ease, box-shadow .24s ease, filter .24s ease;
+  }
+  .startButton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 18%, rgba(255,255,255,.45) 48%, transparent 72%);
+    transform: translateX(-130%);
+    transition: transform .55s ease;
+    pointer-events: none;
+  }
+  .startButton:hover::after { transform: translateX(130%); }
+  .startButton:hover {
+    transform: translateY(-3px) scale(1.025);
+    filter: brightness(1.04);
+    box-shadow: 0 13px 30px rgba(197,145,68,.34), 0 0 18px rgba(233,189,112,.13), inset 0 1px rgba(255,255,255,.8);
+  }
+  .startButton:active { transform: translateY(0) scale(.98); }
+  .gameIcon {
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .gameMessage:hover .gameIcon {
+    transform: translateY(-2px) rotate(-4deg);
+    box-shadow: 0 0 34px rgba(207,157,91,.22), inset 0 1px rgba(255,255,255,.16);
+  }
+}
+
+
+/* Focus-visible styling keeps keyboard users included without a permanent glow. */
+.orb:focus-visible,
+.startButton:focus-visible {
+  outline: 2px solid #ffe6a5;
+  outline-offset: 4px;
+}
+
+
+/* Hover enhancements stay subtle on touch devices and respect reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .arenaPill,
+  .stats > div,
+  .playArea,
+  .orb,
+  .startButton,
+  .gameIcon,
+  .startButton::after {
+    transition: none !important;
+  }
+}
+
+/* === ROYAL INTERACTION PASS (visible, deliberate hover feedback) === */
+@media (hover: hover) and (pointer: fine) {
+  .gameSection { transition: transform .28s ease, filter .28s ease; }
+  .gameSection:hover { filter: drop-shadow(0 8px 22px rgba(184,132,61,.06)); }
+  .arenaHeader { transition: border-color .25s ease, background .25s ease; }
+  .arenaHeadingCopy h3 { transition: color .22s ease, text-shadow .22s ease; }
+  .gameSection:hover .arenaHeadingCopy h3 { color: #fff2d1; text-shadow: 0 0 18px rgba(239,195,113,.18); }
+  .stats > div { position: relative; overflow: hidden; }
+  .stats > div::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(115deg,transparent 20%,rgba(255,231,177,.08) 48%,transparent 75%); transform: translateX(-80%); transition: transform .45s ease, opacity .2s ease; }
+  .stats > div:hover::after { opacity: 1; transform: translateX(80%); }
+  .playArea { isolation: isolate; }
+  .playArea::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0; background: radial-gradient(circle at 50% 50%,rgba(229,181,100,.10),transparent 62%); transition: opacity .35s ease; }
+  .playArea:hover::after { opacity: 1; }
+  .orb { z-index: 2; transform: translate(-50%,-50%); transition: transform .16s cubic-bezier(.2,.8,.2,1), filter .16s ease, box-shadow .16s ease; }
+  .orb:hover { transform: translate(-50%,-50%) scale(1.2); filter: brightness(1.24) saturate(1.16); box-shadow: 0 0 20px rgba(255,239,190,.95),0 0 48px rgba(237,190,91,.9),0 0 90px rgba(180,124,234,.38),inset 0 2px 8px rgba(255,255,255,.95); }
+  .startButton { transform-origin: center; }
+  .startButton:hover { transform: translateY(-4px) scale(1.045); box-shadow: 0 16px 34px rgba(205,151,66,.42),0 0 26px rgba(237,192,109,.18); }
+  .startButton:active { transform: translateY(0) scale(.97); }
+  .gameIcon { transition: transform .28s ease, filter .28s ease; }
+  .gameMessage:hover .gameIcon { transform: translateY(-3px) rotate(7deg) scale(1.06); filter: drop-shadow(0 0 12px rgba(255,215,130,.4)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gameSection, .arenaHeader, .arenaHeadingCopy h3, .stats > div::after, .playArea::after, .orb, .startButton, .gameIcon { transition: none !important; }
+}
+
+
+/* COSMIC BACKGROUND FIX: position the JSX decorations across the arena.
+   Decorative elements are behind gameplay and never intercept clicks. */
+.spaceDecor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.spaceStar, .spacePlanet, .spaceSat, .spaceRocket, .spaceMoon {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+.spaceStar { color: #f8dfaa; opacity: .78; filter: drop-shadow(0 0 5px currentColor); animation: cosmicTwinkle 3.4s ease-in-out infinite; }
+.starOne { left: 12%; top: 19%; animation-delay: -.8s; }
+.starTwo { left: 78%; top: 25%; color: #cba6ff; animation-delay: -1.7s; }
+.starThree { left: 64%; top: 77%; color: #e8c7ff; animation-delay: -2.3s; }
+.starFour { left: 29%; top: 69%; color: #fff0c4; animation-delay: -1.2s; }
+.spacePlanet { left: 81%; top: 18%; width: 42px; height: 42px; border-radius: 50%; background: radial-gradient(circle at 32% 27%, #f2d9ff, #a889d6 35%, #514276 72%, #292441); box-shadow: 0 0 20px rgba(174,137,219,.2); animation: cosmicFloat 7s ease-in-out infinite; }
+.spacePlanet > span { position: absolute; left: -10px; top: 15px; width: 62px; height: 13px; border: 1px solid rgba(221,195,255,.45); border-radius: 50%; transform: rotate(-22deg); }
+.spaceSat { left: 19%; top: 72%; color: #c9d8ef; opacity: .7; animation: cosmicFloat 8s ease-in-out infinite reverse; transform: rotate(-18deg); }
+.spaceRocket { right: 14%; bottom: 16%; color: #f0c978; opacity: .75; animation: cosmicFloat 6.5s ease-in-out infinite; transform: rotate(32deg); filter: drop-shadow(0 0 8px rgba(244,201,107,.24)); }
+.spaceMoon { right: 34%; top: 11%; width: 12px; height: 12px; border-radius: 50%; background: #d6d0e7; opacity: .4; box-shadow: 0 0 12px rgba(214,208,231,.3); }
+/* Remove the old centered circular orbit from the arena. */
+.playArea::before { content: none !important; display: none !important; }
+/* Keep the small ambient pseudo-star, but never let it overlap the center controls. */
+.playArea::after { z-index: 0; }
+.gameMessage { z-index: 2; }
+.orb { z-index: 3; }
+@keyframes cosmicTwinkle { 0%,100% { opacity: .35; transform: scale(.82); } 50% { opacity: .95; transform: scale(1.12); } }
+@keyframes cosmicFloat { 0%,100% { translate: 0 0; } 50% { translate: 0 -9px; } }
+@media (max-width: 600px) {
+  .spacePlanet { left: 79%; top: 12%; width: 31px; height: 31px; }
+  .spacePlanet > span { width: 48px; left: -8px; top: 10px; }
+  .spaceSat { left: 8%; top: 75%; }
+  .spaceRocket { right: 7%; bottom: 10%; }
+}
+@media (prefers-reduced-motion: reduce) { .spaceStar, .spacePlanet, .spaceSat, .spaceRocket { animation: none !important; } }

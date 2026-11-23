@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react';
-import { Clock3, RotateCcw, Target, Zap } from 'lucide-react';
+import { Clock3, RotateCcw, Target, Zap, Trophy, Rocket, Satellite, Star } from 'lucide-react';
 import styles from './XPCatcher.module.css';
 import { logActivity } from '../../utils/ActivityTracker';
 
@@ -135,7 +135,17 @@ export default function XPCatcher({ onEarnXP }) {
         </div>
       </div>
 
-      <div className={styles.playArea}>
+      <div className={`${styles.playArea} ${gameStatus === 'playing' ? styles.isPlaying : ''} ${gameStatus === 'finished' ? styles.isFinished : ''}`}>
+        <div className={styles.spaceDecor} aria-hidden="true">
+          <span className={`${styles.spaceStar} ${styles.starOne}`}><Star size={10} fill="currentColor" /></span>
+          <span className={`${styles.spaceStar} ${styles.starTwo}`}><Star size={7} fill="currentColor" /></span>
+          <span className={`${styles.spaceStar} ${styles.starThree}`}><Star size={8} fill="currentColor" /></span>
+          <span className={`${styles.spaceStar} ${styles.starFour}`}><Star size={6} fill="currentColor" /></span>
+          <span className={styles.spacePlanet}><span /></span>
+          <span className={styles.spaceSat}><Satellite size={25} /></span>
+          <span className={styles.spaceRocket}><Rocket size={23} /></span>
+          <span className={styles.spaceMoon} />
+        </div>
         {gameStatus === 'playing' ? (
           <button
             type="button"
@@ -152,20 +162,28 @@ export default function XPCatcher({ onEarnXP }) {
         ) : (
           <div className={styles.gameMessage}>
             <div className={styles.gameIcon}>
-              <Zap size={27} />
+              {gameStatus === 'finished' ? <Trophy size={25} /> : <Zap size={27} />}
             </div>
 
+            {gameStatus === 'finished' && <span className={styles.resultEyebrow}>CHALLENGE COMPLETE</span>}
             <strong>
               {gameStatus === 'finished'
                 ? 'Time is up!'
                 : 'Ready to catch XP?'}
             </strong>
 
-            <span>
+            <span className={styles.messageDescription}>
               {gameStatus === 'finished'
-                ? `You caught ${score} orbs and earned ${score * XP_PER_CATCH} XP.`
+                ? 'Great run. Your rewards have been added to your progress.'
                 : 'You have 15 seconds. Tap each orb to collect XP.'}
             </span>
+
+            {gameStatus === 'finished' && (
+              <div className={styles.resultStats}>
+                <div className={styles.resultStat}><span>ORBS CAUGHT</span><strong>{score}</strong></div>
+                <div className={`${styles.resultStat} ${styles.resultXp}`}><span>XP EARNED</span><strong>+{score * XP_PER_CATCH} XP</strong></div>
+              </div>
+            )}
 
             <button
               type="button"
@@ -185,7 +203,7 @@ export default function XPCatcher({ onEarnXP }) {
       </div>
 
       <div className={styles.gameFootnote}>
-        Each caught orb adds 10 XP to your dashboard. Your XP is saved in this browser.
+        <Zap size={13} /> Every orb adds 10 XP to your dashboard · Progress saves automatically.
       </div>
     </section>
   );

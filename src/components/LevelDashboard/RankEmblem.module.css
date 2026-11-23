@@ -243,17 +243,3 @@
   opacity: .42 !important;
   transform: scale(1.04) !important;
 }
-
-
-/* Lightweight roadmap emblems: keep the artwork, skip expensive per-card glow layers. */
-.roadmapVariant .emblemAura {
-  display: none !important;
-}
-.roadmapVariant .artwork {
-  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, .28)) !important;
-  transition: none !important;
-}
-.roadmapVariant:hover .artwork,
-.roadmapVariant .artwork {
-  transform: none !important;
-}
