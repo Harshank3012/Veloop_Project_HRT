@@ -25,7 +25,7 @@ import {
 
 import { levelData, XP_PER_LEVEL } from '../../data/levelData';
 import { BADGES } from '../../data/badges';
-
+import { createPortal } from 'react-dom';
 import styles from './LevelDashboard.module.css';
 
 import XPCatcher from '../XPCatcher/XPCatcher.jsx';
@@ -734,55 +734,62 @@ export default function LevelDashboard() {
         />
       )}
 
+      
       {/* MISSION COMPLETION CELEBRATION */}
-      {activeCelebration?.type === 'mission' && (
-        <div
-          className={styles.celebrationOverlay}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="mission-celebration-title"
-        >
-          <div className={styles.missionCelebration}>
-            <div className={styles.missionCelebrationFx} aria-hidden="true">
-              <span className={`${styles.missionStar} ${styles.missionStarOne}`}>✦</span>
-              <span className={`${styles.missionStar} ${styles.missionStarTwo}`}>✧</span>
-              <span className={`${styles.missionStar} ${styles.missionStarThree}`}>✦</span>
-              <span className={`${styles.missionStar} ${styles.missionStarFour}`}>·</span>
-              <span className={`${styles.missionStar} ${styles.missionStarFive}`}>✧</span>
-              <span className={`${styles.missionStar} ${styles.missionStarSix}`}>✦</span>
-              <span className={`${styles.missionRocket} ${styles.missionRocketOne}`}>🚀</span>
-              <span className={`${styles.missionRocket} ${styles.missionRocketTwo}`}>🚀</span>
+      {activeCelebration?.type === 'mission' &&
+        createPortal(
+          <div
+            className={styles.celebrationOverlay}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="mission-celebration-title"
+          >
+            <div className={styles.missionCelebration}>
+              <div
+                className={styles.missionCelebrationFx}
+                aria-hidden="true"
+              >
+                <span className={`${styles.missionStar} ${styles.missionStarOne}`}>✦</span>
+                <span className={`${styles.missionStar} ${styles.missionStarTwo}`}>✧</span>
+                <span className={`${styles.missionStar} ${styles.missionStarThree}`}>✦</span>
+                <span className={`${styles.missionStar} ${styles.missionStarFour}`}>·</span>
+                <span className={`${styles.missionStar} ${styles.missionStarFive}`}>✧</span>
+                <span className={`${styles.missionStar} ${styles.missionStarSix}`}>✦</span>
+                <span className={`${styles.missionRocket} ${styles.missionRocketOne}`}>🚀</span>
+                <span className={`${styles.missionRocket} ${styles.missionRocketTwo}`}>🚀</span>
+              </div>
+
+              <div className={styles.celebrationIcon}>
+                <Target size={36} />
+              </div>
+
+              <span className={styles.celebrationEyebrow}>
+                MISSION COMPLETED
+              </span>
+
+              <h2 id="mission-celebration-title">
+                {activeCelebration.payload.title}
+              </h2>
+
+              <p>{activeCelebration.payload.description}</p>
+
+              <div className={styles.celebrationXP}>
+                +{activeCelebration.payload.xp} XP
+                <span>EARNED</span>
+              </div>
+
+              <button
+                type="button"
+                className={styles.celebrationContinue}
+                onClick={handleCloseCelebration}
+              >
+                Awesome!
+                <ArrowRight size={17} />
+              </button>
             </div>
-            <div className={styles.celebrationIcon}>
-              <Target size={36} />
-            </div>
-
-            <span className={styles.celebrationEyebrow}>
-              MISSION COMPLETED
-            </span>
-
-            <h2 id="mission-celebration-title">
-              {activeCelebration.payload.title}
-            </h2>
-
-            <p>{activeCelebration.payload.description}</p>
-
-            <div className={styles.celebrationXP}>
-              +{activeCelebration.payload.xp} XP
-              <span>EARNED</span>
-            </div>
-
-            <button
-              type="button"
-              className={styles.celebrationContinue}
-              onClick={handleCloseCelebration}
-            >
-              Awesome!
-              <ArrowRight size={17} />
-            </button>
-          </div>
-        </div>
-      )}
-    </main>
+          </div>,
+          document.body
+        )}
+        </main>
   );
-} 
+}

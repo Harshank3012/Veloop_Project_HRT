@@ -1127,3 +1127,225 @@
   .royalRoadmapStage:hover, .royalRankFrame:hover { transform: none !important; }
   .royalHeroOrnament, .royalStageHeading::before { animation: none !important; filter: none !important; }
 }
+
+
+/* XP achievement collectibles live in the Level Roadmap, not the Rewards vault. */
+.roadmapCollectiblesSection {
+  margin: 34px 0 8px;
+  padding: 24px 22px 20px;
+  border: 1px solid rgba(221,190,126,.18);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(199,151,75,.10), transparent 46%),
+    linear-gradient(145deg, rgba(29,35,52,.96), rgba(15,21,34,.98));
+  overflow: hidden;
+}
+.roadmapCollectiblesHeading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:18px;
+}
+.roadmapCollectiblesEyebrow {
+  color:#d7b875;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.8px;
+}
+.roadmapCollectiblesHeading h2 {
+  margin:7px 0 5px;
+  color:#f5e7c8;
+  font-size:23px;
+  letter-spacing:-.5px;
+}
+.roadmapCollectiblesHeading p {
+  margin:0;
+  color:#9ca7ba;
+  font-size:11px;
+}
+.roadmapCollectiblesCount {
+  flex-shrink:0;
+  padding:10px 14px;
+  border:1px solid rgba(220,185,111,.26);
+  border-radius:999px;
+  color:#f2d28e;
+  background:rgba(207,158,75,.08);
+  font-size:14px;
+  font-weight:900;
+}
+.roadmapCollectiblesCount small {
+  color:#aeb7c8;
+  font-size:8px;
+  letter-spacing:1px;
+}
+.roadmapCollectiblesTrack {
+  display:grid;
+  grid-auto-columns:minmax(178px,1fr);
+  grid-auto-flow:column;
+  gap:12px;
+  overflow-x:auto;
+  padding:4px 3px 14px;
+  scroll-snap-type:x mandatory;
+  overscroll-behavior-x:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#8d754d #141b29;
+  -webkit-overflow-scrolling:touch;
+}
+.roadmapCollectibleCard {
+  --milestone-accent:#d7b875;
+  position:relative;
+  display:flex;
+  min-width:0;
+  min-height:300px;
+  flex-direction:column;
+  padding:12px 12px 11px;
+  border:1px solid color-mix(in srgb,var(--milestone-accent) 42%,#354055);
+  border-radius:15px;
+  background:
+    radial-gradient(ellipse at 50% 37%,color-mix(in srgb,var(--milestone-accent) 15%,transparent),transparent 57%),
+    linear-gradient(150deg,#20283a,#111a29 78%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 24px rgba(0,0,0,.22);
+  scroll-snap-align:start;
+  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+}
+.roadmapCollectibleCard:hover {
+  transform:translateY(-5px);
+  border-color:var(--milestone-accent);
+  box-shadow:0 15px 28px rgba(0,0,0,.32),0 0 22px color-mix(in srgb,var(--milestone-accent) 15%,transparent);
+}
+.roadmapCollectibleTop {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:5px;
+  color:#a6b0c3;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+.roadmapCollectibleTop b {
+  padding:4px 6px;
+  border:1px solid color-mix(in srgb,var(--milestone-accent) 70%,white);
+  border-radius:5px;
+  color:var(--milestone-accent);
+  font-size:7px;
+  letter-spacing:.6px;
+}
+.roadmapCollectibleArtWrap {
+  position:relative;
+  display:grid;
+  place-items:center;
+  height:157px;
+  margin:5px 0 0;
+}
+.roadmapCollectibleArtWrap::before {
+  content:"";
+  position:absolute;
+  width:126px;
+  height:126px;
+  border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--milestone-accent) 19%,transparent),transparent 70%);
+  filter:blur(9px);
+}
+.roadmapCollectibleArtWrap img {
+  position:relative;
+  z-index:1;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 10px 10px rgba(0,0,0,.42));
+  transition:transform .3s ease,filter .3s ease;
+}
+.roadmapCollectibleCard:hover .roadmapCollectibleArtWrap img {
+  transform:translateY(-4px) scale(1.045);
+  filter:drop-shadow(0 13px 15px color-mix(in srgb,var(--milestone-accent) 25%,transparent));
+}
+.roadmapCollectibleLocked .roadmapCollectibleArtWrap img {
+  filter:grayscale(.78) brightness(.58) saturate(.5) drop-shadow(0 8px 8px rgba(0,0,0,.4));
+}
+.roadmapCollectibleState {
+  position:absolute;
+  z-index:2;
+  right:13px;
+  bottom:10px;
+  display:grid;
+  place-items:center;
+  width:23px;
+  height:23px;
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:50%;
+  color:#eafff5;
+  background:linear-gradient(145deg,#35c38e,#087858);
+  box-shadow:0 0 12px rgba(52,211,153,.35);
+  font-size:13px;
+  font-weight:900;
+}
+.roadmapCollectibleLocked .roadmapCollectibleState {
+  background:linear-gradient(145deg,#69748a,#30394b);
+  box-shadow:none;
+  font-size:10px;
+}
+.roadmapCollectibleCard h3 {
+  margin:0;
+  color:#f3e6c9;
+  text-align:center;
+  font-size:12px;
+  font-weight:850;
+}
+.roadmapCollectibleCard p {
+  min-height:22px;
+  margin:4px 0 12px;
+  color:#9ca8bb;
+  text-align:center;
+  font-size:8px;
+}
+.roadmapCollectibleProgressLabel {
+  display:flex;
+  justify-content:space-between;
+  gap:5px;
+  margin-top:auto;
+  color:#a2adbf;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.55px;
+}
+.roadmapCollectibleProgressLabel strong {
+  color:var(--milestone-accent);
+  font-size:8px;
+  white-space:nowrap;
+}
+.roadmapCollectibleBar {
+  height:5px;
+  margin-top:7px;
+  overflow:hidden;
+  border-radius:99px;
+  background:#080e18;
+}
+.roadmapCollectibleBar span {
+  display:block;
+  height:100%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--milestone-accent) 70%,white),var(--milestone-accent));
+  box-shadow:0 0 9px color-mix(in srgb,var(--milestone-accent) 45%,transparent);
+}
+.roadmapCollectibleFooter {
+  display:flex;
+  justify-content:space-between;
+  margin-top:9px;
+  color:#6ee0b1;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.7px;
+}
+.roadmapCollectibleLocked .roadmapCollectibleFooter { color:#909bad; }
+.roadmapCollectibleFooter strong { color:var(--milestone-accent); }
+@media(max-width:700px) {
+  .roadmapCollectiblesSection { padding:18px 13px 14px; }
+  .roadmapCollectiblesHeading { align-items:flex-start; }
+  .roadmapCollectiblesHeading h2 { font-size:20px; }
+  .roadmapCollectiblesHeading p { max-width:230px; line-height:1.5; }
+  .roadmapCollectiblesTrack { grid-auto-columns:164px; gap:10px; }
+  .roadmapCollectibleCard { min-height:285px; }
+  .roadmapCollectibleArtWrap { height:145px; }
+}

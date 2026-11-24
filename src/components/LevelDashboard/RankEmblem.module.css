@@ -243,3 +243,51 @@
   opacity: .42 !important;
   transform: scale(1.04) !important;
 }
+
+/* Consistent full-artboard sizing across every rank and rank achievement */
+.roadmapVariant {
+  width: min(100%, 174px) !important;
+  height: 174px !important;
+  min-width: 174px !important;
+  min-height: 174px !important;
+  max-width: 174px !important;
+  max-height: 174px !important;
+  flex: 0 0 174px !important;
+}
+.roadmapVariant .artwork {
+  position: relative;
+  inset: auto;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+.heroVariant .artwork,
+.roadmapVariant .artwork {
+  overflow: visible;
+}
+@media (max-width: 760px) {
+  .roadmapVariant {
+    width: 158px !important;
+    height: 158px !important;
+    min-width: 158px !important;
+    min-height: 158px !important;
+    max-width: 158px !important;
+    max-height: 158px !important;
+    flex-basis: 158px !important;
+  }
+}
+@media (max-width: 560px) {
+  .roadmapVariant {
+    width: 142px !important;
+    height: 142px !important;
+    min-width: 142px !important;
+    min-height: 142px !important;
+    max-width: 142px !important;
+    max-height: 142px !important;
+    flex-basis: 142px !important;
+  }
+}

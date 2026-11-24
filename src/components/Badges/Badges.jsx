@@ -18,10 +18,68 @@ import {
 import { BADGES, BADGE_CATEGORIES } from '../../data/badges';
 import { XP_PER_LEVEL } from '../../data/levelData';
 import BadgeCelebration from '../BadgeCelebration/BadgeCelebration.jsx';
+import BadgeArtwork from './BadgeArtwork.jsx';
+import weekWarrior3D from '../../assets/achievement-badges-3d/week-warrior.webp';
+import fortnightFighter3D from '../../assets/achievement-badges-3d/fortnight-fighter.webp';
+import monthlyChampion3D from '../../assets/achievement-badges-3d/monthly-champion.webp';
+import unstoppableLegend3D from '../../assets/achievement-badges-3d/unstoppable-legend.webp';
+import centuryWarrior3D from '../../assets/achievement-badges-3d/century-warrior.webp';
+import missionStarter3D from '../../assets/achievement-badges-3d/mission-starter.webp';
+import missionPro3D from '../../assets/achievement-badges-3d/mission-pro.webp';
+import missionExpert3D from '../../assets/achievement-badges-3d/mission-expert.webp';
+import missionMaster3D from '../../assets/achievement-badges-3d/mission-master.webp';
+import missionLegendArt from '../../assets/mission-badges/mission-legend.webp';
+import perfectWeekArt from '../../assets/mission-badges/perfect-week.webp';
+
+const premiumBadgeArtwork = {
+  8: weekWarrior3D,
+  9: fortnightFighter3D,
+  10: monthlyChampion3D,
+  11: unstoppableLegend3D,
+  12: centuryWarrior3D,
+  13: missionStarter3D,
+  14: missionPro3D,
+  15: missionExpert3D,
+  16: missionMaster3D,
+  17: missionLegendArt,
+  18: perfectWeekArt,
+  19: quickCatcherUnique,
+  20: skilledCatcherUnique,
+  21: gameStarterUnique,
+  22: gameEnthusiastUnique,
+  23: gameMasterUnique,
+  24: gamingLegendUnique,
+  25: ultimateGamerUnique,
+  26: bronzeRankArt,
+  27: silverRankArt,
+  28: goldRankArt,
+  29: platinumRankArt,
+  30: diamondRankArt,
+  31: eliteRankArt,
+  32: transcendentRankArt,
+};
+import quickCatcherUnique from '../../assets/unique-3d-achievements/quick-catcher.webp';
+import skilledCatcherUnique from '../../assets/unique-3d-achievements/skilled-catcher.webp';
+import gameStarterUnique from '../../assets/unique-3d-achievements/game-starter.webp';
+import gameEnthusiastUnique from '../../assets/unique-3d-achievements/game-enthusiast.webp';
+import gameMasterUnique from '../../assets/unique-3d-achievements/game-master.webp';
+import gamingLegendUnique from '../../assets/unique-3d-achievements/gaming-legend.webp';
+import ultimateGamerUnique from '../../assets/unique-3d-achievements/ultimate-gamer.webp';
 import styles from './Badges.module.css';
 import { getLocalDateKey, getPreviousLocalDateKey } from '../../utils/dateUtils';
 
+// Shared rank artwork: these exact files are also rendered by RankEmblem.
+import bronzeRankArt from '../../assets/rank-emblems/bronze.webp';
+import silverRankArt from '../../assets/rank-emblems/silver.webp';
+import goldRankArt from '../../assets/rank-emblems/gold.webp';
+import platinumRankArt from '../../assets/rank-emblems/platinum.webp';
+import diamondRankArt from '../../assets/rank-emblems/diamond.webp';
+import eliteRankArt from '../../assets/rank-emblems/legendary.webp';
+import transcendentRankArt from '../../assets/rank-emblems/transcendent.webp';
+
 const STORAGE_KEY = 'veloop-unlocked-badges';
+// The seven XP milestone medals are displayed on the Level Roadmap, not in this vault.
+const REWARD_BADGES = BADGES.filter((badge) => badge.id < 1 || badge.id > 7);
 
 const readJSON = (key, fallback = {}) => {
   try {
@@ -144,15 +202,15 @@ useEffect(() => {
 
   const visibleBadges =
     category === 'All'
-      ? BADGES
-      : BADGES.filter((badge) => badge.category === category);
+      ? REWARD_BADGES
+      : REWARD_BADGES.filter((badge) => badge.category === category);
 
-  const unlockedCount = BADGES.filter(
+  const unlockedCount = REWARD_BADGES.filter(
     (badge) => unlockedIds.has(badge.id)
   ).length;
 
-  const percentage = BADGES.length
-    ? Math.round((unlockedCount / BADGES.length) * 100)
+  const percentage = REWARD_BADGES.length
+    ? Math.round((unlockedCount / REWARD_BADGES.length) * 100)
     : 0;
 
   const getRarityClass = (rarity) => {
@@ -263,7 +321,7 @@ useEffect(() => {
 
             <div className={styles.collectionCount}>
               <strong>{unlockedCount}</strong>
-              <span>/ {BADGES.length} UNLOCKED</span>
+              <span>/ {REWARD_BADGES.length} UNLOCKED</span>
             </div>
           </div>
 
@@ -276,7 +334,7 @@ useEffect(() => {
 
           <div className={styles.collectionBottom}>
             <span>{percentage}% of the vault discovered</span>
-            <span>{BADGES.length - unlockedCount} achievements remaining</span>
+            <span>{REWARD_BADGES.length - unlockedCount} achievements remaining</span>
           </div>
         </section>
 
@@ -296,7 +354,7 @@ useEffect(() => {
           </div>
 
           <nav className={styles.filters} aria-label="Filter badges">
-            {BADGE_CATEGORIES.map((item) => (
+            {BADGE_CATEGORIES.filter((item) => item !== 'XP Achievements').map((item) => (
               <button
                 key={item}
                 type="button"
@@ -329,7 +387,7 @@ useEffect(() => {
                   className={`${styles.badgeCard} ${
                     unlocked ? styles.unlocked : styles.locked
                   }`}
-                  style={{ '--card-index': index }}
+                  style={{ '--card-index': index, '--badge-accent': ({1:'#f2bd64',2:'#8fc9ff',3:'#f4c35e',4:'#7ad8e5',5:'#c8a0f5',6:'#ff9b7d',7:'#d69cff',8:'#ff9b55',9:'#8ab8f5',10:'#f2ca67',11:'#c69af3',12:'#e99a91',13:'#e7c783',14:'#82d4df',15:'#a8baff',16:'#efc36a',17:'#c69af3',18:'#8dd9ad',19:'#f0bb65',20:'#8ecbfa',21:'#b3a0ff',22:'#7dd5df',23:'#f0c56e',24:'#f49b80',25:'#d59cff',26:'#c58a59',27:'#c2cfdf',28:'#eac16b',29:'#85dce8',30:'#8dbcf5',31:'#c19be9',32:'#d2a3f6'})[badge.id] || '#d8bd80' }}
                 >
                   <div className={styles.cardTop}>
                     <span className={styles.badgeCategory}>
@@ -346,31 +404,24 @@ useEffect(() => {
                   </div>
 
                   <div className={styles.emblemArea}>
-                    <div className={styles.emblemGlow} />
-                    <div className={styles.emblemOuter}>
-                      <div className={styles.emblemMiddle}>
-                        <div className={styles.emblemInner}>
-                          <div className={styles.emblemIcon}>
-                            {unlocked ? (
-                              <Icon size={34} strokeWidth={1.7} />
-                            ) : (
-                              <LockKeyhole size={29} strokeWidth={1.8} />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {unlocked && (
-                      <>
-                        <span className={styles.emblemSparkle}>
-                          <Sparkles size={15} />
-                        </span>
-                        <span className={styles.emblemCheck}>
-                          <ShieldCheck size={17} />
-                        </span>
-                      </>
+                    {premiumBadgeArtwork[badge.id] ? (
+                      <img
+                        className={styles.premiumBadgeImage}
+                        src={premiumBadgeArtwork[badge.id]}
+                        alt={`${badge.title} premium collectible badge`}
+                        loading="lazy"
+                        draggable="false"
+                      />
+                    ) : (
+                      <BadgeArtwork
+                        badge={badge}
+                        unlocked={unlocked}
+                        progress={progress}
+                      />
                     )}
+                    <span className={styles.artUnlockSeal} aria-hidden="true">
+                      {unlocked ? <ShieldCheck size={16} /> : <LockKeyhole size={14} />}
+                    </span>
                   </div>
 
                   <div className={styles.badgeDetails}>

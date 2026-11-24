@@ -1303,3 +1303,638 @@
 .badgeDetails h3 { font-size:14px !important; }
 .badgeDetails p { font-size:10px !important; min-height:32px !important; }
 @media(max-width:700px) { .badgeCard { padding:10px !important; } .emblemArea { min-height:84px !important; } .emblemOuter { width:64px !important; height:64px !important; border-radius:19px !important; } .emblemMiddle { width:49px !important; height:49px !important; border-radius:15px !important; } .emblemInner { width:37px !important; height:37px !important; } .emblemIcon svg { width:19px !important; height:19px !important; } .badgeDetails h3 { font-size:12px !important; } }
+
+
+/* PREMIUM COLLECTIBLE BADGE ART DIRECTION */
+.badgeCard {
+  --accent: var(--badge-accent, #d8bd80);
+  position: relative;
+  min-height: 365px;
+  padding: 18px 18px 15px;
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, #3a4355);
+  border-radius: 19px;
+  background:
+    radial-gradient(ellipse at 50% 37%, color-mix(in srgb, var(--accent) 19%, transparent), transparent 49%),
+    linear-gradient(145deg, #20283a 0%, #141b2a 48%, #0d1421 100%);
+  box-shadow: 0 15px 32px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.09);
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+}
+.badgeCard::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid color-mix(in srgb, var(--accent) 19%, transparent);
+  border-radius: 13px;
+  pointer-events: none;
+}
+.badgeCard:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+  box-shadow: 0 22px 44px rgba(0,0,0,.38), 0 0 30px color-mix(in srgb, var(--accent) 20%, transparent), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.badgeCard.locked {
+  filter: saturate(.72);
+}
+.badgeCard.locked .badgeArtwork {
+  filter: saturate(.68) brightness(.78);
+}
+.badgeCard.unlocked .badgeArtwork {
+  filter: drop-shadow(0 8px 12px color-mix(in srgb, var(--accent) 22%, transparent));
+}
+.cardTop { position: relative; z-index: 2; min-height: 22px; }
+.badgeCategory { font-size: 9px; letter-spacing: 1.55px; color: #aab4c8; }
+.rarity {
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-size: 8px;
+  letter-spacing: 1.15px;
+  background: rgba(7,12,22,.72);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+}
+.emblemArea {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 194px;
+  margin: 4px auto 2px;
+  overflow: visible;
+  isolation: isolate;
+}
+.emblemArea::before {
+  content: "";
+  position: absolute;
+  width: 178px;
+  height: 178px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent), transparent 68%);
+  filter: blur(12px);
+  z-index: -1;
+}
+.emblemArea::after {
+  content: "";
+  position: absolute;
+  width: 154px;
+  height: 154px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 5%, transparent), inset 0 0 18px color-mix(in srgb, var(--accent) 8%, transparent);
+  opacity: .75;
+  z-index: -1;
+}
+.badgeArtwork {
+  display: block;
+  width: min(100%, 204px);
+  height: 190px;
+  overflow: visible;
+  filter: drop-shadow(0 8px 10px rgba(0,0,0,.45));
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), filter .35s ease;
+}
+.badgeCard:hover .badgeArtwork {
+  transform: translateY(-5px) scale(1.045);
+  filter: drop-shadow(0 11px 17px color-mix(in srgb, var(--accent) 30%, transparent));
+}
+.artUnlockSeal {
+  position: absolute;
+  right: calc(50% - 82px);
+  bottom: 14px;
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border: 2px solid #0d1722;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #38d69b, #087b63);
+  color: #eafff5;
+  box-shadow: 0 3px 12px rgba(0,0,0,.4), 0 0 14px rgba(45,221,158,.35);
+  z-index: 2;
+}
+.locked .artUnlockSeal {
+  background: linear-gradient(145deg, #6e788b, #303a4c);
+  color: #e1e6f0;
+  box-shadow: 0 3px 12px rgba(0,0,0,.4);
+}
+.badgeDetails {
+  position: relative;
+  z-index: 1;
+  min-height: 58px;
+  text-align: center;
+  padding: 0 3px;
+}
+.badgeDetails h3 {
+  margin: 2px 0 6px;
+  color: #f6e8c8;
+  font-size: 16px;
+  font-weight: 850;
+  letter-spacing: -.25px;
+  line-height: 1.25;
+  text-shadow: 0 2px 12px rgba(0,0,0,.45);
+}
+.badgeDetails p {
+  margin: 0 auto;
+  max-width: 230px;
+  color: #aeb8ca;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.badgeProgress {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding-top: 14px;
+}
+.progressHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 9px;
+}
+.progressHeading span {
+  color: #9ca8bb;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.progressHeading strong {
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.badgeTrack {
+  height: 7px;
+  border-radius: 99px;
+  background: #080e19;
+  border: 1px solid rgba(255,255,255,.09);
+  overflow: hidden;
+}
+.badgeFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 65%, #fff), var(--accent), #fff0c6);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 48%, transparent);
+}
+.cardFooter {
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(255,255,255,.09);
+}
+.unlockedLabel { color: #62e5b2; }
+.lockedLabel { color: #8994a8; }
+.progressPercent { color: var(--accent); }
+.badgeCard.unlocked .badgeDetails h3 { color: #fff0cf; }
+.badgeCard.locked .badgeDetails h3 { color: #d4dbea; }
+
+@media (min-width: 1200px) {
+  .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 19px; }
+}
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .badgeCard { min-height: 350px; padding: 15px 13px 13px; }
+  .emblemArea { height: 174px; }
+  .badgeArtwork { height: 174px; }
+}
+@media (max-width: 640px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+  .badgeCard { min-height: 330px; padding: 13px 10px 12px; border-radius: 15px; }
+  .emblemArea { height: 172px; margin-top: 6px; }
+  .badgeArtwork { height: 172px; }
+  .premiumBadgeImage { height: 172px; }
+  .emblemArea::before { width: 148px; height: 148px; }
+  .emblemArea::after { width: 134px; height: 134px; }
+  .artUnlockSeal { right: calc(50% - 67px); bottom: 10px; width: 26px; height: 26px; }
+  .badgeDetails { min-height: 56px; }
+  .badgeDetails h3 { font-size: 13px; }
+  .badgeDetails p { font-size: 9px; }
+  .progressHeading span { font-size: 7px; }
+  .progressHeading strong { font-size: 8px; }
+}
+@media (max-width: 360px) {
+  .grid { grid-template-columns: 1fr; }
+  .badgeCard { min-height: 350px; }
+  .emblemArea { height: 180px; }
+  .badgeArtwork { height: 180px; }
+}
+
+
+/* Illustrated trophy artwork: unique rendered assets for the first achievement set */
+.premiumBadgeImage {
+  display: block;
+  width: min(100%, 244px);
+  height: 220px;
+  object-fit: contain;
+  overflow: visible;
+  filter: drop-shadow(0 12px 18px rgba(0,0,0,.42));
+  transform-origin: 50% 65%;
+  animation: trophyReveal .75s cubic-bezier(.18,.82,.24,1) both, trophyIdle 5.5s ease-in-out 1s infinite;
+  transition: filter .3s ease, transform .35s ease;
+}
+.badgeCard:hover .premiumBadgeImage {
+  transform: translateY(-7px) scale(1.055);
+  filter: drop-shadow(0 15px 22px color-mix(in srgb, var(--accent) 32%, transparent));
+}
+.badgeCard.locked .premiumBadgeImage {
+  filter: grayscale(.72) saturate(.62) brightness(.66) drop-shadow(0 7px 12px rgba(0,0,0,.35));
+  animation: none;
+}
+.badgeCard.locked:hover .premiumBadgeImage {
+  filter: grayscale(.38) saturate(.8) brightness(.82) drop-shadow(0 10px 16px rgba(0,0,0,.4));
+}
+@keyframes trophyReveal {
+  from { opacity: 0; transform: translateY(13px) scale(.88); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes trophyIdle {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -4px; }
+}
+@media (max-width: 900px) {
+  .premiumBadgeImage { height: 184px; }
+}
+@media (max-width: 640px) {
+  .premiumBadgeImage { height: 164px; }
+}
+
+
+/* CONSISTENT BADGE ARTBOARD — all collectible images share one frame */
+.emblemArea {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 204px;
+  min-height: 204px;
+  margin: 7px auto 4px;
+  padding: 0;
+  overflow: visible;
+  flex: 0 0 204px;
+}
+.premiumBadgeImage,
+.badgeArtwork {
+  display: block;
+  width: min(100%, 196px);
+  height: 196px;
+  max-width: 196px;
+  max-height: 196px;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+  object-position: center;
+  overflow: visible;
+  box-sizing: border-box;
+}
+.premiumBadgeImage {
+  padding: 3px;
+  transform-origin: center center;
+}
+.badgeCard:hover .premiumBadgeImage {
+  transform: translateY(-3px) scale(1.025);
+}
+.badgeCard.locked .premiumBadgeImage {
+  filter: grayscale(.78) brightness(.64) saturate(.52) drop-shadow(0 7px 10px rgba(0,0,0,.36));
+}
+.badgeCard.unlocked .premiumBadgeImage {
+  filter: drop-shadow(0 9px 12px rgba(0,0,0,.36));
+}
+.badgeDetails {
+  min-height: 68px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.badgeDetails h3 {
+  line-height: 1.25;
+  min-height: 20px;
+  margin: 3px 0 5px;
+}
+.badgeDetails p {
+  min-height: 30px;
+  margin: 0 auto 12px;
+  line-height: 1.45;
+}
+@media (max-width: 900px) {
+  .emblemArea {
+    height: 194px;
+    min-height: 194px;
+    flex-basis: 194px;
+  }
+  .premiumBadgeImage,
+  .badgeArtwork {
+    width: min(100%, 184px);
+    height: 184px;
+    max-width: 184px;
+    max-height: 184px;
+  }
+}
+@media (max-width: 650px) {
+  .emblemArea {
+    height: 184px;
+    min-height: 184px;
+    flex-basis: 184px;
+  }
+  .premiumBadgeImage,
+  .badgeArtwork {
+    width: min(100%, 174px);
+    height: 174px;
+    max-width: 174px;
+    max-height: 174px;
+  }
+}
+
+
+/* LAPTOP-FIRST BADGE COLLECTION LAYOUT
+   Keep the cards and artwork large enough to read at normal laptop widths. */
+.grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
+}
+.badgeCard {
+  min-height: 430px;
+  padding: 18px 17px 16px;
+}
+.emblemArea {
+  height: clamp(190px, 17vw, 226px);
+  min-height: clamp(190px, 17vw, 226px);
+  flex-basis: clamp(190px, 17vw, 226px);
+}
+.premiumBadgeImage,
+.badgeArtwork {
+  width: min(100%, 214px);
+  height: 214px;
+  max-width: 214px;
+  max-height: 214px;
+}
+
+/* Large laptop / desktop: four generous cards across. */
+@media (min-width: 1360px) {
+  .container {
+    width: min(1320px, 94%);
+  }
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .badgeCard {
+    min-height: 438px;
+    padding: 17px 15px 15px;
+  }
+  .emblemArea {
+    height: 218px;
+    min-height: 218px;
+    flex-basis: 218px;
+  }
+  .premiumBadgeImage,
+  .badgeArtwork {
+    width: min(100%, 216px);
+    height: 216px;
+    max-width: 216px;
+    max-height: 216px;
+  }
+}
+
+/* Standard laptops: three columns with comfortable card width. */
+@media (min-width: 901px) and (max-width: 1359px) {
+  .container {
+    width: min(1160px, 94%);
+  }
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .badgeCard {
+    min-height: 440px;
+  }
+}
+
+/* Small laptops / tablets: two columns instead of squeezing four tiny cards. */
+@media (min-width: 651px) and (max-width: 900px) {
+  .container {
+    width: 94%;
+  }
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .badgeCard {
+    min-height: 420px;
+    padding: 16px;
+  }
+  .emblemArea {
+    height: 210px;
+    min-height: 210px;
+    flex-basis: 210px;
+  }
+  .premiumBadgeImage,
+  .badgeArtwork {
+    width: min(100%, 208px);
+    height: 208px;
+    max-width: 208px;
+    max-height: 208px;
+  }
+}
+
+/* Phones: two columns on regular phones, one on very narrow screens. */
+@media (min-width: 421px) and (max-width: 650px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .badgeCard {
+    min-height: 380px;
+    padding: 13px 11px;
+  }
+  .emblemArea {
+    height: 164px;
+    min-height: 164px;
+    flex-basis: 164px;
+  }
+  .premiumBadgeImage,
+  .badgeArtwork {
+    width: min(100%, 158px);
+    height: 158px;
+    max-width: 158px;
+    max-height: 158px;
+  }
+  .badgeDetails h3 {
+    font-size: 13px;
+  }
+  .badgeDetails p {
+    font-size: 9px;
+  }
+}
+@media (max-width: 420px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .badgeCard {
+    min-height: 390px;
+  }
+  .emblemArea {
+    height: 190px;
+    min-height: 190px;
+    flex-basis: 190px;
+  }
+  .premiumBadgeImage,
+  .badgeArtwork {
+    width: min(100%, 184px);
+    height: 184px;
+    max-width: 184px;
+    max-height: 184px;
+  }
+}
+
+
+/* COMPACT, ALIGNED COLLECTIBLE CARDS — balanced artwork and readable copy */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 14px;
+}
+.badgeCard {
+  min-width: 0;
+  min-height: 356px;
+  height: 356px;
+  padding: 12px 12px 11px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.cardTop {
+  min-height: 20px;
+  align-items: center;
+}
+.badgeCategory {
+  font-size: 8px;
+  letter-spacing: .95px;
+}
+.rarity {
+  padding: 4px 7px;
+  font-size: 7px;
+}
+.emblemArea {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 164px;
+  min-height: 164px;
+  flex: 0 0 164px;
+  margin: 5px auto 2px;
+  padding: 0;
+  overflow: visible;
+}
+.premiumBadgeImage,
+.badgeArtwork {
+  display: block;
+  width: 158px;
+  height: 158px;
+  max-width: 100%;
+  max-height: 158px;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+  object-position: center;
+  padding: 0;
+  box-sizing: border-box;
+}
+.artUnlockSeal {
+  right: calc(50% - 69px);
+  bottom: 4px;
+  width: 25px;
+  height: 25px;
+}
+.badgeDetails {
+  display: flex;
+  flex: 0 0 56px;
+  min-height: 56px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 0 2px;
+}
+.badgeDetails h3 {
+  width: 100%;
+  min-height: 18px;
+  margin: 2px 0 4px;
+  font-size: 13px;
+  line-height: 1.25;
+}
+.badgeDetails p {
+  width: 100%;
+  min-height: 25px;
+  margin: 0 auto;
+  font-size: 9px;
+  line-height: 1.35;
+}
+.badgeProgress {
+  margin-top: auto;
+  padding-top: 5px;
+}
+.progressHeading {
+  margin-bottom: 6px;
+}
+.progressHeading span {
+  font-size: 7px;
+  letter-spacing: .65px;
+}
+.progressHeading strong {
+  font-size: 9px;
+}
+.badgeTrack {
+  height: 5px;
+}
+.cardFooter {
+  min-height: 24px;
+  margin-top: 8px;
+  padding-top: 7px;
+}
+.unlockedLabel,
+.lockedLabel {
+  font-size: 8px;
+}
+.progressPercent {
+  font-size: 9px;
+}
+
+/* Four cards on wider screens; three only when the viewport needs more room. */
+@media (min-width: 1200px) {
+  .container { width: min(1320px, 96%); }
+  /* Laptop and desktop badge collections stay at three readable columns. */
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+}
+@media (min-width: 901px) and (max-width: 1199px) {
+  .container { width: 95%; }
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+  .badgeCard { height: 356px; min-height: 356px; }
+}
+@media (min-width: 601px) and (max-width: 900px) {
+  .container { width: 95%; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+  .badgeCard { height: 350px; min-height: 350px; }
+  .premiumBadgeImage,
+  .badgeArtwork { width: 154px; height: 154px; }
+}
+@media (min-width: 381px) and (max-width: 600px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .badgeCard { height: 330px; min-height: 330px; padding: 10px 9px; }
+  .emblemArea { height: 146px; min-height: 146px; flex-basis: 146px; }
+  .premiumBadgeImage,
+  .badgeArtwork { width: 140px; height: 140px; }
+  .badgeDetails { flex-basis: 54px; min-height: 54px; }
+  .badgeDetails h3 { font-size: 12px; }
+  .badgeDetails p { font-size: 8px; }
+}
+@media (max-width: 380px) {
+  .grid { grid-template-columns: 1fr; gap: 12px; }
+  .badgeCard { height: 344px; min-height: 344px; padding: 11px; }
+  .emblemArea { height: 158px; min-height: 158px; flex-basis: 158px; }
+  .premiumBadgeImage,
+  .badgeArtwork { width: 152px; height: 152px; }
+}

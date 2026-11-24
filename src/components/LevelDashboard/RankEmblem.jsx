@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './RankEmblem.module.css';
 
-import bronzeEmblem from '../../assets/rank-emblems/bronze.png';
-import silverEmblem from '../../assets/rank-emblems/silver.png';
-import goldEmblem from '../../assets/rank-emblems/gold.png';
-import platinumEmblem from '../../assets/rank-emblems/platinum.png';
-import diamondEmblem from '../../assets/rank-emblems/diamond.png';
-import legendaryEmblem from '../../assets/rank-emblems/legendary.png';
-import transcendentEmblem from '../../assets/rank-emblems/transcendent.png';
+import bronzeEmblem from '../../assets/rank-emblems/bronze.webp';
+import silverEmblem from '../../assets/rank-emblems/silver.webp';
+import goldEmblem from '../../assets/rank-emblems/gold.webp';
+import platinumEmblem from '../../assets/rank-emblems/platinum.webp';
+import diamondEmblem from '../../assets/rank-emblems/diamond.webp';
+import legendaryEmblem from '../../assets/rank-emblems/legendary.webp';
+import transcendentEmblem from '../../assets/rank-emblems/transcendent.webp';
 
 const rankArtwork = {
   bronze: bronzeEmblem,
@@ -21,12 +21,12 @@ const rankArtwork = {
 
 const rankNames = {
   bronze: 'Bronze Explorer',
-  silver: 'Silver Adventurer',
-  gold: 'Gold Champion',
-  platinum: 'Platinum Master',
-  diamond: 'Diamond Elite',
-  legendary: 'Legendary',
-  transcendent: 'Transcendent',
+  silver: 'Silver Explorer',
+  gold: 'Gold Explorer',
+  platinum: 'Platinum Explorer',
+  diamond: 'Diamond Explorer',
+  legendary: 'Elite Explorer',
+  transcendent: 'Transcendent Explorer',
 };
 
 export default function RankEmblem({ tier, state = 'locked', className = '', variant = 'default' }) {

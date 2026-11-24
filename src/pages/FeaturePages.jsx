@@ -553,9 +553,6 @@ export function StreaksPage() {
         </p>
       )}
 
-      <p className={styles.notice}>
-        Each streak milestone can be claimed only once. Claimed rewards are saved on this device.
-      </p>
     </FeatureLayout>
   );
 }
